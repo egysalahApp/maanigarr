@@ -14,9 +14,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['"Readex Pro"', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['"Readex Pro"', 'sans-serif'] },
                     colors: {
                         pastel: {
                             bg: '#F8FAFC',
@@ -31,9 +29,7 @@
                             warningDark: '#D97706',
                         }
                     },
-                    animation: {
-                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
-                    },
+                    animation: { 'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both' },
                     keyframes: {
                         shake: {
                             '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
@@ -49,14 +45,10 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* التمدد السلس للعناصر */
         .grid-expand { display: grid; transition: grid-template-rows 0.4s ease-out, opacity 0.4s ease-out; }
         .grid-0 { grid-template-rows: 0fr; opacity: 0; pointer-events: none; }
         .grid-1 { grid-template-rows: 1fr; opacity: 1; pointer-events: auto; }
         .overflow-hidden-inner { overflow: hidden; }
-
-        /* Fallback للتمرير في حال فشل JS أو للتحميل المباشر للمقاطع */
         main { scroll-margin-top: 5rem; }
     </style>
 </head>
@@ -80,18 +72,13 @@
     <!-- Tabs Container (Sticky) -->
     <div id="tabs-wrapper" class="sticky top-0 z-50 w-full bg-pastel-bg/95 backdrop-blur shadow-sm border-b border-slate-200">
         <div class="relative w-full max-w-3xl mx-auto pt-1">
-            <div id="tabs-container" class="flex overflow-x-auto no-scrollbar mx-auto w-max max-w-full px-4 py-1 gap-2 items-center">
-                <!-- التبويبات تُولد هنا عبر JS -->
-            </div>
-            <!-- Progress Bar - يبدأ من اليمين -->
+            <div id="tabs-container" class="flex overflow-x-auto no-scrollbar mx-auto w-max max-w-full px-4 py-1 gap-2 items-center"></div>
             <div class="absolute bottom-0 right-0 h-1.5 bg-pastel-primaryDark transition-all duration-500 ease-out w-0 origin-right" id="progress-bar"></div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <main id="main-content" class="flex-grow w-full max-w-3xl mx-auto p-4 md:p-6 flex flex-col pb-8">
-        <!-- يتم التوليد هنا عبر JS -->
-    </main>
+    <main id="main-content" class="flex-grow w-full max-w-3xl mx-auto p-4 md:p-6 flex flex-col pb-8"></main>
 
     <!-- حاوية النتيجة النهائية -->
     <div class="w-full max-w-3xl mx-auto px-4 md:px-6 pb-12">
@@ -101,28 +88,21 @@
                     <div class="text-7xl mb-4">🎓</div>
                     <h2 class="text-4xl font-bold mb-4">أكملت جميع التحديات بنجاحٍ!</h2>
                     <p class="text-2xl text-blue-100 mb-8">حصيلتك الإجمالية: <span id="global-final-score" class="font-bold text-white text-4xl">٠ / ٠</span></p>
-                    <button onclick="startOver()" class="w-full bg-white text-blue-900 py-4 rounded-xl font-bold text-2xl hover:bg-slate-50 transition-colors shadow-md outline-none">
-                        ابدأ من جديدٍ
-                    </button>
+                    <button onclick="startOver()" class="w-full bg-white text-blue-900 py-4 rounded-xl font-bold text-2xl hover:bg-slate-50 transition-colors shadow-md outline-none">ابدأ من جديدٍ</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="mt-auto py-6 text-center border-t border-slate-200">
-        <a href="https://www.youtube.com/egysalah" target="_blank" rel="noopener noreferrer" class="text-base text-slate-400 font-medium text-center block py-2 hover:text-slate-600 transition-colors outline-none">
-            جميع الحقوق محفوظة لقناة العربية السهلة
-        </a>
+        <a href="https://www.youtube.com/egysalah" target="_blank" rel="noopener noreferrer" class="text-base text-slate-400 font-medium text-center block py-2 hover:text-slate-600 transition-colors outline-none">جميع الحقوق محفوظة لقناة العربية السهلة</a>
     </footer>
 
     <script>
-        // منع استعادة التمرير التلقائي للمتصفح عند التحميل
         if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
 
         const toArabicNum = (num) => String(num).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 
-        // بيانات التطبيق - مرتبة تعليميًا
         const appData = {
             sections: [
                 { id: 'intro', title: 'مقدمة', type: 'info' },
@@ -130,74 +110,80 @@
                     id: 'fill',
                     title: 'الكلمة المفقودة',
                     type: 'mcq',
-                    description: 'اختر حرف الجر المناسب لملء الفراغِ، بحيث يؤدي الحرف المعنى المطلوب بين القوسين تمامًا.',
+                    description: 'اختر حرف الجر المناسب لملء الفراغِ ليعطي المعنى المطلوب بدقةٍ.',
                     questions: [
-                        { id: 'q_f1', text: 'خاتم أمي مصنوعٌ [ ... ] ذهبٍ خالصٍ.', options: ['مِنْ', 'بـِ', 'فِي'], correct: 0, hint: 'نحتاج حرفًا يبين المادة الخام التي صُنع منها الخاتم.', explanation: '(مِنْ) تستخدم لبيان النوع والمادة المصنوع منها الشيء.' },
-                        { id: 'q_f2', text: 'السفر الطويل أحب [ ... ] من الإقامة بلا عملٍ.', options: ['إلَيَّ', 'عَلَيَّ', 'فِيَّ'], correct: 0, hint: 'نحتاج حرفًا يفيد معنى (عندي) أو القرب النفسي.', explanation: '(إلَى) تستخدم أحيانًا بمعنى (عند).' },
-                        { id: 'q_f3', text: 'أخذتُ هذا الخبر اليقين [ ... ] صديقي.', options: ['عَنْ', 'فِي', 'مِنْ'], correct: 0, hint: 'هذا الحرف يدل على الأصل والمصدر الذي صدر منه الخبر.', explanation: '(عَنْ) تُستخدم لتدل على مصدر الشيء وأصله.' },
-                        { id: 'q_f4', text: 'فاق صالحٌ أقرانه بالدراسة [ ... ] صغر سنه.', options: ['عَلَى', 'مِنْ', 'البَاء'], correct: 0, hint: 'نحتاج حرفًا يفيد تجاوز العائق (بالرغم من).', explanation: '(عَلَى) تأتي أحيانًا لتفيد معنى (الرغم).' },
-                        { id: 'q_f5', text: 'غادرت بعثتنا الرياضية المدينة [ ... ] مهمةٍ وطنيةٍ.', options: ['فِي', 'لِـ', 'إلَى'], correct: 0, hint: 'الحرف هنا يدل على الهدف الذي تم من أجله السفر.', explanation: '(فِي) تأتي للدلالة على الغرض الذي تم من أجله الفعل.' },
-                        { id: 'q_f6', text: 'استمعتُ لشرح الأستاذ [ ... ] انتباهٍ شديدٍ.', options: ['بـِ', 'فِي', 'كـَ'], correct: 0, hint: 'نحتاج حرفًا يصف هيئة المستمع (أي: استمعتُ مُنتبهًا).', explanation: '(الباء) هنا دخلت لتفيد وصف الحال.' },
-                        { id: 'q_f7', text: 'أحب الفواكه الصيفية [ ... ] العنب والبطيخ.', options: ['كـَ', 'لِـ', 'بـِ'], correct: 0, hint: 'نحتاج حرفًا نستخدمه لتقديم أمثلةٍ توضيحيةٍ.', explanation: '(الكاف) تُستخدم لضرب الأمثلة والتفصيل.' },
-                        { id: 'q_f8', text: 'أنفقتُ [ ... ] مالي في مساعدة الفقراءِ.', options: ['مِنْ', 'فِي', 'البَاء'], correct: 0, hint: 'المال المنفق هو (جزءٌ) فقط من إجمالي المال.', explanation: '(مِنْ) تُستخدم للدلالة على التبعيض.' },
-                        { id: 'q_f9', text: 'تحدثنا طويلاً [ ... ] أهمية الوقتِ.', options: ['عَنْ', 'فِي', 'مِنْ'], correct: 0, hint: 'هذا الحرف يدل على المحور الذي دار حوله النقاش.', explanation: '(عَنْ) تُستخدم لتدل على موضوع الحديث.' },
-                        { id: 'q_f10', text: 'ينقسم الاسم [ ... ] نكرة ومعرفة.', options: ['إلَى', 'اللَّام', 'فِي'], correct: 0, hint: 'نحتاج حرفًا يجزئ الشيء لمكوناته.', explanation: '(إلَى) تستخدم للتفصيل والتقسيم.' }
+                        { id: 'f1', text: 'خاتمُ المعلمِ مصنوعٌ [ ... ] فضةٍ. (بيان النوع)', options: ['مِنْ', 'فِي', 'بـِ'], correct: 0, hint: 'نحتاج حرفًا يبين المادة الخام.', explanation: '(مِنْ) تستخدم لبيان النوع والمادة.' },
+                        { id: 'f2', text: 'السفرُ أحبُّ [ ... ] من البقاءِ. (معنى العِندية)', options: ['إلَيَّ', 'عَلَيَّ', 'فِيَّ'], correct: 0, hint: 'الحرف هنا يفيد معنى (عند).', explanation: '(إلَى) تستخدم بمعنى (عند) أحيانًا.' },
+                        { id: 'f3', text: 'فاقَ المجتهدُ أقرانَهُ [ ... ] صغرِ سنِّهِ. (معنى الرَّغم)', options: ['عَلَى', 'مِنْ', 'البَاء'], correct: 0, hint: 'أي: بالرغم من صغر سنه.', explanation: '(عَلَى) تفيد معنى (الرغم).' },
+                        { id: 'f4', text: 'أخذتُ العلمَ [ ... ] أفواهِ العلماءِ. (مصدر الشيء)', options: ['عَنْ', 'فِي', 'إلَى'], correct: 0, hint: 'الحرف يدل على الأصل والمصدر.', explanation: '(عَنْ) تدل على مصدر الشيء وأصله.' },
+                        { id: 'f5', text: 'استمعتُ للدرسِ [ ... ] انتباهٍ. (الحال)', options: ['بـِ', 'فِي', 'كـَ'], correct: 0, hint: 'أي: استمعتُ مُنتبهًا.', explanation: 'الباء تدخل لتفيد وصف الحال.' },
+                        { id: 'f6', text: 'أنفقتُ [ ... ] مالي في الخيرِ. (التبعيض)', options: ['مِنْ', 'إلَى', 'عَلَى'], correct: 0, hint: 'أي: أنفقت جزءًا من مالي.', explanation: '(مِنْ) تدل على التبعيض.' },
+                        { id: 'f7', text: 'ينقسمُ الكلمُ [ ... ] ثلاثةِ أقسامٍ. (التقسيم)', options: ['إلَى', 'فِي', 'عَنْ'], correct: 0, hint: 'تجزئة الشيء لمكوناته.', explanation: '(إلَى) تفيد التقسيم والتفصيل.' },
+                        { id: 'f8', text: 'خرجتُ [ ... ] البيتِ صباحًا. (ابتداء المكان)', options: ['مِنْ', 'عَنْ', 'فِي'], correct: 0, hint: 'نقطة الانطلاق المكانية.', explanation: '(مِنْ) تفيد ابتداء الغاية المكانية.' },
+                        { id: 'f9', text: 'الفواكهُ صيفيةٌ [ ... ] العنبِ والبطيخِ. (التفصيل)', options: ['كـَ', 'لـِ', 'بـِ'], correct: 0, hint: 'لضرب الأمثلة التوضيحية.', explanation: 'الكاف تفيد التمثيل والتفصيل.' },
+                        { id: 'f10', text: 'دخلت امرأةٌ النارَ [ ... ] هرّةٍ. (السببية)', options: ['فِي', 'عَلَى', 'عَنْ'], correct: 0, hint: 'أي: بسبب هرّةٍ.', explanation: '(فِي) تأتي أحيانًا لتفيد السببية.' },
+                        { id: 'f11', text: 'أحبُّ العلمَ [ ... ] أهميتِهِ. (السببية)', options: ['لـِ', 'بـِ', 'فِي'], correct: 0, hint: 'لماذا تحب العلم؟', explanation: 'اللام تفيد التعليل والسببية.' },
+                        { id: 'f12', text: 'تحدثنا طويلاً [ ... ] فضلِ الأمِ. (موضوع الكلام)', options: ['عَنْ', 'مِنْ', 'إلَى'], correct: 0, hint: 'عن ماذا كان الحديث؟', explanation: '(عَنْ) تدل على موضوع الحديث.' }
                     ]
                 },
                 {
                     id: 'sort',
                     title: 'فرز البطاقات',
                     type: 'sort',
-                    description: 'اقرأ الجملة التي تظهر في البطاقة، ثم انقر على الصندوق المناسب للمعنى الذي يؤديه الحرف الملون فيها.',
+                    description: 'اسحب البطاقة أو انقر على الصندوق المناسب للمعنى الذي يؤديه الحرف الملون.',
                     items: [
-                        { id: 'srt1', text: 'شرعت في العمل <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> الأسبوع الماضي', options: ['زمان الابتداء', 'التبعيض', 'بيان النوع'], correct: 0, hint: 'الحرف يحدد متى بدأ زمن الفعل.', explanation: '(مِنْ) هنا حددت نقطة انطلاق الزمن.' },
-                        { id: 'srt2', text: 'وصلت <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">إلى</span> المدرسة باكرًا', options: ['النهاية في المكان', 'النهاية في الزمان', 'معنى القرب'], correct: 0, hint: 'المدرسة هي المحطة الأخيرة للحركة.', explanation: '(إلى) تفيد انتهاء الغاية المكانية.' },
-                        { id: 'srt3', text: 'شرّبت الأم ولدها الدواء <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> أنه ماء', options: ['الاستعلاء المكان', 'معنى الوهم', 'الشرط'], correct: 1, hint: 'الأم صورت الدواء بشيءٍ غير حقيقيٍ لتشجع ابنها.', explanation: '(عَلَى) هنا صورت شيئًا متوهمًا غير حقيقيٍ.' },
-                        { id: 'srt12', text: '<span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">بـ</span>سم الله الرحمن الرحيم', options: ['السبب والعلة', 'الوسيلة (الاستعانة)', 'القسم واليمين'], correct: 1, hint: 'الباء هنا للطلب والاستغاثة باسم الله لإنجاز العمل.', explanation: 'الباء هنا معنوية وتفيد الاستعانة أو الوسيلة.' },
-                        { id: 'srt13', text: 'فرح محمد <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">بـ</span>قدوم أخيه', options: ['الوسيلة (الآلة)', 'التعويض والثمن', 'السبب والعلة'], correct: 2, hint: 'القدوم هو الدافع والعلة وراء شعور الفرح.', explanation: 'الباء هنا سببية، أي (بسبب) قدوم أخيه.' },
-                        { id: 'srt6', text: 'اشتريت هذا الكتاب القيم <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">بـ</span>دينارٍ', options: ['التعويض والثمن', 'الوسيلة (معنوي)', 'الآلة (مادي)'], correct: 0, hint: 'تمت مبادلة الكتاب بمبلغٍ ماديٍ.', explanation: 'الباء تدخل على الثمن لتفيد التعويض.' },
-                        { id: 'srt4', text: 'جلسنا <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> المائدة لنتناول الطعام', options: ['الاستعلاء المكان', 'القرب من الشيء', 'الشرط'], correct: 1, hint: 'نحن نجلس بجوار المائدة وقربها لا فوقها.', explanation: '(على) تأتي أحيانًا بمعنى (عند) أو القرب.' }
+                        { id: 'srt1', text: 'شرّبت الأمُ ولدها الدواء <span class="text-pastel-primaryDark font-black">على</span> أنه ماء', options: ['معنى الوهم', 'الاستعلاء', 'الشرط'], correct: 0, hint: 'تصوير شيءٍ غير حقيقيٍ.', explanation: '(عَلَى) تفيد هنا التوهم.' },
+                        { id: 'srt2', text: '<span class="text-pastel-primaryDark font-black">بـ</span>سم الله الرحمن الرحيم', options: ['الوسيلة (الاستعانة)', 'القسم', 'السبب'], correct: 0, hint: 'طلب العون لعمل شيءٍ.', explanation: 'الباء هنا للاستعانة والوسيلة.' },
+                        { id: 'srt3', text: 'فرحَ الطفلُ <span class="text-pastel-primaryDark font-black">بـ</span>قدومِ العيدِ', options: ['السبب والعلة', 'الآلة', 'الثمن'], correct: 0, hint: 'ما الدافع وراء الفرح؟', explanation: 'الباء هنا تفيد السببية.' },
+                        { id: 'srt4', text: 'هذا البستانُ <span class="text-pastel-primaryDark font-black">لـ</span>أخي المجتهدِ', options: ['الملكية المادية', 'الملكية المعنوية', 'التعليل'], correct: 0, hint: 'امتلاك شيءٍ ماديٍ.', explanation: 'اللام هنا للملكية المادية.' },
+                        { id: 'srt5', text: 'الوفاءُ <span class="text-pastel-primaryDark font-black">لـ</span>ـه أثرٌ طيبٌ', options: ['الملكية المعنوية', 'الملكية المادية', 'الإباحة'], correct: 0, hint: 'اختصاص صفةٍ بشيءٍ.', explanation: 'اللام هنا للملكية المعنوية.' },
+                        { id: 'srt6', text: 'اشتريتُ القلمَ <span class="text-pastel-primaryDark font-black">بـ</span>درهمٍ', options: ['التعويض والثمن', 'الآلة', 'الوسيلة'], correct: 0, hint: 'مبادلة مالٍ بسلعةٍ.', explanation: 'الباء تدخل على الأثمان.' },
+                        { id: 'srt7', text: 'سرتُ <span class="text-pastel-primaryDark font-black">إلى</span> مطلعِ الفجرِ', options: ['انتهاء الزمان', 'انتهاء المكان', 'الاتجاه'], correct: 0, hint: 'نهاية وقت الفعل.', explanation: '(إلَى) تفيد انتهاء الزمان.' },
+                        { id: 'srt8', text: 'ابتعدتُ <span class="text-pastel-primaryDark font-black">عن</span> رفقاءِ السوءِ', options: ['البعد والفصل حسًّا', 'البعد معنًى', 'موضوع الكلام'], correct: 0, hint: 'تغيير المكان والابتعاد.', explanation: '(عَنْ) تفيد المجاوزة والبعد.' },
+                        { id: 'srt9', text: 'لعبنا <span class="text-pastel-primaryDark font-black">في</span> الحديقةِ', options: ['الظرفية المكانية', 'الظرفية الزمانية', 'السببية'], correct: 0, hint: 'أين حدث الفعل؟', explanation: '(فِي) تفيد المكان.' },
+                        { id: 'srt10', text: 'النجومُ <span class="text-pastel-primaryDark font-black">كـ</span>المصابيحِ ضياءً', options: ['التشبيه', 'التفصيل', 'التعليل'], correct: 0, hint: 'مماثلة بين شيئين.', explanation: 'الكاف تفيد التشبيه.' }
                     ]
                 },
                 {
                     id: 'mcq2',
                     title: 'أسرار المعاني',
                     type: 'mcq',
-                    description: 'هذا القسم يختبر المعاني الدقيقة والعميقة لحروف الجر. اقرأ بتمعنٍ ثم اختر الإجابة الصحيحة.',
+                    description: 'تحديات لغوية دقيقة تختبر فهمك العميق لأسرار حروف الجر.',
                     questions: [
-                        { id: 'q_m1', text: 'ماذا أفاد حرف الجر (من) في قولنا: "ما على الشجرة من طائرٍ."؟', options: ['تأكيد النفي', 'مكان الابتداء', 'التبعيض'], correct: 0, hint: 'الجملة منفية بـ(ما)، والحرف زائدٌ للتوكيد.', explanation: 'تفيد (من) هنا تأكيد النفي.' },
-                        { id: 'q_m4', text: 'ما الدلالة المستفادة من (على) في قولنا: "على أبي مائة دينارٍ."؟', options: ['الشيء الذي لا رغبة فيه', 'الوجوب والإلزام', 'الدعاء بالشر'], correct: 0, hint: 'الدَّين حملٌ ثقيلٌ لا يرغب فيه الإنسان.', explanation: 'تفيد (على) هنا الشيء الذي لا رغبة فيه كالدين.' },
-                        { id: 'q_m5', text: 'ماذا يفيد حرف (على) في جملة: "دعا جدي على مَن ظلمه."؟', options: ['الدعاء بالشر', 'الاستعلاء', 'معنى الرَّغم'], correct: 0, hint: 'هذا دعاءٌ سلبيٌ ضد شخصٍ ظالمٍ.', explanation: 'تفيد (على) هنا الدعاء بالشر.' },
-                        { id: 'q_m6', text: 'ماذا تفيد الباء في قولنا: "ليس الكسول بناجحٍ."؟', options: ['تأكيد النفي', 'الآلة', 'الحال'], correct: 0, hint: 'الباء هنا دخلت على خبر (ليس) لزيادة قوة المعنى.', explanation: 'تفيد (الباء) هنا تأكيد وتقوية النفي.' },
-                        { id: 'q_m7', text: 'حدد دلالة الحرف في قولنا: "باللهِ لأجتهدنَّ في دروسي."؟', options: ['القسم واليمين', 'السبب', 'الوسيلة'], correct: 0, hint: 'تستخدم الباء هنا كحرفٍ يسبق لفظ الجلالة للحلف.', explanation: 'تفيد (الباء) هنا القسم واليمين.' }
+                        { id: 'm1', text: 'ما معنى اللام في: "اللهمَّ اغفر لـنا ولوالدينا"؟', options: ['الدعاء بالخير', 'الملكية', 'التعليل'], correct: 0, hint: 'طلب الخير لشخصٍ ما.', explanation: 'اللام تستخدم للدعاء بالخير (عكس على).' },
+                        { id: 'm2', text: 'ما معنى (على) في: "دعا المظلومُ على مَن ظلمَهُ"؟', options: ['الدعاء بالشر', 'الاستعلاء', 'الرغم'], correct: 0, hint: 'طلب السوء لشخصٍ ما.', explanation: '(على) تستخدم للدعاء بالشر.' },
+                        { id: 'm3', text: 'ماذا تفيد الباء في: "ليسَ النجاحُ بـمستحيلٍ"؟', options: ['تأكيد النفي', 'الوسيلة', 'السببية'], correct: 0, hint: 'جاءت لتقوية معنى النفي بـ (ليس).', explanation: 'الباء الزائدة تفيد تأكيد النفي.' },
+                        { id: 'm4', text: 'ما دلالة (من) في: "ما جاءنا من بشيرٍ"؟', options: ['تأكيد النفي', 'التبعيض', 'بيان النوع'], correct: 0, hint: 'جاءت في جملةٍ منفيةٍ للتوكيد.', explanation: '(من) الزائدة تفيد تأكيد النفي.' },
+                        { id: 'm5', text: 'ما معنى (في) في: "خرجَ القائدُ في جُندِهِ"؟', options: ['المعية (المصاحبة)', 'المكان', 'السبب'], correct: 0, hint: 'أي: خرج مع جنده.', explanation: '(فِي) تفيد المعية والمصاحبة أحيانًا.' },
+                        { id: 'm6', text: 'ما معنى (عن) في: "لا تجزي نفسٌ عن نفسٍ شيئًا"؟', options: ['البدلية (العِوض)', 'البعد', 'الموضوع'], correct: 0, hint: 'أي: لا تقوم مقامها أو بدلاً منها.', explanation: '(عَنْ) تأتي بمعنى البدل.' },
+                        { id: 'm7', text: 'ما معنى اللام في: "للأطفالِ أن يلعبوا في الساحةِ"؟', options: ['الإباحة (السماح)', 'الملكية', 'السببية'], correct: 0, hint: 'تعطي إذنًا بالقيام بالفعل.', explanation: 'اللام تفيد الإباحة والسماح.' },
+                        { id: 'm8', text: 'ما معنى (على) في: "على المديونِ مائةُ دينارٍ"؟', options: ['الشيء المكروه (الدَّين)', 'الوجوب', 'الاستعلاء'], correct: 0, hint: 'تستخدم مع الديون والأعباء.', explanation: '(على) تفيد التحمل أو الدَّين.' }
                     ]
                 },
                 {
                     id: 'search',
                     title: 'البحث الدقيق',
                     type: 'mcq',
-                    noShuffle: true, 
-                    description: 'في هذا التحدي الختامي، سنقارن بين المعاني (الحسية والمعنوية). حدد المعنى الدقيق في كل جملةٍ.',
+                    noShuffle: true,
+                    description: 'التحدي الختامي: المقارنة بين المحسوس والمعنوي لترسيخ الفروق الدقيقة.',
                     questions: [
-                        { id: 'pair_1a', text: 'قال تعالى: "لِـلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ". اللام تفيد:', options: ['الملكية المادية', 'الملكية المعنوية', 'الغرض والتعليل'], correct: 0, hint: 'الخالق يملك الكون ملكيةً حقيقيةً شاملةً.', explanation: 'تفيد اللام هنا الملكية المادية (الحقيقية).' },
-                        { id: 'pair_1b', text: 'لـلصادقِ مكانةٌ رفيعةٌ في المجتمعِ. ماذا تفيد اللام؟', options: ['الملكية المادية', 'الملكية المعنوية (الاختصاص)', 'السبب والعلة'], correct: 1, hint: 'المكانة شيءٌ معنويٌ يختص به الصادق.', explanation: 'تفيد اللام هنا الملكية المعنوية أو الاختصاص.' },
-                        { id: 'pair_2a', text: 'سافرَ السائحُ إلى مدينةِ "القاهرةِ" بالقطارِ. "إلى" تفيد:', options: ['الاتجاه حسًّا', 'الاتجاه معنًى', 'الزمان'], correct: 0, hint: 'القاهرة مكانٌ ماديٌ ننتقل إليه بالأجساد.', explanation: 'تفيد "إلى" هنا الاتجاه حسًّا.' },
-                        { id: 'pair_2b', text: 'هدتني نصيحةُ المعلمِ إلى الصوابِ والنجاحِ. "إلى" تفيد:', options: ['الاتجاه حسًّا', 'الاتجاه معنًى', 'الملكية'], correct: 1, hint: 'الصواب طريقٌ فكريٌ معنويٌ.', explanation: 'تفيد "إلى" هنا الاتجاه معنًى.' },
-                        { id: 'pair_3a', text: 'أزاحَ العاملُ الأذى عن الطريقِ لسلامةِ الناسِ. "عن" تفيد:', options: ['البعد والفصل حسًّا', 'البعد والفصل معنًى', 'موضوع الكلام'], correct: 0, hint: 'إبعاد شيءٍ ماديٍ عن مكانٍ ماديٍ.', explanation: 'تفيد "عن" هنا البعد والفصل حسًّا.' },
-                        { id: 'pair_3b', text: 'أعرضَ الحكيمُ عن لغوِ الحديثِ والكذبِ. "عن" تفيد:', options: ['البعد والفصل حسًّا', 'البعد والفصل معنًى', 'مصدر الشيء'], correct: 1, hint: 'اللغو والكذب أمورٌ معنويةٌ نبتعد عنها سلوكيًا.', explanation: 'تفيد "عن" هنا البعد والفصل معنًى.' },
-                        { id: 'q_s10', text: '<span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> المريضِ في المستشفى أن يعملَ بنصائحِ الطبيبِ.', options: ['الوجوب والإلزام', 'معنى الوهم', 'الاستعلاء'], correct: 0, hint: 'أمرٌ يتطلب التنفيذ الصارم ولا خيار فيه.', explanation: 'تفيد (على) هنا الوجوب والإلزام.' }
+                        { id: 'p1a', text: 'هذه السيارةُ <span class="text-pastel-primaryDark font-black">لـ</span>جاري. اللام هنا تفيد:', options: ['الملكية المادية', 'الملكية المعنوية', 'التعليل'], correct: 0, hint: 'السيارة شيءٌ ماديٌ ملموسٌ.', explanation: 'اللام للملكية المادية.' },
+                        { id: 'p1b', text: '<span class="text-pastel-primaryDark font-black">لـ</span>لحريةِ ثمنٌ غالٍ. ماذا تفيد اللام هنا؟', options: ['الملكية المادية', 'الملكية المعنوية (الاختصاص)', 'السبب'], correct: 1, hint: 'الحرية قيمةٌ معنويةٌ وليست مادةً.', explanation: 'اللام للملكية المعنوية أو الاختصاص.' },
+                        { id: 'p2a', text: 'وصلتُ <span class="text-pastel-primaryDark font-black">إلى</span> الحديقةِ. (إلى) تفيد:', options: ['الاتجاه حسًّا', 'الاتجاه معنًى', 'الزمان'], correct: 0, hint: 'الحديقة مكانٌ نصل إليه فعليًا.', explanation: '(إلى) تفيد انتهاء الغاية المكانية (حسًّا).' },
+                        { id: 'p2b', text: 'وصلتُ <span class="text-pastel-primaryDark font-black">إلى</span> الحلِّ الصحيحِ. (إلى) تفيد:', options: ['الاتجاه حسًّا', 'الاتجاه معنًى', 'الزمان'], correct: 1, hint: 'الحل وصولٌ فكريٌ وليس مكانيًا.', explanation: '(إلى) تفيد انتهاء الغاية معنويًا.' },
+                        { id: 'p3a', text: 'رميتُ الكرةَ <span class="text-pastel-primaryDark font-black">عن</span> المنضدةِ. (عن) تفيد:', options: ['البعد حسًّا', 'البعد معنًى', 'الموضوع'], correct: 0, hint: 'الكرة والمنضدة أشياء مادية.', explanation: '(عن) تفيد البعد والفصل الحسي.' },
+                        { id: 'p3b', text: 'ابتعدتُ <span class="text-pastel-primaryDark font-black">عن</span> الغيبةِ والنميمةِ. (عن) تفيد:', options: ['البعد حسًّا', 'البعد معنًى', 'المصدر'], correct: 1, hint: 'الغيبة والنميمة سلوكياتٌ معنويةٌ.', explanation: '(عن) تفيد البعد والفصل المعنوي.' },
+                        { id: 'p4a', text: 'الكتابُ <span class="text-pastel-primaryDark font-black">على</span> المكتبِ. (على) تفيد:', options: ['الاستعلاء الحقيقي', 'القرب والندنية', 'الوجوب'], correct: 0, hint: 'الكتاب فوق المكتب ماديًا.', explanation: '(على) تفيد الاستعلاء الحقيقي.' },
+                        { id: 'p4b', text: 'جلستُ <span class="text-pastel-primaryDark font-black">على</span> النهرِ. (على) تفيد:', options: ['الاستعلاء الحقيقي', 'القرب والندنية', 'الوجوب'], correct: 1, hint: 'هل جلست فوق الماء أم بجوار النهر؟', explanation: '(على) هنا تفيد القرب (بمعنى عند).' }
                     ]
                 }
             ]
         };
 
-        let activeSectionIndex = 0;
         let state = {
             mcq: { answers: {}, hints: {}, shuffled: {} },
             sort: { currentItemIdx: 0, sorted: {}, shuffledItems: null, shuffledOptions: null, hintActive: false, feedbackActive: false }
         };
-
-        // --- نظام التمرير الذكي (Vertical & Horizontal) ---
 
         function scrollToTabs() {
             requestAnimationFrame(() => {
@@ -210,26 +196,17 @@
         function centerTabHorizontal(tabEl) {
             if (!tabEl) return;
             const container = document.getElementById('tabs-container');
-            if (!container) return;
-
             requestAnimationFrame(() => {
                 const tabRect = tabEl.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
-                
-                const tabCenter = tabRect.left + tabRect.width / 2;
-                const containerCenter = containerRect.left + containerRect.width / 2;
-                const diff = tabCenter - containerCenter;
-                
+                const diff = (tabRect.left + tabRect.width / 2) - (containerRect.left + containerRect.width / 2);
                 container.scrollBy({ left: diff, behavior: 'smooth' });
             });
         }
 
-        // --- دوال منطق التطبيق ---
-
         function initSectionShuffle(sectionId) {
             const section = appData.sections.find(s => s.id === sectionId);
             if (!section || section.type === 'info') return;
-            
             if (section.type === 'mcq' && !state.mcq.shuffled[sectionId]) {
                 state.mcq.shuffled[sectionId] = {};
                 section.questions.forEach(q => {
@@ -237,7 +214,6 @@
                     state.mcq.shuffled[sectionId][q.id] = (section.noShuffle) ? opts : shuffleArray(opts);
                 });
             }
-
             if (section.type === 'sort') {
                 if (!state.sort.shuffledItems) state.sort.shuffledItems = shuffleArray(section.items);
                 if (!state.sort.shuffledOptions) {
@@ -256,21 +232,19 @@
                 appData.sections.forEach((sec, idx) => {
                     const btn = document.createElement('button');
                     btn.id = `tab-btn-${sec.id}`;
-                    btn.onclick = () => switchSection(idx, true); // التمرير عند الضغط فقط
+                    btn.onclick = () => switchSection(idx, true);
                     btn.innerHTML = `<span class="whitespace-nowrap font-bold">${sec.title}</span>` + 
                         (sec.type !== 'info' ? `<svg id="tab-check-${sec.id}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pastel-successDark transition-opacity duration-300 opacity-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>` : '');
                     container.appendChild(btn);
                 });
             }
-
             appData.sections.forEach((sec, idx) => {
                 const btn = document.getElementById(`tab-btn-${sec.id}`);
-                const isComplete = checkSectionComplete(sec.id);
                 const isActive = activeSectionIndex === idx;
                 btn.className = `flex-shrink-0 flex items-center gap-2 px-5 py-4 rounded-t-xl transition-colors font-bold text-xl relative outline-none ${isActive ? 'text-pastel-primaryDark bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' : 'text-slate-500 hover:text-slate-700'}`;
                 if (sec.type !== 'info') {
                     const check = document.getElementById(`tab-check-${sec.id}`);
-                    if (check) { check.classList.toggle('opacity-100', isComplete); check.classList.toggle('opacity-0', !isComplete); }
+                    if (check) { check.classList.toggle('opacity-100', checkSectionComplete(sec.id)); check.classList.toggle('opacity-0', !checkSectionComplete(sec.id)); }
                 }
                 if (isActive && shouldCenter) centerTabHorizontal(btn);
             });
@@ -279,22 +253,16 @@
 
         function updateProgressBar() {
             const bar = document.getElementById('progress-bar');
-            if (!bar) return;
             const sec = appData.sections[activeSectionIndex];
             let percent = (sec.type === 'info') ? 100 : (sec.type === 'mcq' ? (sec.questions.filter(q => state.mcq.answers[q.id] !== undefined).length / sec.questions.length) * 100 : (state.sort.currentItemIdx / sec.items.length) * 100);
             bar.style.width = `${percent}%`;
         }
 
         function switchSection(idx, shouldScroll = false) {
-            if (idx < 0 || idx >= appData.sections.length) return;
             activeSectionIndex = idx;
             initSectionShuffle(appData.sections[idx].id);
-            renderTabs(true); 
-            renderContent();
-            updateFinalResultVisibility();
-            if (shouldScroll) {
-                setTimeout(scrollToTabs, 50); 
-            }
+            renderTabs(true); renderContent(); updateFinalResultVisibility();
+            if (shouldScroll) setTimeout(scrollToTabs, 50);
         }
 
         function checkSectionComplete(sectionId) {
@@ -311,34 +279,18 @@
             return sec.items.length;
         }
 
-        function getTotalQuestionsCount(sec) { return (sec.type === 'mcq') ? sec.questions.length : sec.items.length; }
-
         function renderContent() {
             const main = document.getElementById('main-content');
             const sec = appData.sections[activeSectionIndex];
-            
-            let contentHtml = `<div class="text-center mb-8 pt-6"><h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">معاني حروف الجر</h2>${sec.description ? `<p class="text-2xl text-slate-600 mt-6 leading-snug max-w-2xl mx-auto">${sec.description}</p>` : ''}</div>`;
-            
-            if (sec.type === 'info') contentHtml += renderInfoSection();
-            else if (sec.type === 'sort') contentHtml += renderSortGame(sec);
-            else contentHtml += renderMCQGame(sec);
-
+            let html = `<div class="text-center mb-8 pt-6"><h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">معاني حروف الجر</h2>${sec.description ? `<p class="text-2xl text-slate-600 mt-6 leading-snug max-w-2xl mx-auto">${sec.description}</p>` : ''}</div>`;
+            if (sec.type === 'info') html += renderInfoSection();
+            else if (sec.type === 'sort') html += renderSortGame(sec);
+            else html += renderMCQGame(sec);
             if (sec.type !== 'info') {
-                const isSecComplete = checkSectionComplete(sec.id);
-                contentHtml += `
-                    <div id="sec-res-wrapper-${sec.id}" class="grid-expand ${isSecComplete ? 'grid-1' : 'grid-0'} w-full max-w-lg mx-auto">
-                        <div class="overflow-hidden-inner">
-                            <div class="bg-slate-800 text-white p-8 rounded-2xl text-center shadow-lg mt-8">
-                                <div class="text-6xl mb-4">🏆</div>
-                                <h3 id="sec-res-score-${sec.id}" class="text-3xl font-bold mb-2">أحسنت! النتيجة: ${toArabicNum(calculateScore(sec.id))} / ${toArabicNum(getTotalQuestionsCount(sec))}</h3>
-                                <p class="text-2xl text-slate-300 mt-4">لقد أنهيت هذا التحدي بنجاحٍ.</p>
-                            </div>
-                        </div>
-                    </div>
-                    ${renderSectionEndButtons(sec.id)}
-                `;
+                const isComplete = checkSectionComplete(sec.id);
+                html += `<div id="sec-res-wrapper-${sec.id}" class="grid-expand ${isComplete ? 'grid-1' : 'grid-0'} w-full max-w-lg mx-auto"><div class="overflow-hidden-inner"><div class="bg-slate-800 text-white p-8 rounded-2xl text-center shadow-lg mt-8"><div class="text-6xl mb-4">🏆</div><h3 class="text-3xl font-bold mb-2">أحسنت! النتيجة: ${toArabicNum(calculateScore(sec.id))} / ${toArabicNum(sec.type==='mcq'?sec.questions.length:sec.items.length)}</h3><p class="text-2xl text-slate-300 mt-4">لقد أنهيت التحدي بنجاحٍ.</p></div></div></div>${renderSectionEndButtons(sec.id)}`;
             }
-            main.innerHTML = contentHtml;
+            main.innerHTML = html;
         }
 
         function renderSortGame(sec) {
@@ -347,16 +299,15 @@
             let categoriesHtml = '';
             if (currentItem) {
                 const shuffledOpts = state.sort.shuffledOptions[currentItem.id];
-                const colorClasses = ['bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border-emerald-300', 'bg-purple-100 text-purple-800 hover:bg-purple-200 border-purple-300', 'bg-amber-100 text-amber-800 hover:bg-amber-200 border-amber-300'];
-                categoriesHtml = shuffledOpts.map((opt, idx) => `<button onclick="handleSortClick(${opt.originalIndex})" class="flex-1 py-4 px-2 rounded-xl font-bold text-lg md:text-xl text-center transition-transform hover:scale-105 active:scale-95 border-2 ${colorClasses[idx]} outline-none min-h-[5rem] flex items-center justify-center leading-snug">${opt.text}</button>`).join('');
+                const colors = ['bg-emerald-100 border-emerald-300', 'bg-purple-100 border-purple-300', 'bg-amber-100 border-amber-300'];
+                categoriesHtml = shuffledOpts.map((opt, idx) => `<button onclick="handleSortClick(${opt.originalIndex})" class="flex-1 py-4 px-2 rounded-xl font-bold text-lg md:text-xl border-2 ${colors[idx]} hover:scale-105 transition-transform active:scale-95 min-h-[5rem]">${opt.text}</button>`).join('');
             }
-            return `<div class="w-full max-w-2xl mx-auto flex flex-col gap-6"><div class="flex gap-3 w-full justify-between">${categoriesHtml}</div><div class="relative w-full min-h-[14rem] md:min-h-[16rem] bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-6 text-right">${currentItem ? `<div class="absolute top-4 left-4 z-10"><button onclick="toggleSortHint()" class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center shadow-sm hover:bg-amber-200 transition-colors">💡</button></div><div id="sort-card" class="w-full bg-white rounded-xl shadow-md border border-slate-200 flex flex-col items-center justify-center p-8 text-center text-2xl md:text-3xl font-bold text-slate-800 transition-all duration-300 transform leading-snug"><div>${currentItem.text}</div><div id="sort-hint-wrapper" class="grid-expand ${state.sort.hintActive ? 'grid-1' : 'grid-0'} w-full mt-4"><div class="overflow-hidden-inner"><div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-lg md:text-xl text-amber-800 font-normal"><span class="font-bold">تلميح:</span> ${currentItem.hint}</div></div></div></div>` : `<div class="text-3xl font-bold text-emerald-500">تم فرز جميع البطاقات بنجاحٍ!</div>`}</div><div id="sort-feedback-wrapper" class="grid-expand ${state.sort.feedbackActive ? 'grid-1' : 'grid-0'} w-full"><div class="overflow-hidden-inner"><div class="p-4 bg-red-50 border border-red-200 rounded-xl text-center text-red-700 text-xl md:text-2xl font-bold">⚠️ ${currentItem ? currentItem.explanation : ''}</div></div></div>${!isComplete ? `<div class="text-center text-2xl font-bold text-slate-500">البطاقة ${toArabicNum(state.sort.currentItemIdx + 1)} من ${toArabicNum(sec.items.length)}</div>` : ''}</div>`;
+            return `<div class="w-full max-w-2xl mx-auto flex flex-col gap-6"><div class="flex gap-3 w-full justify-between">${categoriesHtml}</div><div class="relative min-h-[14rem] bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-6">${currentItem ? `<div class="absolute top-4 left-4"><button onclick="toggleSortHint()" class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center shadow-sm">💡</button></div><div id="sort-card" class="w-full bg-white rounded-xl shadow-md border border-slate-200 p-8 text-center text-2xl md:text-3xl font-bold text-slate-800 transition-all transform leading-snug"><div>${currentItem.text}</div><div class="grid-expand ${state.sort.hintActive ? 'grid-1' : 'grid-0'} w-full mt-4"><div class="overflow-hidden-inner"><div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-lg font-normal text-amber-800"><span class="font-bold">تلميح:</span> ${currentItem.hint}</div></div></div></div>` : `<div class="text-3xl font-bold text-emerald-500">تم الفرز بنجاحٍ!</div>`}</div><div class="grid-expand ${state.sort.feedbackActive ? 'grid-1' : 'grid-0'} w-full"><div class="overflow-hidden-inner"><div class="p-4 bg-red-50 border border-red-200 rounded-xl text-center text-red-700 text-xl font-bold">⚠️ ${currentItem ? currentItem.explanation : ''}</div></div></div>${!isComplete ? `<div class="text-center text-2xl font-bold text-slate-500">البطاقة ${toArabicNum(state.sort.currentItemIdx + 1)} من ${toArabicNum(sec.items.length)}</div>` : ''}</div>`;
         }
 
         function toggleSortHint() { state.sort.hintActive = !state.sort.hintActive; renderContent(); }
 
         function handleSortClick(selectedOriginalIndex) {
-            if (checkSectionComplete('sort')) return;
             const currentItem = state.sort.shuffledItems[state.sort.currentItemIdx];
             if (selectedOriginalIndex === currentItem.correct) {
                 state.sort.currentItemIdx++; state.sort.hintActive = false; state.sort.feedbackActive = false;
@@ -373,20 +324,19 @@
 
         function renderMCQGame(sec) {
             return sec.questions.map((q, i) => {
-                const qNum = toArabicNum(i + 1);
                 const isAnswered = state.mcq.answers[q.id] !== undefined;
                 const isCorrect = state.mcq.answers[q.id] === q.correct;
-                const optionsHtml = state.mcq.shuffled[sec.id][q.id].map((opt, optIndex) => {
+                const optionsHtml = state.mcq.shuffled[sec.id][q.id].map((opt, idx) => {
                     const isSelected = state.mcq.answers[q.id] === opt.originalIndex;
-                    let btnClass = 'bg-white border-slate-200 text-slate-700 hover:border-blue-400', numClass = 'bg-slate-100 text-slate-600';
+                    let cls = 'bg-white border-slate-200 text-slate-700 hover:border-blue-400', numCls = 'bg-slate-100 text-slate-600';
                     if (isAnswered) {
-                        if (isSelected) { btnClass = isCorrect ? 'bg-pastel-success border-pastel-successDark text-pastel-successDark shadow-inner' : 'bg-pastel-danger border-pastel-dangerDark text-pastel-dangerDark shadow-inner'; numClass = isCorrect ? 'bg-pastel-successDark text-white' : 'bg-pastel-dangerDark text-white'; }
-                        else if (opt.originalIndex === q.correct) { btnClass = 'bg-white border-pastel-successDark text-pastel-successDark border-dashed'; numClass = 'bg-pastel-success text-pastel-successDark'; }
-                        else { btnClass = 'bg-slate-50 border-slate-200 text-slate-400 opacity-50 cursor-not-allowed'; numClass = 'bg-slate-200 text-slate-400'; }
+                        if (isSelected) { cls = isCorrect ? 'bg-pastel-success border-pastel-successDark text-pastel-successDark shadow-inner' : 'bg-pastel-danger border-pastel-dangerDark text-pastel-dangerDark shadow-inner'; numCls = isCorrect ? 'bg-pastel-successDark text-white' : 'bg-pastel-dangerDark text-white'; }
+                        else if (opt.originalIndex === q.correct) { cls = 'bg-white border-pastel-successDark text-pastel-successDark border-dashed'; numCls = 'bg-pastel-success text-pastel-successDark'; }
+                        else { cls = 'bg-slate-50 border-slate-200 text-slate-400 opacity-50 cursor-not-allowed'; numCls = 'bg-slate-200 text-slate-400'; }
                     }
-                    return `<button id="mcq-btn-${q.id}-${optIndex}" onclick="handleMCQClick('${sec.id}', '${q.id}', ${opt.originalIndex})" class="w-full p-5 rounded-xl border-2 transition-colors text-2xl font-medium mb-4 flex items-center gap-4 text-right outline-none ${btnClass}"><div id="mcq-num-${q.id}-${optIndex}" class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-lg font-bold text-2xl transition-colors ${numClass}">${toArabicNum(optIndex + 1)}</div><span class="leading-snug">${opt.text}</span></button>`;
+                    return `<button onclick="handleMCQClick('${sec.id}', '${q.id}', ${opt.originalIndex})" class="w-full p-5 rounded-xl border-2 transition-colors text-2xl font-medium mb-4 flex items-center gap-4 text-right outline-none ${cls}"><div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-lg font-bold text-2xl ${numCls}">${toArabicNum(idx+1)}</div><span class="leading-snug">${opt.text}</span></button>`;
                 }).join('');
-                return `<div class="w-full max-w-2xl mx-auto py-4"><div class="flex justify-between items-center mb-2 px-2"><span class="text-slate-500 font-bold text-2xl">السؤال ${qNum}</span><button onclick="toggleMCQHint('${q.id}')" class="flex items-center gap-2 text-amber-500 hover:text-amber-600 font-bold px-4 py-2 bg-amber-50 rounded-xl transition-colors outline-none text-xl relative"><span>💡</span><span>تلميح</span></button></div><h3 class="text-3xl font-bold text-slate-800 leading-snug px-2 text-right">${q.text}</h3><div id="mcq-hint-wrapper-${q.id}" class="grid-expand ${state.mcq.hints[q.id] ? 'grid-1' : 'grid-0'} w-full mt-3"><div class="overflow-hidden-inner"><div class="bg-amber-50 border border-amber-300 text-amber-900 p-5 rounded-xl shadow-sm text-xl leading-snug text-right mb-2"><span class="font-bold mb-2 block text-amber-700">💡 تلميح ذكي:</span>${q.hint}</div></div></div><div class="w-full flex flex-col gap-4 mt-6">${optionsHtml}</div><div id="mcq-fb-wrapper-${q.id}" class="grid-expand ${isAnswered ? 'grid-1' : 'grid-0'} w-full mt-4"><div class="overflow-hidden-inner"><div id="mcq-fb-box-${q.id}" class="p-6 rounded-xl border flex items-start gap-4 ${isAnswered ? (isCorrect ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-red-700 bg-red-50 border-red-200') : ''}"><div class="text-3xl">${isCorrect ? '✅' : '❌'}</div><div><h4 class="font-bold text-2xl mb-2">${isCorrect ? 'إجابة صحيحة!' : 'إجابة خاطئة!'}</h4><p class="text-xl leading-snug opacity-90">${q.explanation}</p></div></div></div></div></div><div class="w-full max-w-2xl mx-auto h-px bg-slate-200 my-6 border-0"></div>`;
+                return `<div class="w-full max-w-2xl mx-auto py-4"><div class="flex justify-between items-center mb-2 px-2"><span class="text-slate-500 font-bold text-2xl">السؤال ${toArabicNum(i+1)}</span><button onclick="toggleMCQHint('${q.id}')" class="flex items-center gap-2 text-amber-500 font-bold px-4 py-2 bg-amber-50 rounded-xl outline-none"><span>💡</span><span>تلميح</span></button></div><h3 class="text-3xl font-bold text-slate-800 leading-snug px-2 text-right">${q.text}</h3><div class="grid-expand ${state.mcq.hints[q.id] ? 'grid-1' : 'grid-0'} w-full mt-3"><div class="overflow-hidden-inner"><div class="bg-amber-50 border border-amber-300 p-5 rounded-xl text-xl leading-snug text-right mb-2 text-amber-900"><span class="font-bold text-amber-700">💡 تلميح: </span>${q.hint}</div></div></div><div class="w-full flex flex-col gap-4 mt-6">${optionsHtml}</div><div class="grid-expand ${isAnswered ? 'grid-1' : 'grid-0'} w-full mt-4"><div class="overflow-hidden-inner"><div class="p-6 rounded-xl border flex items-start gap-4 ${isCorrect ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-red-700 bg-red-50 border-red-200'}"><div class="text-3xl">${isCorrect ? '✅' : '❌'}</div><div><h4 class="font-bold text-2xl mb-2">${isCorrect ? 'إجابة صحيحة!' : 'إجابة خاطئة!'}</h4><p class="text-xl leading-snug opacity-90">${q.explanation}</p></div></div></div></div></div><div class="w-full max-w-2xl mx-auto h-px bg-slate-200 my-6 border-0"></div>`;
             }).join('');
         }
 
@@ -395,42 +345,37 @@
         function handleMCQClick(secId, qId, val) {
             if (state.mcq.answers[qId] !== undefined) return;
             state.mcq.answers[qId] = val; updateProgressBar();
-            if (checkSectionComplete(secId)) { renderTabs(); updateFinalResultVisibility(); }
-            renderContent();
+            if (checkSectionComplete(secId)) renderTabs(); renderContent(); updateFinalResultVisibility();
         }
 
         function renderInfoSection() {
-            return `<div class="w-full max-w-2xl mx-auto bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col gap-8"><p class="text-2xl text-slate-700 leading-relaxed text-right">تتنوع معاني حروف الجر في لغتنا الجميلة حسب السياق. دعنا نتعرف على أبرزها بأسلوبٍ ممتعٍ:</p><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2"><div class="bg-blue-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-blue-100"><div class="text-5xl">🧭</div><div><h3 class="font-bold text-blue-900 text-2xl">المكان والاتجاه</h3><p class="text-slate-600 text-xl mt-2">من (البداية)، وإلى (النهاية)، في (الظرفية)، على (الاستعلاء).</p></div></div><div class="bg-emerald-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-emerald-100"><div class="text-5xl">⏱️</div><div><h3 class="font-bold text-emerald-900 text-2xl">الزمان</h3><p class="text-slate-600 text-xl mt-2">من، وإلى، وفي تُستخدم أيضًا للدلالة على الأوقات.</p></div></div><div class="bg-amber-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-amber-100"><div class="text-5xl">⚙️</div><div><h3 class="font-bold text-amber-900 text-2xl">الآلة والوسيلة</h3><p class="text-slate-600 text-xl mt-2">الباء تفيد <b>الآلة</b> (للشيء المادي)، أو <b>الوسيلة</b> (للمعنوي كالعلم والاستعانة).</p></div></div><div class="bg-purple-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-purple-100"><div class="text-5xl">🔍</div><div><h3 class="font-bold text-purple-900 text-2xl">التشبيه والتفصيل</h3><p class="text-slate-600 text-xl mt-2">الكاف تُستخدم للتشبيه وتأتي لضرب الأمثلة (التفصيل).</p></div></div></div><button onclick="switchSection(1, true)" class="w-full bg-pastel-primaryDark text-white py-5 rounded-2xl font-bold text-3xl hover:bg-blue-700 transition-colors shadow-md mt-4 outline-none">ابدأ التحديات الآن!</button></div>`;
+            return `<div class="w-full max-w-2xl mx-auto bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col gap-8"><p class="text-2xl text-slate-700 leading-relaxed text-right">تتنوع معاني حروف الجر في لغتنا الجميلة حسب السياق. دعنا نتعرف على أبرزها بأسلوبٍ ممتعٍ:</p><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2"><div class="bg-blue-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-blue-100"><div class="text-5xl">🧭</div><h3 class="font-bold text-blue-900 text-2xl">المكان والاتجاه</h3><p class="text-slate-600 text-xl mt-2">مِن (البداية)، إلَى (النهاية)، فِي (الظرفية)، عَلَى (الاستعلاء).</p></div><div class="bg-emerald-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-emerald-100"><div class="text-5xl">⏱️</div><h3 class="font-bold text-emerald-900 text-2xl">الزمان</h3><p class="text-slate-600 text-xl mt-2">مِن، وإلَى، وفِي تُستخدم أيضًا للدلالة على الأوقات.</p></div><div class="bg-amber-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-amber-100"><div class="text-5xl">⚙️</div><h3 class="font-bold text-amber-900 text-2xl">الآلة والوسيلة</h3><p class="text-slate-600 text-xl mt-2">الباء تفيد <b>الآلة</b> (مادي)، أو <b>الوسيلة</b> (معنوي كالعلم).</p></div><div class="bg-purple-50 rounded-2xl p-6 flex flex-col items-center text-center gap-4 border border-purple-100"><div class="text-5xl">🔍</div><h3 class="font-bold text-purple-900 text-2xl">التشبيه والتفصيل</h3><p class="text-slate-600 text-xl mt-2">الكاف تُستخدم للتشبيه وتأتي لضرب الأمثلة (التفصيل).</p></div></div><button onclick="switchSection(1, true)" class="w-full bg-pastel-primaryDark text-white py-5 rounded-2xl font-bold text-3xl hover:bg-blue-700 transition-colors shadow-md mt-4 outline-none">ابدأ التحديات الآن!</button></div>`;
         }
 
         function renderSectionEndButtons(secId) {
             const isLast = activeSectionIndex === appData.sections.length - 1;
-            return `<div class="flex gap-4 w-full max-w-lg mx-auto mt-8"><button onclick="resetSection('${secId}')" class="flex-1 bg-white border-2 border-slate-300 text-slate-700 py-4 rounded-xl font-bold text-2xl hover:bg-slate-50 transition-colors outline-none">إعادة المحاولة</button>${!isLast ? `<button onclick="switchSection(${activeSectionIndex + 1}, true)" class="flex-1 bg-pastel-primaryDark text-white py-4 rounded-xl font-bold text-2xl hover:bg-blue-700 transition-colors shadow-sm outline-none">القسم التالي</button>` : ''}</div>`;
+            return `<div class="flex gap-4 w-full max-w-lg mx-auto mt-8"><button onclick="resetSection('${secId}')" class="flex-1 bg-white border-2 border-slate-300 text-slate-700 py-4 rounded-xl font-bold text-2xl hover:bg-slate-50 outline-none">إعادة المحاولة</button>${!isLast ? `<button onclick="switchSection(${activeSectionIndex + 1}, true)" class="flex-1 bg-pastel-primaryDark text-white py-4 rounded-xl font-bold text-2xl hover:bg-blue-700 outline-none shadow-sm">القسم التالي</button>` : ''}</div>`;
         }
 
         function updateFinalResultVisibility() {
-            const globalResWrapper = document.getElementById('global-res-wrapper');
-            if (!globalResWrapper) return;
+            const wrapper = document.getElementById('global-res-wrapper');
+            if (!wrapper) return;
             if (isAllComplete()) {
-                let totalScore = 0, totalQs = 0;
-                appData.sections.filter(s => s.type !== 'info').forEach(s => { totalScore += calculateScore(s.id); totalQs += getTotalQuestionsCount(s); });
-                document.getElementById('global-final-score').textContent = `${toArabicNum(totalScore)} / ${toArabicNum(totalQs)}`;
-                globalResWrapper.classList.replace('grid-0', 'grid-1');
-            } else { globalResWrapper.classList.replace('grid-1', 'grid-0'); }
+                let s = 0, q = 0;
+                appData.sections.filter(x => x.type !== 'info').forEach(x => { s += calculateScore(x.id); q += (x.questions?x.questions.length:x.items.length); });
+                document.getElementById('global-final-score').textContent = `${toArabicNum(s)} / ${toArabicNum(q)}`;
+                wrapper.classList.replace('grid-0', 'grid-1');
+            } else wrapper.classList.replace('grid-1', 'grid-0');
         }
 
         function resetSection(sectionId) {
+            const sec = appData.sections.find(s => s.id === sectionId);
             if(sectionId === 'sort') state.sort = { currentItemIdx: 0, sorted: {}, shuffledItems: null, shuffledOptions: null, hintActive: false, feedbackActive: false };
             else { 
-                const sec = appData.sections.find(s => s.id === sectionId);
                 sec.questions.forEach(q => { delete state.mcq.answers[q.id]; delete state.mcq.hints[q.id]; });
                 state.mcq.shuffled[sectionId] = null;
             }
-            initSectionShuffle(sectionId); 
-            renderTabs(); 
-            renderContent(); 
-            updateFinalResultVisibility(); 
-            setTimeout(scrollToTabs, 50);
+            initSectionShuffle(sectionId); renderTabs(); renderContent(); updateFinalResultVisibility(); setTimeout(scrollToTabs, 50);
         }
 
         function startOver() {
@@ -439,13 +384,9 @@
             switchSection(0, true);
         }
 
-        function shuffleArray(array) {
-            const newArr = [...array];
-            for (let i = newArr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [newArr[i], newArr[j]] = [newArr[j], newArr[i]]; }
-            return newArr;
-        }
+        function shuffleArray(a) { let n = [...a]; for (let i = n.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [n[i], n[j]] = [n[j], n[i]]; } return n; }
 
-        window.onload = () => { switchSection(0, false); }; // التحميل الأول صامت بدون تمرير
+        window.onload = () => switchSection(0, false);
     </script>
 </body>
 </html>
