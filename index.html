@@ -84,12 +84,12 @@
     </header>
 
     <!-- Tabs Container (Sticky) -->
-    <div id="tabs-wrapper" class="sticky top-0 z-50 w-full bg-pastel-bg/95 backdrop-blur shadow-sm border-b border-slate-200">
-        <div class="relative w-full max-w-3xl mx-auto pt-1">
-            <div id="tabs-container" class="flex overflow-x-auto no-scrollbar mx-auto w-full px-2 py-1 gap-1.5 md:gap-2 items-center"></div>
-            <!-- Progress Bar -->
-            <div class="absolute bottom-0 right-0 h-1.5 bg-pastel-primaryDark transition-all duration-500 ease-out w-0 origin-right" id="progress-bar"></div>
+    <div id="tabs-wrapper" class="sticky top-0 z-50 w-full bg-pastel-bg/95 backdrop-blur shadow-sm relative">
+        <div class="w-full max-w-3xl mx-auto py-3">
+            <div id="tabs-container" class="flex overflow-x-auto no-scrollbar mx-auto w-full px-4 gap-2 md:gap-3 items-center"></div>
         </div>
+        <!-- Progress Bar -->
+        <div class="absolute bottom-0 right-0 h-1.5 transition-all duration-500 ease-out w-0 origin-right" id="progress-bar"></div>
     </div>
 
     <!-- Main Content -->
@@ -120,11 +120,12 @@
 
         const appData = {
             sections: [
-                { id: 'intro', title: 'قبل أن نبدأ', type: 'info' },
+                { id: 'intro', title: 'قبل أن نبدأ', type: 'info', theme: 'bg-slate-700' },
                 {
                     id: 'fill',
                     title: 'الكلمة المفقودة',
                     type: 'mcq',
+                    theme: 'bg-emerald-500',
                     description: 'اختر حرف الجر المناسب لملء الفراغِ ليعطي المعنى المطلوب بدقةٍ.',
                     questions: [
                         { id: 'f1', text: 'خاتمُ المعلمِ مصنوعٌ [ ... ] فضةٍ. (بيان النوع)', options: ['مِنْ', 'فِي', 'بـِ'], correct: 0, hint: 'نحتاج حرفًا يبين المادة الخام.', explanation: '(مِنْ) تستخدم لبيان النوع والمادة المصنوع منها الشيء.' },
@@ -142,17 +143,18 @@
                         { id: 'f13', text: 'اشتكى المريضُ [ ... ] الألمِ. (سبب الشيء)', options: ['مِنْ', 'عَلَى', 'بـِ'], correct: 0, hint: 'العلة والسبب الذي أدى للشكوى.', explanation: '(مِنْ) تأتي لتفيد سبب الشيء والعلة.' },
                         { id: 'f14', text: 'العلمُ أنفعُ [ ... ] المالِ. (الربط في التفضيل)', options: ['مِنْ', 'عَنْ', 'بـِ'], correct: 0, hint: 'حرف يربط بين اسم التفضيل (أنفع) والمفضل عليه (المال).', explanation: 'تُستخدم (مِنْ) للربط بين اسم التفضيل والمفضل عليه.' },
                         { id: 'f15', text: 'مرَّ الفارسُ [ ... ] سرعةِ البرقِ. (الحال)', options: ['فِي', 'عَلَى', 'بـِ'], correct: 0, hint: 'تصف هيئة وحال الفارس عند مروره.', explanation: '(فِي) تأتي أحيانًا لتفيد وصف الحال.' },
-                        { id: 'f_new1', text: 'يتكونُ المركزُ الثقافيُّ [ ... ] مكتبةٍ وعدةِ قاعاتٍ. (التفصيل)', options: ['مِنْ', 'إلَى', 'فِي'], correct: 0, hint: 'حرف يذكر لتفصيل وتبيين المكونات.', explanation: '(مِنْ) تأتي لتفصيل الشيء وتبيان مكوناته.' },
-                        { id: 'f_new2', text: 'تغيبتُ [ ... ]ـمرضٍ أصابني. (السبب)', options: ['لـِ', 'بـِ', 'فِي'], correct: 0, hint: 'حرف يفيد العلة أو السبب الذي أدى للغياب.', explanation: 'اللام هنا تفيد السبب والعلة.' },
-                        { id: 'f_new3', text: 'انطلقَ اللاعبُ [ ... ]ـالفهدِ. (التشبيه)', options: ['كـَ', 'بـِ', 'لـِ'], correct: 0, hint: 'حرف يستخدم للمماثلة والمقارنة.', explanation: 'الكاف تفيد التشبيه.' },
-                        { id: 'f_new4', text: 'سافرتُ [ ... ] مهمةٍ رسميةٍ. (الغرض)', options: ['فِي', 'عَلَى', 'مِنْ'], correct: 0, hint: 'أي سافرت لأجل مهمة.', explanation: '(فِي) تأتي أحيانًا لتفيد الغرض أو التعليل.' },
-                        { id: 'f_new5', text: 'وصلتُ [ ... ] المدرسةِ. (نهاية المكان)', options: ['إلَى', 'فِي', 'عَلَى'], correct: 0, hint: 'النقطة التي انتهى إليها الوصول.', explanation: '(إلَى) تفيد انتهاء الغاية المكانية.' }
+                        { id: 'f16', text: 'يتكونُ المركزُ الثقافيُّ [ ... ] مكتبةٍ وعدةِ قاعاتٍ. (التفصيل)', options: ['مِنْ', 'إلَى', 'فِي'], correct: 0, hint: 'حرف يذكر لتفصيل وتبيين المكونات.', explanation: '(مِنْ) تأتي لتفصيل الشيء وتبيان مكوناته.' },
+                        { id: 'f17', text: 'تغيبتُ [ ... ]ـمرضٍ أصابني. (السبب)', options: ['لـِ', 'بـِ', 'فِي'], correct: 0, hint: 'حرف يفيد العلة أو السبب الذي أدى للغياب.', explanation: 'اللام هنا تفيد السبب والعلة.' },
+                        { id: 'f18', text: 'انطلقَ اللاعبُ [ ... ]ـالفهدِ. (التشبيه)', options: ['كـَ', 'بـِ', 'لـِ'], correct: 0, hint: 'حرف يستخدم للمماثلة والمقارنة.', explanation: 'الكاف تفيد التشبيه.' },
+                        { id: 'f19', text: 'سافرتُ [ ... ] مهمةٍ رسميةٍ. (الغرض)', options: ['فِي', 'عَلَى', 'مِنْ'], correct: 0, hint: 'أي سافرت لأجل مهمة.', explanation: '(فِي) تأتي أحيانًا لتفيد الغرض أو التعليل.' },
+                        { id: 'f20', text: 'وصلتُ [ ... ] المدرسةِ. (نهاية المكان)', options: ['إلَى', 'فِي', 'عَلَى'], correct: 0, hint: 'النقطة التي انتهى إليها الوصول.', explanation: '(إلَى) تفيد انتهاء الغاية المكانية.' }
                     ]
                 },
                 {
                     id: 'sort',
                     title: 'فرز البطاقات',
                     type: 'sort',
+                    theme: 'bg-purple-500',
                     description: 'اسحب البطاقة أو انقر على الصندوق المناسب للمعنى الذي يؤديه الحرف الملون.',
                     items: [
                         { id: 'srt1', text: 'شرّبت الأمُ ولدها الدواء <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> أنه ماء', options: ['معنى الوهم', 'الاستعلاء', 'الشرط'], correct: 0, hint: 'تصوير شيءٍ غير حقيقيٍ.', explanation: '(عَلَى) تفيد هنا التوهم.' },
@@ -166,23 +168,24 @@
                         { id: 'srt9', text: 'لعبنا <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">في</span> الحديقةِ', options: ['الظرفية المكانية', 'الظرفية الزمانية', 'السببية'], correct: 0, hint: 'أين حدث الفعل؟', explanation: '(فِي) تفيد المكان.' },
                         { id: 'srt10', text: 'النجومُ <span class="text-pastel-primaryDark font-black">كـ</span>المصابيحِ ضياءً', options: ['التشبيه', 'التفصيل', 'التعليل'], correct: 0, hint: 'مماثلة بين شيئين.', explanation: 'الكاف تفيد التشبيه.' },
                         { id: 'srt11', text: 'شرعت في العمل <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> الأسبوع الماضي', options: ['زمان الابتداء', 'السبب', 'بيان النوع'], correct: 0, hint: 'الحرف يحدد متى بدأ زمن الفعل.', explanation: '(مِنْ) هنا حددت نقطة انطلاق الزمن.' },
-                        { id: 'srt12', text: 'بقي جدي <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> نشاطِهِ', options: ['الحال', 'الاستعلاء', 'الوجوب'], correct: 0, hint: 'تصف حالته المستقرة (يمكن السؤال بكلمة كيف).', explanation: '(على) هنا تفيد الحال.' },
+                        { id: 'srt12', text: 'بقي جدي <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> نشاطِهِ', options: ['الحال', 'الاستعلاء', 'الوجوب'], correct: 0, hint: 'يمكن السؤال بكلمة كيف.', explanation: '(على) هنا تفيد الحال.' },
                         { id: 'srt13', text: 'أعفو عنكَ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> أن تُحسّنَ سلوكَكَ', options: ['الشرط', 'معنى الوهم', 'القرب'], correct: 0, hint: 'يوجد التزام متبادل لحدوث العفو.', explanation: '(على) هنا تفيد الشرط.' },
                         { id: 'srt14', text: 'تجتمعُ الأسرةُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">في</span> المساءِ', options: ['الزمان', 'المكان', 'الحال'], correct: 0, hint: 'المساء يعبر عن فترة ووقت.', explanation: '(في) تفيد الظرفية الزمانية.' },
                         { id: 'srt15', text: 'قطعتُ الغصنَ <span class="text-pastel-primaryDark font-black">بـ</span>المنشارِ', options: ['الآلة', 'الوسيلة', 'المكان'], correct: 0, hint: 'أداة مادية ملموسة تُمسك باليد.', explanation: 'الباء تفيد الآلة (شيء ماديّ).' },
-                        { id: 'srt16', text: 'تتسعُ ثقافةُ الإنسانِ <span class="text-pastel-primaryDark font-black">بـ</span>المطالعةِ', options: ['الوسيلة', 'الآلة', 'السبب'], correct: 0, hint: 'المطالعة شيءٌ معنويٌ يُستعان به.', explanation: 'الباء تفيد الوسيلة (شيء معنوي).' },
-                        { id: 'srt_new1', text: 'عندي مصحفٌ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> مكةَ', options: ['مصدر الشيء', 'بيان النوع', 'مكان الابتداء'], correct: 0, hint: 'مكة هي المصدر الذي جاء منه المصحف.', explanation: '(مِنْ) هنا تفيد مصدر الشيء وأصله.' },
-                        { id: 'srt_new2', text: 'جلستُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">إلى</span> المائدةِ', options: ['معنى القرب', 'النهاية في المكان', 'الاتجاه حسًّا'], correct: 0, hint: 'أي جلست بجوارها وقريبًا منها.', explanation: '(إلى) تأتي أحيانًا لتدل على القرب بمعنى (عند).' },
-                        { id: 'srt_new3', text: 'سافرَ أخي <span class="text-pastel-primaryDark font-black">لـ</span>طلبِ العلمِ', options: ['الغرض', 'الملكية المادية', 'الإباحة'], correct: 0, hint: 'الهدف الذي من أجله تم السفر.', explanation: 'اللام هنا تفيد الغرض.' },
-                        { id: 'srt_new4', text: 'جلستُ <span class="text-pastel-primaryDark font-black">بـ</span>مكانٍ هادئٍ', options: ['المكان (الظرفية)', 'الآلة', 'السبب'], correct: 0, hint: 'يدل على الحيز الذي تم فيه الجلوس.', explanation: 'الباء هنا تفيد الظرفية المكانية.' },
-                        { id: 'srt_new5', text: 'اشتريتُ ما أريد <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> الطعامِ', options: ['توضيح (ما) الموصولة', 'الوجوب', 'مصدر الشيء'], correct: 0, hint: 'جاءت لتبين وتفسر الشيء الذي اشتريته (ما).', explanation: '(مِنْ) هنا توضح الاسم الموصول (ما).' },
-                        { id: 'srt_new6', text: 'كافأ الوزيرُ مَنْ حضرَ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">مِنْ</span> الطلابِ', options: ['توضيح (مَنْ) الموصولة', 'الحال', 'تأكيد النفي'], correct: 0, hint: 'جاءت لتفسير وتبيين المقصود بـ (مَن).', explanation: '(مِنْ) هنا تفيد توضيح الاسم الموصول (مَنْ).' }
+                        { id: 'srt16', text: 'تتسعُ ثقافةُ الإنسانِ <span class="text-pastel-primaryDark font-black">بـ</span>المطالعةِ', options: ['الوسيلة', 'الآلة', 'الزمان'], correct: 0, hint: 'المطالعة شيءٌ معنويٌ يُستعان به.', explanation: 'الباء تفيد الوسيلة (شيء معنوي).' },
+                        { id: 'srt17', text: 'عندي مصحفٌ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> مكةَ', options: ['مصدر الشيء', 'بيان النوع', 'مكان الابتداء'], correct: 0, hint: 'مكة هي المصدر الذي جاء منه المصحف.', explanation: '(مِنْ) هنا تفيد مصدر الشيء وأصله.' },
+                        { id: 'srt18', text: 'جلستُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">إلى</span> المائدةِ', options: ['معنى القرب', 'النهاية في المكان', 'الاتجاه حسًّا'], correct: 0, hint: 'أي جلست بجوارها وقريبًا منها.', explanation: '(إلى) تأتي أحيانًا لتدل على القرب بمعنى (عند).' },
+                        { id: 'srt19', text: 'سافرَ أخي <span class="text-pastel-primaryDark font-black">لـ</span>طلبِ العلمِ', options: ['الغرض', 'الملكية المادية', 'الإباحة'], correct: 0, hint: 'الهدف الذي من أجله تم السفر.', explanation: 'اللام هنا تفيد الغرض.' },
+                        { id: 'srt20', text: 'جلستُ <span class="text-pastel-primaryDark font-black">بـ</span>مكانٍ هادئٍ', options: ['المكان (الظرفية)', 'الآلة', 'السبب'], correct: 0, hint: 'يدل على الحيز الذي تم فيه الجلوس.', explanation: 'الباء هنا تفيد الظرفية المكانية.' },
+                        { id: 'srt21', text: 'اشتريتُ ما أريد <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">مِنْ</span> الطعامِ', options: ['توضيح (ما) الموصولة', 'الوجوب', 'مصدر الشيء'], correct: 0, hint: 'جاء حرف الجر ليبين الشيء الذي اشتريته (ما).', explanation: '(مِنْ) هنا توضح الاسم الموصول (ما).' },
+                        { id: 'srt22', text: 'كافأ الوزيرُ مَنْ حضرَ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">مِنْ</span> الطلابِ', options: ['توضيح (مَنْ) الموصولة', 'الحال', 'تأكيد النفي'], correct: 0, hint: 'جاء حرف الجر ليبين المقصود بـ (مَنْ).', explanation: '(مِنْ) هنا تفيد توضيح الاسم الموصول (مَنْ).' }
                     ]
                 },
                 {
                     id: 'mcq2',
                     title: 'أسرار المعاني',
                     type: 'mcq',
+                    theme: 'bg-amber-500',
                     description: 'تحديات لغوية دقيقة تختبر فهمك العميق لأسرار حروف الجر.',
                     questions: [
                         { id: 'm1', text: 'ما معنى اللام في: "اللهمَّ اغفر لـنا ولوالدينا"؟', options: ['الدعاء بالخير', 'الملكية', 'التعليل'], correct: 0, hint: 'طلب الخير لشخصٍ ما.', explanation: 'اللام تستخدم للدعاء بالخير.' },
@@ -193,17 +196,18 @@
                         { id: 'm6', text: 'ما دلالة (من) في قولنا: "اشتريتُ قميصًا من قطنٍ"؟', options: ['بيان النوع', 'تأكيد النفي', 'المكان'], correct: 0, hint: 'توضح المادة الخام التي صُنع منها.', explanation: '(مِنْ) تستخدم لبيان النوع والمادة.' },
                         { id: 'm7', text: 'ما معنى اللام في: "للأطفالِ أن يلعبوا في الساحةِ"؟', options: ['الإباحة (السماح)', 'الملكية', 'السببية'], correct: 0, hint: 'تعطي إذنًا بالقيام بالفعل.', explanation: 'اللام تفيد الإباحة والسماح.' },
                         { id: 'm8', text: 'ما معنى (على) في: "على أخي مائةُ دينارٍ"؟', options: ['الشيء المكروه (الدَّين)', 'الوجوب', 'الاستعلاء'], correct: 0, hint: 'تستخدم مع الديون والأعباء.', explanation: '(على) تفيد التحمل أو الدَّين.' },
-                        { id: 'm_new1', text: 'ما دلالة (عن) في: "تركتُ المفتاح عن قصدٍ"؟', options: ['الحال', 'موضوع الكلام', 'المصدر'], correct: 0, hint: 'هل قمتُ بالفعل قاصدًا أم ناسيًا؟ (كيف كان حالي؟)', explanation: '(عن) هنا تفيد الحال.' },
-                        { id: 'm_new2', text: 'ما دلالة اللام في: "حكمَ القاضي لـلمظلومِ"؟', options: ['حصول فائدة للاسم المجرور', 'الملكية المادية', 'الملكية المعنوية'], correct: 0, hint: 'الحكم كان في صالحه ومنفعته.', explanation: 'اللام تفيد حصول فائدة ومنفعة للاسم المجرور.' },
-                        { id: 'm_new3', text: 'ما دلالة الباء في: "بـاللهِ ساعدني"؟', options: ['القسم', 'الوسيلة', 'تأكيد النفي'], correct: 0, hint: 'المتحدث يحلف بالله.', explanation: 'الباء هنا حرف جر يفيد القسم واليمين.' },
-                        { id: 'm_new4', text: 'ما معنى (على) في: "على المريضِ اتباعُ نصائحِ الطبيبِ"؟', options: ['الوجوب والإلزام', 'الاستعلاء', 'السبب'], correct: 0, hint: 'أمر لابد من فعله كحق وواجب.', explanation: '(على) هنا تفيد الوجوب والإلزام.' },
-                        { id: 'm_new6', text: 'ما دلالة (مِنْ) في: "هل رأيتَ مِنْ نباتٍ في الصحراءِ؟"؟', options: ['تأكيد معنى الاستفهام', 'السماح', 'بيان النوع'], correct: 0, hint: 'سبقها استفهام، وجاءت لتقوية المعنى وتأكيده،  ويمكن الاستغناء عنها.', explanation: '(مِنْ) الزائدة هنا سبقت باستفهام فتفيد تأكيد معنى الاستفهام.' }
+                        { id: 'm9', text: 'ما دلالة (عن) في: "تركتُ المفتاح عن قصدٍ"؟', options: ['الحال', 'موضوع الكلام', 'المصدر'], correct: 0, hint: 'هل قمتُ بالفعل قاصدًا أم ناسيًا؟ (كيف كان حالي؟)', explanation: '(عن) هنا تفيد الحال.' },
+                        { id: 'm10', text: 'ما دلالة اللام في: "حكمَ القاضي لـلمظلومِ"؟', options: ['حصول فائدة للاسم المجرور', 'الملكية المادية', 'الملكية المعنوية'], correct: 0, hint: 'الحكم كان في صالحه ومنفعته.', explanation: 'اللام تفيد حصول فائدة ومنفعة للاسم المجرور.' },
+                        { id: 'm11', text: 'ما دلالة الباء في: "بـاللهِ ساعدني"؟', options: ['القسم', 'الوسيلة', 'تأكيد النفي'], correct: 0, hint: 'المتحدث يحلف بالله.', explanation: 'الباء هنا حرف جر تفيد القسم واليمين.' },
+                        { id: 'm12', text: 'ما معنى (على) في: "على المريضِ اتباعُ نصائحِ الطبيبِ"؟', options: ['الوجوب والإلزام', 'الاستعلاء', 'السبب'], correct: 0, hint: 'أمر لابد من فعله كحق وواجب.', explanation: '(على) هنا تفيد الوجوب والإلزام.' },
+                        { id: 'm13', text: 'ما دلالة (مِنْ) في: "هل رأيتَ مِنْ نباتٍ في الصحراءِ؟"؟', options: ['تأكيد معنى الاستفهام', 'السماح', 'بيان النوع'], correct: 0, hint: 'سبقها استفهام، وجاءت لتقوية المعنى وتأكيده،  ويمكن الاستغناء عنها.', explanation: '(مِنْ) الزائدة هنا سبقت باستفهام فتفيد تأكيد معنى الاستفهام.' }
                     ]
                 },
                 {
                     id: 'search',
                     title: 'البحث الدقيق',
                     type: 'mcq',
+                    theme: 'bg-rose-500',
                     description: 'تحدي المقارنة: بين المحسوس والمعنوي لترسيخ الفروق الدقيقة.',
                     questions: [
                         { id: 'p1a', text: 'هذه السيارةُ <span class="text-pastel-primaryDark font-black">لـ</span>جاري. اللام هنا تفيد:', options: ['الملكية المادية', 'الملكية المعنوية', 'التعليل'], correct: 0, hint: '(السيارة) شيءٌ ماديٌّ ملموسٌ.', explanation: 'اللام للملكية المادية.' },
@@ -221,6 +225,7 @@
                     id: 'boxes',
                     title: 'صناديق المعاني',
                     type: 'boxes',
+                    theme: 'bg-blue-500',
                     description: 'التحدي الشامل: معاني متطابقة لحروف مختلفة! اقرأ الجملة وضعها في الصندوق المناسب.',
                     categories: ['السببية والتعليل', 'التفصيل', 'الحال', 'مصدر الشيء'],
                     items: [
@@ -299,18 +304,36 @@
                     btn.id = `tab-btn-${sec.id}`;
                     btn.onclick = () => switchSection(idx, true);
                     btn.innerHTML = `<span class="whitespace-nowrap font-bold text-base md:text-lg">${sec.title}</span>` + 
-                        (sec.type !== 'info' ? `<svg id="tab-check-${sec.id}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pastel-successDark transition-opacity duration-300 opacity-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>` : '');
+                        (sec.type !== 'info' ? `<svg id="tab-check-${sec.id}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-colors duration-300 transition-opacity opacity-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>` : '');
                     container.appendChild(btn);
                 });
             }
             appData.sections.forEach((sec, idx) => {
                 const btn = document.getElementById(`tab-btn-${sec.id}`);
                 const isActive = activeSectionIndex === idx;
-                btn.className = `flex-shrink-0 flex items-center gap-1.5 px-3 py-3 md:px-5 md:py-4 rounded-t-xl transition-colors font-bold relative outline-none ${isActive ? 'text-pastel-primaryDark bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' : 'text-slate-500 hover:text-slate-700'}`;
+                
+                let baseClasses = "flex-shrink-0 flex items-center gap-1.5 px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold relative outline-none transition-all duration-300";
+                
+                if (isActive) {
+                    btn.className = `${baseClasses} ${sec.theme} text-white shadow-md transform scale-105`;
+                } else {
+                    btn.className = `${baseClasses} bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-700`;
+                }
+                
                 if (sec.type !== 'info') {
                     const isComp = checkSectionComplete(sec.id);
                     const check = document.getElementById(`tab-check-${sec.id}`);
-                    if (check) { check.classList.toggle('opacity-100', isComp); check.classList.toggle('opacity-0', !isComp); }
+                    if (check) { 
+                        check.classList.toggle('opacity-100', isComp); 
+                        check.classList.toggle('opacity-0', !isComp); 
+                        if(isActive) {
+                            check.classList.remove('text-emerald-500');
+                            check.classList.add('text-white');
+                        } else {
+                            check.classList.remove('text-white');
+                            check.classList.add('text-emerald-500');
+                        }
+                    }
                 }
                 if (isActive && shouldCenter) centerTabHorizontal(btn);
             });
@@ -320,6 +343,8 @@
         function updateProgressBar() {
             const bar = document.getElementById('progress-bar');
             const sec = appData.sections[activeSectionIndex];
+            
+            bar.className = `absolute bottom-0 right-0 h-1.5 transition-all duration-500 ease-out origin-right ${sec.theme}`;
             
             if (sec.type === 'info') {
                 bar.style.width = '0%';
@@ -369,7 +394,7 @@
         function renderContent() {
             const main = document.getElementById('main-content');
             const sec = appData.sections[activeSectionIndex];
-            let html = `<div class="text-center mb-6 pt-4"><h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-2">معاني حروف الجر</h2>${sec.description ? `<p class="text-xl text-slate-600 leading-snug max-w-2xl mx-auto px-2">${sec.description}</p>` : ''}</div>`;
+            let html = `<div class="text-center mb-6 pt-4"><h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">معاني حروف الجر</h2>${sec.description ? `<p class="text-lg md:text-xl text-slate-600 leading-snug max-w-2xl mx-auto px-2">${sec.description}</p>` : ''}</div>`;
             
             if (sec.type === 'info') html += renderInfoSection();
             else if (sec.type === 'sort') html += renderSortGame(sec);
