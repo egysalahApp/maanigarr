@@ -303,8 +303,9 @@
                     const btn = document.createElement('button');
                     btn.id = `tab-btn-${sec.id}`;
                     btn.onclick = () => switchSection(idx, true);
+                    // تم إعطاء الأيقونة عرض صفر w-0 لكي لا تزاحم النص وهو غير مكتمل
                     btn.innerHTML = `<span class="whitespace-nowrap font-bold text-base md:text-lg">${sec.title}</span>` + 
-                        (sec.type !== 'info' ? `<svg id="tab-check-${sec.id}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-colors duration-300 transition-opacity opacity-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>` : '');
+                        (sec.type !== 'info' ? `<svg id="tab-check-${sec.id}" xmlns="http://www.w3.org/2000/svg" class="h-5 w-0 opacity-0 overflow-hidden transition-all duration-300 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>` : '');
                     container.appendChild(btn);
                 });
             }
@@ -312,7 +313,8 @@
                 const btn = document.getElementById(`tab-btn-${sec.id}`);
                 const isActive = activeSectionIndex === idx;
                 
-                let baseClasses = "flex-shrink-0 flex items-center gap-1.5 px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold relative outline-none transition-all duration-300";
+                // تمت إزالة gap-1.5 الثابتة وإضافة justify-center ليتوسط النص بشكل مثالي
+                let baseClasses = "flex-shrink-0 flex items-center justify-center px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold relative outline-none transition-all duration-300";
                 
                 if (isActive) {
                     btn.className = `${baseClasses} ${sec.theme} text-white shadow-md transform scale-105`;
@@ -324,15 +326,18 @@
                     const isComp = checkSectionComplete(sec.id);
                     const check = document.getElementById(`tab-check-${sec.id}`);
                     if (check) { 
-                        check.classList.toggle('opacity-100', isComp); 
-                        check.classList.toggle('opacity-0', !isComp); 
-                        if(isActive) {
-                            check.classList.remove('text-emerald-500');
-                            check.classList.add('text-white');
+                        if (isComp) {
+                            // إعطاء مساحة الأيقونة وإظهارها فقط عند الاكتمال
+                            check.classList.remove('w-0', 'opacity-0');
+                            check.classList.add('w-5', 'opacity-100', 'mr-1.5');
                         } else {
-                            check.classList.remove('text-white');
-                            check.classList.add('text-emerald-500');
+                            // إخفاء مساحة الأيقونة تماماً قبل الاكتمال
+                            check.classList.add('w-0', 'opacity-0');
+                            check.classList.remove('w-5', 'opacity-100', 'mr-1.5');
                         }
+
+                        check.classList.remove('text-emerald-500', 'text-white');
+                        check.classList.add(isActive ? 'text-white' : 'text-emerald-500');
                     }
                 }
                 if (isActive && shouldCenter) centerTabHorizontal(btn);
@@ -534,6 +539,7 @@
                     state.sort.hintActive = false; 
                     renderTabs(); 
                     renderContent(); 
+                    updateFinalResultVisibility();
                 }, 300);
             } else {
                 state.sort.feedbackActive = true;
@@ -572,6 +578,7 @@
                     state.boxes.currentItemIdx++; 
                     renderTabs(); 
                     renderContent(); 
+                    updateFinalResultVisibility();
                 }, 300);
             } else {
                 state.boxes.feedbackActive = true;
@@ -628,6 +635,7 @@
         function updateFinalResultVisibility() {
             const wrapper = document.getElementById('global-res-wrapper');
             if (!wrapper) return;
+            
             if (isAllComplete()) {
                 let s = 0, q = 0;
                 appData.sections.filter(x => x.type !== 'info').forEach(x => { s += calculateScore(x.id); q += (x.questions?x.questions.length:x.items.length); });
@@ -638,6 +646,14 @@
                 document.getElementById('global-final-title').textContent = globalTitle;
                 document.getElementById('global-final-score').textContent = `${toArabicNum(s)} / ${toArabicNum(q)}`;
                 wrapper.classList.replace('grid-0', 'grid-1');
+                
+                // التمرير السلس للأسفل لضمان رؤية النتيجة فور اكتمال التحديات
+                setTimeout(() => {
+                    const rect = wrapper.getBoundingClientRect();
+                    if (rect.bottom > window.innerHeight) {
+                        window.scrollBy({ top: rect.bottom - window.innerHeight + 30, behavior: 'smooth' });
+                    }
+                }, 400);
             } else {
                 wrapper.classList.replace('grid-1', 'grid-0');
             }
