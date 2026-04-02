@@ -64,7 +64,7 @@
 </head>
 <body class="bg-pastel-bg text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-blue-200">
 
-    <!-- Header (غير مثبت) -->
+    <!-- Header -->
     <header id="page-header" class="w-full bg-pastel-bg">
         <div class="max-w-3xl mx-auto pt-6 pb-4 text-center px-4">
             <h1 class="flex items-center justify-center">
@@ -83,7 +83,7 @@
     <div id="tabs-wrapper" class="sticky top-0 z-50 w-full bg-pastel-bg/95 backdrop-blur shadow-sm border-b border-slate-200">
         <div class="relative w-full max-w-3xl mx-auto pt-1">
             <div id="tabs-container" class="flex overflow-x-auto no-scrollbar mx-auto w-full px-2 py-1 gap-1.5 md:gap-2 items-center"></div>
-            <!-- Progress Bar - يبدأ من اليمين -->
+            <!-- Progress Bar -->
             <div class="absolute bottom-0 right-0 h-1.5 bg-pastel-primaryDark transition-all duration-500 ease-out w-0 origin-right" id="progress-bar"></div>
         </div>
     </div>
@@ -114,6 +114,7 @@
 
         const toArabicNum = (num) => String(num).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 
+        // الأسئلة الأساسية التي اعتمدتها + المعاني الـ 9 الجديدة مدمجة في الأماكن المناسبة
         const appData = {
             sections: [
                 { id: 'intro', title: 'مقدمة', type: 'info' },
@@ -123,16 +124,25 @@
                     type: 'mcq',
                     description: 'اختر حرف الجر المناسب لملء الفراغِ ليعطي المعنى المطلوب بدقةٍ.',
                     questions: [
-                        { id: 'f1', text: 'خاتمُ المعلمِ مصنوعٌ [ ... ] فضةٍ. <br><span class="text-lg md:text-xl text-slate-500">(بيان النوع)</span>', options: ['مِنْ', 'فِي', 'بـِ'], correct: 0, hint: 'نحتاج حرفًا يبين المادة الخام.', explanation: '(مِنْ) تستخدم لبيان النوع والمادة المصنوع منها الشيء.' },
-                        { id: 'f2', text: 'السفرُ أحبُّ [ ... ] من البقاءِ. <br><span class="text-lg md:text-xl text-slate-500">(معنى عندي)</span>', options: ['إلَيَّ', 'عَلَيَّ', 'فِيَّ'], correct: 0, hint: 'نحتاج حرفًا يفيد معنى (عند) أو القرب النفسي.', explanation: '(إلَى) تستخدم أحيانًا بمعنى (عند).' },
-                        { id: 'f3', text: 'أخذتُ هذا الخبر اليقين [ ... ] صديقي.', options: ['عَنْ', 'فِي', 'مِنْ'], correct: 0, hint: 'هذا الحرف يدل على الأصل والمصدر الذي صدر منه الخبر.', explanation: '(عَنْ) تُستخدم لتدل على مصدر الشيء وأصله.' },
-                        { id: 'f4', text: 'فاق صالحٌ أقرانه بالدراسة [ ... ] صغر سنه.', options: ['عَلَى', 'مِنْ', 'البَاء'], correct: 0, hint: 'نحتاج حرفًا يفيد تجاوز العائق (بالرغم من).', explanation: '(عَلَى) تأتي أحيانًا لتفيد معنى (الرغم).' },
-                        { id: 'f5', text: 'غادرت بعثتنا الرياضية المدينة [ ... ] مهمةٍ وطنيةٍ.', options: ['فِي', 'لِـ', 'إلَى'], correct: 0, hint: 'الحرف هنا يدل على الهدف الذي تم من أجله السفر.', explanation: '(فِي) تأتي للدلالة على الغرض الذي تم من أجله الفعل.' },
-                        { id: 'f6', text: 'استمعتُ لشرح الأستاذ [ ... ] انتباهٍ شديدٍ.', options: ['بـِ', 'فِي', 'كـَ'], correct: 0, hint: 'نحتاج حرفًا يصف هيئة المستمع (أي: استمعتُ مُنتبَهًا).', explanation: '(الباء) هنا دخلت لتفيد وصف الحال.' },
-                        { id: 'f7', text: 'أحب الفواكه الصيفية [ ... ] العنب والبطيخ.', options: ['كـَ', 'لِـ', 'بـِ'], correct: 0, hint: 'نحتاج حرفًا نستخدمه لتقديم أمثلةٍ توضيحيةٍ.', explanation: '(الكاف) تُستخدم لضرب الأمثلة والتفصيل.' },
-                        { id: 'f8', text: 'أنفقتُ [ ... ] مالي في مساعدة الفقراءِ.', options: ['مِنْ', 'فِي', 'البَاء'], correct: 0, hint: 'المال المنفق هو (جزءٌ) فقط من إجمالي المال.', explanation: '(مِنْ) تُستخدم للدلالة على التبعيض.' },
-                        { id: 'f9', text: 'تحدثنا طويلًا [ ... ] أهمية الوقتِ.', options: ['عَنْ', 'فِي', 'مِنْ'], correct: 0, hint: 'هذا الحرف يدل على المحور الذي دار حوله النقاش.', explanation: '(عَنْ) تُستخدم لتدل على موضوع الحديث.' },
-                        { id: 'f10', text: 'ينقسم الاسم [ ... ] نكرة ومعرفة.', options: ['إلَى', 'اللَّام', 'فِي'], correct: 0, hint: 'نحتاج حرفًا يجزئ الشيء لمكوناته.', explanation: '(إلَى) تستخدم للتفصيل والتقسيم.' }
+                        { id: 'f1', text: 'خاتمُ المعلمِ مصنوعٌ [ ... ] فضةٍ. (بيان النوع)', options: ['مِنْ', 'فِي', 'بـِ'], correct: 0, hint: 'نحتاج حرفًا يبين المادة الخام.', explanation: '(مِنْ) تستخدم لبيان النوع والمادة المصنوع منها الشيء.' },
+                        { id: 'f2', text: 'السفرُ أحبُّ [ ... ] من البقاءِ. (العِندية)', options: ['إلَيَّ', 'عَلَيَّ', 'فِيَّ'], correct: 0, hint: 'نحتاج حرفًا يفيد معنى (عند).', explanation: '(إلَى) تستخدم أحيانًا بمعنى (عند).' },
+                        { id: 'f3', text: 'فاقَ المجتهدُ أقرانَهُ [ ... ] صغرِ سنِّهِ. (الرَّغم)', options: ['عَلَى', 'مِنْ', 'البَاء'], correct: 0, hint: 'أي: بالرغم من صغر سنه.', explanation: '(عَلَى) تفيد معنى (الرغم).' },
+                        { id: 'f4', text: 'أخذتُ العلمَ [ ... ] أفواهِ العلماءِ. (مصدر الشيء)', options: ['عَنْ', 'فِي', 'إلَى'], correct: 0, hint: 'الحرف يدل على الأصل والمصدر.', explanation: '(عَنْ) تدل على مصدر الشيء وأصله.' },
+                        { id: 'f5', text: 'استمعتُ للدرسِ [ ... ] انتباهٍ. (الحال)', options: ['بـِ', 'فِي', 'كـَ'], correct: 0, hint: 'أي: استمعتُ مُنتبهًا.', explanation: 'الباء تدخل لتفيد وصف الحال.' },
+                        { id: 'f6', text: 'أنفقتُ [ ... ] مالي في الخيرِ. (التبعيض)', options: ['مِنْ', 'إلَى', 'عَلَى'], correct: 0, hint: 'أي: أنفقت جزءًا من مالي.', explanation: '(مِنْ) تدل على التبعيض.' },
+                        { id: 'f7', text: 'ينقسمُ الكلمُ [ ... ] ثلاثةِ أقسامٍ. (التقسيم)', options: ['إلَى', 'فِي', 'عَنْ'], correct: 0, hint: 'تجزئة الشيء لمكوناته.', explanation: '(إلَى) تفيد التقسيم والتفصيل.' },
+                        { id: 'f8', text: 'خرجتُ [ ... ] البيتِ صباحًا. (ابتداء المكان)', options: ['مِنْ', 'عَنْ', 'فِي'], correct: 0, hint: 'نقطة الانطلاق المكانية.', explanation: '(مِنْ) تفيد ابتداء الغاية المكانية.' },
+                        { id: 'f9', text: 'الفواكهُ صيفيةٌ [ ... ] العنبِ والبطيخِ. (التفصيل)', options: ['كـَ', 'لـِ', 'بـِ'], correct: 0, hint: 'لضرب الأمثلة التوضيحية.', explanation: 'الكاف تفيد التمثيل والتفصيل.' },
+                        { id: 'f10', text: 'دخلت امرأةٌ النارَ [ ... ] هرّةٍ. (السببية)', options: ['فِي', 'عَلَى', 'عَنْ'], correct: 0, hint: 'أي: بسبب هرّةٍ.', explanation: '(فِي) تأتي أحيانًا لتفيد السببية.' },
+                        { id: 'f11', text: 'أحبُّ العلمَ [ ... ] أهميتِهِ. (السببية)', options: ['لـِ', 'بـِ', 'فِي'], correct: 0, hint: 'لماذا تحب العلم؟', explanation: 'اللام تفيد التعليل والسببية.' },
+                        { id: 'f12', text: 'تحدثنا طويلاً [ ... ] فضلِ الأمِ. (موضوع الكلام)', options: ['عَنْ', 'مِنْ', 'إلَى'], correct: 0, hint: 'عن ماذا كان الحديث؟', explanation: '(عَنْ) تدل على موضوع الحديث.' },
+                        { id: 'f13', text: 'اشتكى المريضُ [ ... ] الألمِ. (سبب الشيء)', options: ['مِنْ', 'عَلَى', 'بـِ'], correct: 0, hint: 'العلة والسبب الذي أدى للشكوى.', explanation: '(مِنْ) تأتي لتفيد سبب الشيء والعلة.' },
+                        { id: 'f14', text: 'العلمُ أنفعُ [ ... ] المالِ. (الربط في التفضيل)', options: ['مِنْ', 'عَنْ', 'بـِ'], correct: 0, hint: 'حرف يربط بين اسم التفضيل (أنفع) والمفضل عليه (المال).', explanation: 'تُستخدم (مِنْ) للربط بين اسم التفضيل والمفضل عليه.' },
+                        { id: 'f15', text: 'مرَّ الفارسُ [ ... ] سرعةِ البرقِ. (الحال)', options: ['فِي', 'عَلَى', 'بـِ'], correct: 0, hint: 'تصف هيئة وحال الفارس عند مروره.', explanation: '(فِي) تأتي أحيانًا لتفيد وصف الحال.' },
+                        // --- الإضافات الجديدة الخاصة بالقسم الأول ---
+                        { id: 'f_new1', text: 'يتكونُ المركزُ الثقافيُّ [ ... ] مكتبةٍ وعدةِ قاعاتٍ. (التفصيل)', options: ['مِنْ', 'إلَى', 'فِي'], correct: 0, hint: 'حرف يذكر لتفصيل وتبيين المكونات.', explanation: '(مِنْ) تأتي لتفصيل الشيء وتبيان مكوناته.' },
+                        { id: 'f_new2', text: 'تغيبتُ [ ... ]ـمرضٍ أصابني. (السبب)', options: ['لـِ', 'بـِ', 'فِي'], correct: 0, hint: 'حرف يفيد العلة أو السبب الذي أدى للغياب.', explanation: 'اللام هنا تفيد السبب والعلة.' },
+                        { id: 'f_new3', text: 'انطلقَ اللاعبُ [ ... ]ـالفهدِ. (التشبيه)', options: ['كـَ', 'بـِ', 'لـِ'], correct: 0, hint: 'حرف يستخدم للمماثلة والمقارنة.', explanation: 'الكاف تفيد التشبيه.' }
                     ]
                 },
                 {
@@ -141,13 +151,26 @@
                     type: 'sort',
                     description: 'اسحب البطاقة أو انقر على الصندوق المناسب للمعنى الذي يؤديه الحرف الملون.',
                     items: [
-                        { id: 'srt1', text: 'شرعت في العمل <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> الأسبوع الماضي', options: ['زمان الابتداء', 'التبعيض', 'بيان النوع'], correct: 0, hint: 'الحرف يحدد متى بدأ زمن الفعل.', explanation: '(مِنْ) هنا حددت نقطة انطلاق الزمن.' },
-                        { id: 'srt2', text: 'وصلت <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">إلى</span> المدرسة باكرًا', options: ['النهاية في المكان', 'النهاية في الزمان', 'معنى القرب'], correct: 0, hint: 'المدرسة هي محطة (الوصول) الأخيرة للحركة.', explanation: '(إلى) تفيد النهاية في المكان، التركيز هنا على النهاية والوصول.' },
-                        { id: 'srt3', text: 'شرّبت الأم ولدها الدواء <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> أنه ماء', options: ['الاستعلاء المكان', 'معنى الوهم', 'الشرط'], correct: 1, hint: 'الأم صورت الدواء بشيءٍ غير حقيقيٍ لتشجع ابنها.', explanation: '(عَلَى) هنا صورت شيئًا متوهمًا غير حقيقيٍ.' },
-                        { id: 'srt12', text: '<span class="text-pastel-primaryDark font-black">بـ</span>سم الله الرحمن الرحيم', options: ['السبب والعلة', 'الوسيلة (الاستعانة)', 'القسم واليمين'], correct: 1, hint: 'الباء هنا للطلب والاستعانة باسم الله لإنجاز العمل.', explanation: 'الباء هنا معنوية وتفيد الاستعانة أو الوسيلة.' },
-                        { id: 'srt13', text: 'فرح محمد <span class="text-pastel-primaryDark font-black">بـ</span>قدوم أخيه', options: ['الوسيلة', 'التعويض والثمن', 'السبب والعلة'], correct: 2, hint: 'القدوم هو الدافع والعلة وراء شعور الفرح.', explanation: 'الباء هنا سببية، أي (بسبب) قدوم أخيه.' },
-                        { id: 'srt6', text: 'اشتريت هذا الكتاب القيم <span class="text-pastel-primaryDark font-black">بـ</span>دينارٍ', options: ['التعويض والثمن', 'الوسيلة (معنوي)', 'الآلة (مادي)'], correct: 0, hint: 'تمت مبادلة الكتاب بمبلغٍ ماديٍ.', explanation: 'الباء تدخل على الثمن لتفيد التعويض.' },
-                        { id: 'srt4', text: 'جلسنا <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> المائدة لنتناول الطعام', options: ['الاستعلاء المكان', 'القرب من الشيء', 'الشرط'], correct: 1, hint: 'نحن نجلس بجوار المائدة وقربها لا فوقها.', explanation: '(على) تأتي أحيانًا بمعنى (عند) أو القرب.' }
+                        { id: 'srt1', text: 'شرّبت الأمُ ولدها الدواء <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> أنه ماء', options: ['معنى الوهم', 'الاستعلاء', 'الشرط'], correct: 0, hint: 'تصوير شيءٍ غير حقيقيٍ.', explanation: '(عَلَى) تفيد هنا التوهم.' },
+                        { id: 'srt2', text: '<span class="text-pastel-primaryDark font-black">بـ</span>سم الله الرحمن الرحيم', options: ['الوسيلة (الاستعانة)', 'القسم', 'السبب'], correct: 0, hint: 'طلب العون لعمل شيءٍ.', explanation: 'الباء هنا للاستعانة والوسيلة.' },
+                        { id: 'srt3', text: 'فرحَ الطفلُ <span class="text-pastel-primaryDark font-black">بـ</span>قدومِ العيدِ', options: ['السبب والعلة', 'الآلة', 'الثمن'], correct: 0, hint: 'ما الدافع وراء الفرح؟', explanation: 'الباء هنا تفيد السببية.' },
+                        { id: 'srt4', text: 'هذا البستانُ <span class="text-pastel-primaryDark font-black">لـ</span>أخي المجتهدِ', options: ['الملكية المادية', 'الملكية المعنوية', 'التعليل'], correct: 0, hint: 'امتلاك شيءٍ ماديٍ.', explanation: 'اللام هنا للملكية المادية.' },
+                        { id: 'srt5', text: 'الوفاءُ <span class="text-pastel-primaryDark font-black">لـ</span>ـه أثرٌ طيبٌ', options: ['الملكية المعنوية', 'الملكية المادية', 'الإباحة'], correct: 0, hint: 'اختصاص صفةٍ بشيءٍ.', explanation: 'اللام هنا للملكية المعنوية.' },
+                        { id: 'srt6', text: 'اشتريتُ القلمَ <span class="text-pastel-primaryDark font-black">بـ</span>درهمٍ', options: ['التعويض والثمن', 'الآلة', 'الوسيلة'], correct: 0, hint: 'مبادلة مالٍ بسلعةٍ.', explanation: 'الباء تدخل على الأثمان.' },
+                        { id: 'srt7', text: 'سرتُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">إلى</span> مطلعِ الفجرِ', options: ['انتهاء الزمان', 'انتهاء المكان', 'الاتجاه'], correct: 0, hint: 'نهاية وقت الفعل.', explanation: '(إلَى) تفيد انتهاء الزمان.' },
+                        { id: 'srt8', text: 'ابتعدتُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">عن</span> رفقاءِ السوءِ', options: ['البعد والفصل حسًّا', 'البعد معنًى', 'موضوع الكلام'], correct: 0, hint: 'تغيير المكان والابتعاد.', explanation: '(عَنْ) تفيد المجاوزة والبعد.' },
+                        { id: 'srt9', text: 'لعبنا <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">في</span> الحديقةِ', options: ['الظرفية المكانية', 'الظرفية الزمانية', 'السببية'], correct: 0, hint: 'أين حدث الفعل؟', explanation: '(فِي) تفيد المكان.' },
+                        { id: 'srt10', text: 'النجومُ <span class="text-pastel-primaryDark font-black">كـ</span>المصابيحِ ضياءً', options: ['التشبيه', 'التفصيل', 'التعليل'], correct: 0, hint: 'مماثلة بين شيئين.', explanation: 'الكاف تفيد التشبيه.' },
+                        { id: 'srt11', text: 'شرعت في العمل <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> الأسبوع الماضي', options: ['زمان الابتداء', 'التبعيض', 'بيان النوع'], correct: 0, hint: 'الحرف يحدد متى بدأ زمن الفعل.', explanation: '(مِنْ) هنا حددت نقطة انطلاق الزمن.' },
+                        { id: 'srt12', text: 'بقي جدي <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> نشاطِهِ', options: ['الحال', 'الاستعلاء', 'الوجوب'], correct: 0, hint: 'تصف حالته المستمرة والمستقرة.', explanation: '(على) هنا تفيد الحال والاستمرار.' },
+                        { id: 'srt13', text: 'أعفو عنكَ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> أن تُحسّنَ سلوكَكَ', options: ['الشرط', 'معنى الوهم', 'القرب'], correct: 0, hint: 'يوجد التزام متبادل لحدوث العفو.', explanation: '(على) هنا تفيد الشرط.' },
+                        { id: 'srt14', text: 'تجتمعُ الأسرةُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">في</span> المساءِ', options: ['الزمان', 'المكان', 'الحال'], correct: 0, hint: 'المساء يعبر عن فترة ووقت.', explanation: '(في) تفيد الظرفية الزمانية.' },
+                        { id: 'srt15', text: 'قطعتُ الغصنَ <span class="text-pastel-primaryDark font-black">بـ</span>المنشارِ', options: ['الآلة', 'الوسيلة', 'المكان'], correct: 0, hint: 'أداة مادية ملموسة تُمسك باليد.', explanation: 'الباء تفيد الآلة (المادية).' },
+                        { id: 'srt16', text: 'تتسعُ ثقافةُ الإنسانِ <span class="text-pastel-primaryDark font-black">بـ</span>المطالعةِ', options: ['الوسيلة', 'الآلة', 'السبب'], correct: 0, hint: 'المطالعة شيءٌ معنويٌ يُستعان به.', explanation: 'الباء تفيد الوسيلة (المعنوية).' },
+                        // --- الإضافات الجديدة الخاصة بالقسم الثاني ---
+                        { id: 'srt_new1', text: 'عندي مصحفٌ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> مكةَ', options: ['مصدر الشيء', 'بيان النوع', 'مكان الابتداء'], correct: 0, hint: 'مكة هي المكان الذي صدر وجاء منه المصحف.', explanation: '(مِنْ) هنا تفيد مصدر الشيء وأصله.' },
+                        { id: 'srt_new2', text: 'جلستُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">إلى</span> المائدةِ', options: ['معنى القرب', 'النهاية في المكان', 'الاتجاه حسًّا'], correct: 0, hint: 'أي جلست بجوارها وقريباً منها.', explanation: '(إلى) تأتي أحياناً لتدل على القرب بمعنى (عند).' },
+                        { id: 'srt_new3', text: 'سافرَ أخي <span class="text-pastel-primaryDark font-black">لـ</span>طلبِ العلمِ', options: ['الغرض', 'الملكية المادية', 'الإباحة'], correct: 0, hint: 'الهدف الذي من أجله تم السفر.', explanation: 'اللام هنا تفيد الغرض.' }
                     ]
                 },
                 {
@@ -163,7 +186,11 @@
                         { id: 'm5', text: 'ما معنى (في) في: "خرجَ القائدُ في جُندِهِ"؟', options: ['المعية (المصاحبة)', 'المكان', 'السبب'], correct: 0, hint: 'أي: خرج مع جنده.', explanation: '(فِي) تفيد المعية والمصاحبة.' },
                         { id: 'm6', text: 'ما معنى (عن) في: "لا تجزي نفسٌ عن نفسٍ شيئًا"؟', options: ['البدلية (العِوض)', 'البعد', 'الموضوع'], correct: 0, hint: 'أي: لا تقوم مقامها أو بدلًا منها.', explanation: '(عَنْ) تأتي بمعنى البدل.' },
                         { id: 'm7', text: 'ما معنى اللام في: "للأطفالِ أن يلعبوا في الساحةِ"؟', options: ['الإباحة (السماح)', 'الملكية', 'السببية'], correct: 0, hint: 'تعطي إذنًا بالقيام بالفعل.', explanation: 'اللام تفيد الإباحة والسماح.' },
-                        { id: 'm8', text: 'ما معنى (على) في: "على المديونِ مائةُ دينارٍ"؟', options: ['الشيء المكروه (الدَّين)', 'الوجوب', 'الاستعلاء'], correct: 0, hint: 'تستخدم مع الديون والأعباء.', explanation: '(على) تفيد التحمل أو الدَّين.' }
+                        { id: 'm8', text: 'ما معنى (على) في: "على المديونِ مائةُ دينارٍ"؟', options: ['الشيء المكروه (الدَّين)', 'الوجوب', 'الاستعلاء'], correct: 0, hint: 'تستخدم مع الديون والأعباء.', explanation: '(على) تفيد التحمل أو الدَّين.' },
+                        // --- الإضافات الجديدة الخاصة بالقسم الثالث ---
+                        { id: 'm_new1', text: 'ما دلالة (عن) في: "تركتُ الباب مفتوحًا عن قصدٍ"؟', options: ['الحال', 'البدلية', 'موضوع الكلام'], correct: 0, hint: 'تصف الهيئة أو الحالة التي تُرِك عليها الباب.', explanation: '(عن) هنا تفيد الحال.' },
+                        { id: 'm_new2', text: 'ما دلالة اللام في: "حكمَ القاضي لـلمظلومِ"؟', options: ['حصول فائدة للاسم المجرور', 'الملكية المادية', 'الملكية المعنوية'], correct: 0, hint: 'الحكم كان في صالحه ومنفعته.', explanation: 'اللام تفيد حصول فائدة ومنفعة للاسم المجرور.' },
+                        { id: 'm_new3', text: 'ما دلالة الباء في: "بـاللهِ ساعدني"؟', options: ['القسم', 'الوسيلة', 'تأكيد النفي'], correct: 0, hint: 'المتحدث يحلف بالله.', explanation: 'الباء هنا حرف جر يفيد القسم واليمين.' }
                     ]
                 },
                 {
@@ -196,12 +223,6 @@
                 const header = document.getElementById('page-header');
                 const targetY = header ? header.offsetHeight : 0;
                 window.scrollTo({ top: targetY, behavior: 'smooth' });
-            });
-        }
-
-        function scrollToTop() {
-            requestAnimationFrame(() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
@@ -245,7 +266,6 @@
                     const btn = document.createElement('button');
                     btn.id = `tab-btn-${sec.id}`;
                     btn.onclick = () => switchSection(idx, true);
-                    // تصغير الخط قليلا والهوامش لتتسع جميع التبويبات بسهولة
                     btn.innerHTML = `<span class="whitespace-nowrap font-bold text-base md:text-lg">${sec.title}</span>` + 
                         (sec.type !== 'info' ? `<svg id="tab-check-${sec.id}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pastel-successDark transition-opacity duration-300 opacity-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>` : '');
                     container.appendChild(btn);
@@ -254,7 +274,6 @@
             appData.sections.forEach((sec, idx) => {
                 const btn = document.getElementById(`tab-btn-${sec.id}`);
                 const isActive = activeSectionIndex === idx;
-                // هوامش أضيق قليلًا لضمان استيعاب كافة الأقسام
                 btn.className = `flex-shrink-0 flex items-center gap-1.5 px-3 py-3 md:px-5 md:py-4 rounded-t-xl transition-colors font-bold relative outline-none ${isActive ? 'text-pastel-primaryDark bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' : 'text-slate-500 hover:text-slate-700'}`;
                 if (sec.type !== 'info') {
                     const isComp = checkSectionComplete(sec.id);
@@ -269,20 +288,22 @@
         function updateProgressBar() {
             const bar = document.getElementById('progress-bar');
             const sec = appData.sections[activeSectionIndex];
-            let percent = (sec.type === 'info') ? 100 : (sec.type === 'mcq' ? (sec.questions.filter(q => state.mcq.answers[q.id] !== undefined).length / sec.questions.length) * 100 : (state.sort.currentItemIdx / sec.items.length) * 100);
-            bar.style.width = `${percent}%`;
+            
+            if (sec.type === 'info') {
+                bar.style.width = '0%';
+                bar.style.opacity = '0';
+            } else {
+                let percent = (sec.type === 'mcq' ? (sec.questions.filter(q => state.mcq.answers[q.id] !== undefined).length / sec.questions.length) * 100 : (state.sort.currentItemIdx / sec.items.length) * 100);
+                bar.style.width = `${percent}%`;
+                bar.style.opacity = '1';
+            }
         }
 
         function switchSection(idx, shouldScroll = false) {
             activeSectionIndex = idx;
             initSectionShuffle(appData.sections[idx].id);
+            renderTabs(false); renderContent(); updateFinalResultVisibility();
             
-            // بناء الواجهة بدون توسيط فوري لتجنب حسابات خاطئة أثناء الـ Reflow
-            renderTabs(false); 
-            renderContent(); 
-            updateFinalResultVisibility();
-            
-            // التوسيط الأفقي والتمرير العمودي بعد استقرار أبعاد الصفحة
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     if (shouldScroll) scrollToTabs();
@@ -335,25 +356,81 @@
             if (currentItem) {
                 const shuffledOpts = state.sort.shuffledOptions[currentItem.id];
                 const colors = ['bg-emerald-100 border-emerald-300', 'bg-purple-100 border-purple-300', 'bg-amber-100 border-amber-300'];
-                categoriesHtml = shuffledOpts.map((opt, idx) => `<button onclick="handleSortClick(${opt.originalIndex})" class="flex-1 py-4 px-2 rounded-xl font-bold text-lg md:text-xl border-2 ${colors[idx]} transition-transform active:scale-95 min-h-[5rem]">${opt.text}</button>`).join('');
+                categoriesHtml = shuffledOpts.map((opt, idx) => `<button onclick="handleSortClick(${opt.originalIndex})" class="flex-1 py-4 px-2 rounded-xl font-bold text-lg md:text-xl border-2 ${colors[idx]} transition-transform active:scale-95 min-h-[5rem] shadow-sm">${opt.text}</button>`).join('');
             }
-            return `<div class="w-full max-w-2xl mx-auto flex flex-col gap-4 px-2"><div class="flex gap-2 w-full justify-between">${categoriesHtml}</div><div class="relative min-h-[12rem] bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 text-right">${currentItem ? `<div class="absolute top-3 left-3"><button onclick="toggleSortHint()" class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center shadow-sm">💡</button></div><div id="sort-card" class="w-full bg-white rounded-xl shadow-md border border-slate-200 p-6 text-center text-xl md:text-2xl font-bold text-slate-800 transition-all transform leading-snug"><div>${currentItem.text}</div><div class="grid-expand ${state.sort.hintActive ? 'grid-1' : 'grid-0'} w-full mt-2"><div class="overflow-hidden-inner"><div class="p-2 bg-amber-50 border border-amber-200 rounded-lg text-lg font-normal text-amber-800"><span class="font-bold">تلميح:</span> ${currentItem.hint}</div></div></div></div>` : `<div class="text-3xl font-bold text-emerald-500">تم الفرز بنجاحٍ!</div>`}</div><div class="grid-expand ${state.sort.feedbackActive ? 'grid-1' : 'grid-0'} w-full"><div class="overflow-hidden-inner"><div class="p-3 bg-red-50 border border-red-200 rounded-xl text-center text-red-700 text-lg font-bold">⚠️ ${currentItem ? currentItem.explanation : ''}</div></div></div>${!isComplete ? `<div class="text-center text-xl font-bold text-slate-500">البطاقة ${toArabicNum(state.sort.currentItemIdx + 1)} من ${toArabicNum(sec.items.length)}</div>` : ''}</div>`;
+            return `<div class="w-full max-w-2xl mx-auto flex flex-col gap-4 px-2">
+                <div class="flex gap-2 w-full justify-between">${categoriesHtml}</div>
+                <div class="relative min-h-[14rem] bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 md:p-6 text-right">
+                    ${currentItem ? `
+                        <div id="sort-card" class="relative w-full max-w-md mx-auto bg-white rounded-xl shadow-lg border border-slate-200 p-6 text-center text-xl md:text-2xl font-bold text-slate-800 transition-all transform leading-snug">
+                            <button onclick="toggleSortHint()" class="absolute top-3 left-3 w-9 h-9 bg-amber-50 hover:bg-amber-100 text-amber-500 rounded-full flex items-center justify-center shadow-sm border border-amber-100 transition-colors outline-none" title="تلميح">💡</button>
+                            <div class="mt-4 mb-2">${currentItem.text}</div>
+                            <div id="sort-hint" class="grid-expand ${state.sort.hintActive ? 'grid-1' : 'grid-0'} w-full mt-4">
+                                <div class="overflow-hidden-inner">
+                                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-lg font-normal text-amber-800 text-right">
+                                        <span class="font-bold">تلميح:</span> ${currentItem.hint}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ` : `<div class="text-3xl font-bold text-emerald-500">تم الفرز بنجاحٍ!</div>`}
+                </div>
+                <div id="sort-feedback" class="grid-expand ${state.sort.feedbackActive ? 'grid-1' : 'grid-0'} w-full">
+                    <div class="overflow-hidden-inner">
+                        <div class="p-4 bg-red-50 border border-red-200 rounded-xl text-center text-red-700 text-lg md:text-xl font-bold shadow-sm">
+                            ⚠️ ${currentItem ? currentItem.explanation : ''}
+                        </div>
+                    </div>
+                </div>
+                ${!isComplete ? `<div class="text-center text-xl font-bold text-slate-500 mt-2">البطاقة ${toArabicNum(state.sort.currentItemIdx + 1)} من ${toArabicNum(sec.items.length)}</div>` : ''}
+            </div>`;
         }
 
-        function toggleSortHint() { state.sort.hintActive = !state.sort.hintActive; renderContent(); }
+        function toggleSortHint() { 
+            state.sort.hintActive = !state.sort.hintActive; 
+            const hintEl = document.getElementById('sort-hint');
+            if(hintEl) {
+                if (state.sort.hintActive) {
+                    hintEl.classList.replace('grid-0', 'grid-1');
+                } else {
+                    hintEl.classList.replace('grid-1', 'grid-0');
+                }
+            }
+        }
 
         function handleSortClick(selectedOriginalIndex) {
             const currentItem = state.sort.shuffledItems[state.sort.currentItemIdx];
             if (selectedOriginalIndex === currentItem.correct) {
-                state.sort.currentItemIdx++; state.sort.hintActive = false; state.sort.feedbackActive = false;
+                state.sort.feedbackActive = false;
+                const feedbackEl = document.getElementById('sort-feedback');
+                if(feedbackEl) feedbackEl.classList.replace('grid-1', 'grid-0');
+                
                 const cardEl = document.getElementById('sort-card');
-                if(cardEl) { cardEl.style.transform = 'translateY(-30px) scale(0.9)'; cardEl.style.opacity = '0'; }
-                setTimeout(() => { renderTabs(); renderContent(); }, 300);
+                if(cardEl) { 
+                    cardEl.style.transform = 'translateY(-30px) scale(0.9)'; 
+                    cardEl.style.opacity = '0'; 
+                }
+                
+                setTimeout(() => { 
+                    state.sort.currentItemIdx++; 
+                    state.sort.hintActive = false; 
+                    renderTabs(); 
+                    renderContent(); 
+                }, 300);
             } else {
                 state.sort.feedbackActive = true;
+                const feedbackEl = document.getElementById('sort-feedback');
+                if(feedbackEl) {
+                    feedbackEl.innerHTML = `<div class="overflow-hidden-inner"><div class="p-4 bg-red-50 border border-red-200 rounded-xl text-center text-red-700 text-lg md:text-xl font-bold shadow-sm">⚠️ ${currentItem.explanation}</div></div>`;
+                    feedbackEl.classList.replace('grid-0', 'grid-1');
+                }
+                
                 const cardEl = document.getElementById('sort-card');
-                if(cardEl) { cardEl.classList.remove('animate-shake'); void cardEl.offsetWidth; cardEl.classList.add('animate-shake'); }
-                renderContent();
+                if(cardEl) { 
+                    cardEl.classList.remove('animate-shake'); 
+                    void cardEl.offsetWidth; 
+                    cardEl.classList.add('animate-shake'); 
+                }
             }
         }
 
@@ -417,12 +494,7 @@
                 sec.questions.forEach(q => { delete state.mcq.answers[q.id]; delete state.mcq.hints[q.id]; });
                 state.mcq.shuffled[sectionId] = null;
             }
-            initSectionShuffle(sectionId); 
-            
-            renderTabs(false); 
-            renderContent(); 
-            updateFinalResultVisibility(); 
-            
+            initSectionShuffle(sectionId); renderTabs(false); renderContent(); updateFinalResultVisibility(); 
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     scrollToTabs();
@@ -433,27 +505,23 @@
         }
 
         function startOver() {
-            // إخفاء النتيجة فورًا لمنع القفزات
             const wrapper = document.getElementById('global-res-wrapper');
             if(wrapper) {
                 wrapper.style.transition = 'none';
                 wrapper.classList.replace('grid-1', 'grid-0');
-                void wrapper.offsetWidth; // إجبار المتصفح على تطبيق التحديث الفوري
+                void wrapper.offsetWidth;
                 wrapper.style.transition = '';
             }
 
-            // تصفير البيانات
             state.mcq = { answers: {}, hints: {}, shuffled: {} };
             state.sort = { currentItemIdx: 0, sorted: {}, shuffledItems: null, shuffledOptions: null, hintActive: false, feedbackActive: false };
             
             activeSectionIndex = 0;
             initSectionShuffle(appData.sections[0].id);
-            
             renderTabs(false);
             renderContent();
             updateFinalResultVisibility();
 
-            // تمرير لحظي حاسم لمستوى التبويبات وتوسيط أفقي دقيق بعد الـ Reflow
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     scrollToTabs(); 
