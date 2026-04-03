@@ -95,15 +95,19 @@
     <!-- Main Content -->
     <main id="main-content" class="flex-grow w-full max-w-3xl mx-auto p-4 md:p-6 flex flex-col pb-8"></main>
 
-    <!-- حاوية النتيجة النهائية -->
+    <!-- حاوية النتيجة النهائية المبسطة -->
     <div class="w-full max-w-3xl mx-auto px-4 md:px-6 pb-12">
-        <div id="global-res-wrapper" class="grid-expand grid-0 w-full max-w-lg mx-auto">
+        <div id="global-res-wrapper" class="grid-expand grid-0 w-full mx-auto">
             <div class="overflow-hidden-inner">
-                <div class="bg-gradient-to-br from-pastel-primaryDark to-blue-900 text-white p-8 rounded-2xl text-center shadow-xl mt-6">
-                    <div class="text-7xl mb-4">🎓</div>
-                    <h2 id="global-final-title" class="text-3xl md:text-4xl font-bold mb-4">أكملت جميع التحديات!</h2>
-                    <p class="text-xl md:text-2xl text-blue-100 mb-8">حصيلتك الإجمالية: <span id="global-final-score" class="font-bold text-white text-3xl md:text-4xl">٠ / ٠</span></p>
-                    <button onclick="startOver()" class="w-full bg-white text-blue-900 py-4 rounded-xl font-bold text-xl md:text-2xl hover:bg-slate-50 transition-colors shadow-md outline-none">ابدأ من جديدٍ</button>
+                <div class="bg-blue-50 border border-blue-200 p-5 md:p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between shadow-sm mt-6 gap-4">
+                    <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-right">
+                        <div class="text-5xl hidden md:block">🎓</div>
+                        <div>
+                            <h2 id="global-final-title" class="text-xl md:text-2xl font-bold text-blue-900 mb-1">أكملت جميع التحديات!</h2>
+                            <p class="text-base md:text-lg text-blue-700">حصيلتك الإجمالية: <span id="global-final-score" class="font-bold text-blue-900 text-xl md:text-2xl mx-1 inline-block">٠ / ٠</span></p>
+                        </div>
+                    </div>
+                    <button onclick="startOver()" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors shadow-sm outline-none w-full md:w-auto flex-shrink-0">ابدأ من جديد</button>
                 </div>
             </div>
         </div>
@@ -173,7 +177,7 @@
                         { id: 'srt14', text: 'تجتمعُ الأسرةُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">في</span> المساءِ', options: ['الزمان', 'المكان', 'الحال'], correct: 0, hint: 'المساء يعبر عن فترة ووقت.', explanation: '(في) تفيد الظرفية الزمانية.' },
                         { id: 'srt15', text: 'قطعتُ الغصنَ <span class="text-pastel-primaryDark font-black">بـ</span>المنشارِ', options: ['الآلة', 'الوسيلة', 'المكان'], correct: 0, hint: 'أداة مادية ملموسة تُمسك باليد.', explanation: 'الباء تفيد الآلة (شيء ماديّ).' },
                         { id: 'srt16', text: 'تتسعُ ثقافةُ الإنسانِ <span class="text-pastel-primaryDark font-black">بـ</span>المطالعةِ', options: ['الوسيلة', 'الآلة', 'الزمان'], correct: 0, hint: 'المطالعة شيءٌ معنويٌ يُستعان به.', explanation: 'الباء تفيد الوسيلة (شيء معنوي).' },
-                        { id: 'srt17', text: 'عندي مصحفٌ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> مكةَ', options: ['مصدر الشيء', 'بيان النوع', 'مكان الابتداء'], correct: 0, hint: 'مكة هي المصدر الذي جاء منه المصحف.', explanation: '(مِنْ) هنا تفيد مصدر الشيء وأصله.' },
+                        { id: 'srt17', text: 'عندي مصحفٌ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">من</span> مكةَ', options: ['مصدر الشيء', 'بيان النوع', 'الحال'], correct: 0, hint: 'مكة هي المصدر الذي جاء منه المصحف.', explanation: '(مِنْ) هنا تفيد مصدر الشيء وأصله.' },
                         { id: 'srt18', text: 'جلستُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">إلى</span> المائدةِ', options: ['معنى القرب', 'النهاية في المكان', 'الاتجاه حسًّا'], correct: 0, hint: 'أي جلست بجوارها وقريبًا منها.', explanation: '(إلى) تأتي أحيانًا لتدل على القرب بمعنى (عند).' },
                         { id: 'srt19', text: 'سافرَ أخي <span class="text-pastel-primaryDark font-black">لـ</span>طلبِ العلمِ', options: ['الغرض', 'الملكية المادية', 'الإباحة'], correct: 0, hint: 'الهدف الذي من أجله تم السفر.', explanation: 'اللام هنا تفيد الغرض.' },
                         { id: 'srt20', text: 'جلستُ <span class="text-pastel-primaryDark font-black">بـ</span>مكانٍ هادئٍ', options: ['المكان (الظرفية)', 'الآلة', 'السبب'], correct: 0, hint: 'يدل على الحيز الذي تم فيه الجلوس.', explanation: 'الباء هنا تفيد الظرفية المكانية.' },
@@ -218,7 +222,7 @@
                         { id: 'p3b', text: 'ابتعدتُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">عن</span> الغيبةِ والنميمةِ. (عن) تفيد:', options: ['البعد حسًّا', 'البعد معنًى', 'المصدر'], correct: 1, hint: 'الغيبة والنميمة سلوكياتٌ معنويةٌ.', explanation: '(عن) تفيد البعد والفصل المعنوي.' },
                         { id: 'p4a', text: 'الكتابُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> المكتبِ. (على) تفيد:', options: ['الاستعلاء الحقيقي', 'القرب', 'الوجوب'], correct: 0, hint: 'الكتاب فوق المكتب.', explanation: '(على) تفيد الاستعلاء الحقيقي.' },
                         { id: 'p4b', text: 'جلستُ <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">على</span> النهرِ. (على) تفيد:', options: ['الاستعلاء الحقيقي', 'القرب', 'الوجوب'], correct: 1, hint: 'هل جلست فوق الماء أم بجوار النهر؟', explanation: '(على) هنا تفيد القرب (بمعنى عند).' },
-                        { id: 'p5', text: 'اشتريتُ كثيرًا <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">مِنْ</span> الكتبِ. "مِنْ" هنا تفيد:', options: ['توضيح اسم نكرة', 'توضيح (ما) الموصولة', 'التبعيض'], correct: 0, hint: 'جاءت لتفسير وتوضيح المقصود بكلمة "كثيرًا" النكرة.', explanation: '(مِنْ) هنا جاءت لتوضيح وتفسير اسم نكرة يسبقها.' }
+                        { id: 'p5', text: 'اشتريتُ كثيرًا <span class="text-pastel-primaryDark font-black bg-blue-50 px-2 rounded">مِنْ</span> الكتبِ. "مِنْ" هنا تفيد:', options: ['توضيح اسم نكرة', 'توضيح (ما) الموصولة', 'التشبيه'], correct: 0, hint: 'جاءت لتفسير وتوضيح المقصود بكلمة "كثيرًا" النكرة.', explanation: '(مِنْ) هنا جاءت لتوضيح وتفسير اسم نكرة يسبقها.' }
                     ]
                 },
                 {
@@ -255,19 +259,25 @@
         function scrollToTabs() {
             requestAnimationFrame(() => {
                 const header = document.getElementById('page-header');
-                const targetY = header ? header.offsetHeight : 0;
+                const targetY = header ? header.getBoundingClientRect().height : 0;
                 window.scrollTo({ top: targetY, behavior: 'smooth' });
             });
         }
 
-        function centerTabHorizontal(tabEl) {
+        function centerTabHorizontal(tabEl, isFirst = false) {
             if (!tabEl) return;
             const container = document.getElementById('tabs-container');
             requestAnimationFrame(() => {
                 const tabRect = tabEl.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
-                const diff = (tabRect.left + tabRect.width / 2) - (containerRect.left + containerRect.width / 2);
-                container.scrollBy({ left: diff, behavior: 'smooth' });
+                
+                if (isFirst) {
+                    const diff = tabRect.right - containerRect.right;
+                    container.scrollBy({ left: diff, behavior: 'smooth' });
+                } else {
+                    const diff = (tabRect.left + tabRect.width / 2) - (containerRect.left + containerRect.width / 2);
+                    container.scrollBy({ left: diff, behavior: 'smooth' });
+                }
             });
         }
 
@@ -303,7 +313,6 @@
                     const btn = document.createElement('button');
                     btn.id = `tab-btn-${sec.id}`;
                     btn.onclick = () => switchSection(idx, true);
-                    // تم إعطاء الأيقونة عرض صفر w-0 لكي لا تزاحم النص وهو غير مكتمل
                     btn.innerHTML = `<span class="whitespace-nowrap font-bold text-base md:text-lg">${sec.title}</span>` + 
                         (sec.type !== 'info' ? `<svg id="tab-check-${sec.id}" xmlns="http://www.w3.org/2000/svg" class="h-5 w-0 opacity-0 overflow-hidden transition-all duration-300 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>` : '');
                     container.appendChild(btn);
@@ -313,7 +322,6 @@
                 const btn = document.getElementById(`tab-btn-${sec.id}`);
                 const isActive = activeSectionIndex === idx;
                 
-                // تمت إزالة gap-1.5 الثابتة وإضافة justify-center ليتوسط النص بشكل مثالي
                 let baseClasses = "flex-shrink-0 flex items-center justify-center px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold relative outline-none transition-all duration-300";
                 
                 if (isActive) {
@@ -327,11 +335,9 @@
                     const check = document.getElementById(`tab-check-${sec.id}`);
                     if (check) { 
                         if (isComp) {
-                            // إعطاء مساحة الأيقونة وإظهارها فقط عند الاكتمال
                             check.classList.remove('w-0', 'opacity-0');
                             check.classList.add('w-5', 'opacity-100', 'mr-1.5');
                         } else {
-                            // إخفاء مساحة الأيقونة تماماً قبل الاكتمال
                             check.classList.add('w-0', 'opacity-0');
                             check.classList.remove('w-5', 'opacity-100', 'mr-1.5');
                         }
@@ -340,7 +346,7 @@
                         check.classList.add(isActive ? 'text-white' : 'text-emerald-500');
                     }
                 }
-                if (isActive && shouldCenter) centerTabHorizontal(btn);
+                if (isActive && shouldCenter) centerTabHorizontal(btn, idx === 0);
             });
             updateProgressBar();
         }
@@ -374,7 +380,7 @@
                 setTimeout(() => {
                     if (shouldScroll) scrollToTabs();
                     const activeTab = document.getElementById(`tab-btn-${appData.sections[idx].id}`);
-                    centerTabHorizontal(activeTab);
+                    centerTabHorizontal(activeTab, idx === 0);
                 }, 50);
             });
         }
@@ -414,7 +420,7 @@
                 const titleMsg = ratio >= 0.8 ? 'ممتاز!' : (ratio >= 0.5 ? 'جيد جدًّا!' : 'أنهيت القسم!');
                 const descMsg = ratio >= 0.8 ? 'لقد اجتزت التحدي بتفوقٍ وتألقٍ.' : (ratio >= 0.5 ? 'أداءٌ جيدٌ، ولكن يمكنك تحقيق الأفضل.' : 'تحتاج إلى مراجعة بعض المعاني والمحاولة مجددًا.');
 
-                html += `<div id="sec-res-wrapper-${sec.id}" class="grid-expand ${isComplete ? 'grid-1' : 'grid-0'} w-full max-w-lg mx-auto"><div class="overflow-hidden-inner"><div class="bg-slate-800 text-white p-6 rounded-2xl text-center shadow-lg mt-8"><div class="text-6xl mb-4">🏆</div><h3 class="text-3xl font-bold mb-2 px-2">${titleMsg} النتيجة: ${toArabicNum(score)} / ${toArabicNum(total)}</h3><p class="text-2xl text-slate-300 mt-4 px-2">${descMsg}</p></div></div></div>${renderSectionEndButtons(sec.id)}`;
+                html += `<div id="sec-res-wrapper-${sec.id}" class="grid-expand ${isComplete ? 'grid-1' : 'grid-0'} w-full max-w-2xl mx-auto mt-6"><div class="overflow-hidden-inner"><div class="bg-emerald-50 border border-emerald-200 p-4 md:p-5 rounded-2xl flex flex-col md:flex-row items-center gap-4 shadow-sm"><div class="text-5xl hidden md:block flex-shrink-0">🏆</div><div class="flex-grow text-center md:text-right"><h3 class="text-xl md:text-2xl font-bold text-emerald-800 mb-1">${titleMsg}</h3><p class="text-base text-emerald-700 leading-snug">${descMsg}</p></div><div class="text-center flex-shrink-0 bg-white px-5 py-2 rounded-xl border border-emerald-100 shadow-sm"><span class="block text-sm text-emerald-500 font-bold mb-1">النتيجة</span><span class="text-2xl md:text-3xl font-black text-emerald-700">${toArabicNum(score)} / ${toArabicNum(total)}</span></div></div></div></div>${renderSectionEndButtons(sec.id)}`;
             }
             main.innerHTML = html;
         }
@@ -460,7 +466,6 @@
             const isComplete = checkSectionComplete(sec.id);
             const currentItem = isComplete ? null : state.boxes.shuffledItems[state.boxes.currentItemIdx];
             
-            // ألوان وتنسيقات الصناديق
             const colors = [
                 { bg: 'bg-blue-50', border: 'border-blue-300', text: 'text-blue-900', itemBg: 'bg-white', itemBorder: 'border-blue-100' },
                 { bg: 'bg-emerald-50', border: 'border-emerald-300', text: 'text-emerald-900', itemBg: 'bg-white', itemBorder: 'border-emerald-100' },
@@ -469,7 +474,6 @@
             ];
 
             const boxesHtml = sec.categories.map((cat, idx) => {
-                // الجمل التي تم وضعها في هذا الصندوق
                 const placedHtml = state.boxes.placedItems[idx].map(item => 
                     `<div class="mt-2 p-3 rounded-lg text-sm md:text-base border ${colors[idx].itemBorder} ${colors[idx].itemBg} shadow-sm leading-snug animate-fadeIn">
                         ${item.text}
@@ -565,7 +569,6 @@
                 const feedbackEl = document.getElementById('box-feedback');
                 if(feedbackEl) feedbackEl.classList.replace('grid-1', 'grid-0');
                 
-                // حفظ الجملة في الصندوق الصحيح
                 state.boxes.placedItems[selectedBoxIndex].push(currentItem);
 
                 const cardEl = document.getElementById('box-card');
@@ -629,7 +632,7 @@
 
         function renderSectionEndButtons(secId) {
             const isLast = activeSectionIndex === appData.sections.length - 1;
-            return `<div class="flex gap-3 w-full max-w-lg mx-auto mt-6 px-4"><button onclick="resetSection('${secId}')" class="flex-1 bg-white border-2 border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-xl hover:bg-slate-50 outline-none">إعادة المحاولة</button>${!isLast ? `<button onclick="switchSection(${activeSectionIndex + 1}, true)" class="flex-1 bg-pastel-primaryDark text-white py-3 rounded-xl font-bold text-xl hover:bg-blue-700 outline-none shadow-sm">القسم التالي</button>` : ''}</div>`;
+            return `<div class="flex gap-3 w-full max-w-2xl mx-auto mt-4 px-2"><button onclick="resetSection('${secId}')" class="flex-1 bg-white border-2 border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-lg md:text-xl hover:bg-slate-50 outline-none transition-colors">إعادة المحاولة</button>${!isLast ? `<button onclick="switchSection(${activeSectionIndex + 1}, true)" class="flex-1 bg-pastel-primaryDark text-white py-3 rounded-xl font-bold text-lg md:text-xl hover:bg-blue-700 outline-none shadow-sm transition-colors">القسم التالي</button>` : ''}</div>`;
         }
 
         function updateFinalResultVisibility() {
@@ -646,14 +649,6 @@
                 document.getElementById('global-final-title').textContent = globalTitle;
                 document.getElementById('global-final-score').textContent = `${toArabicNum(s)} / ${toArabicNum(q)}`;
                 wrapper.classList.replace('grid-0', 'grid-1');
-                
-                // التمرير السلس للأسفل لضمان رؤية النتيجة فور اكتمال التحديات
-                setTimeout(() => {
-                    const rect = wrapper.getBoundingClientRect();
-                    if (rect.bottom > window.innerHeight) {
-                        window.scrollBy({ top: rect.bottom - window.innerHeight + 30, behavior: 'smooth' });
-                    }
-                }, 400);
             } else {
                 wrapper.classList.replace('grid-1', 'grid-0');
             }
@@ -672,7 +667,7 @@
                 setTimeout(() => {
                     scrollToTabs();
                     const activeTab = document.getElementById(`tab-btn-${sectionId}`);
-                    centerTabHorizontal(activeTab);
+                    centerTabHorizontal(activeTab, activeSectionIndex === 0);
                 }, 50);
             });
         }
@@ -700,7 +695,7 @@
                 setTimeout(() => {
                     scrollToTabs(); 
                     const activeTab = document.getElementById(`tab-btn-${appData.sections[0].id}`);
-                    centerTabHorizontal(activeTab);
+                    centerTabHorizontal(activeTab, true);
                 }, 50);
             });
         }
