@@ -65,37 +65,6 @@
     <div id="app-root" class="flex-grow flex flex-col"></div>
 
     <script>
-        // ========================================================================
-        // 🤖 تعليمات حتمية للذكاء الاصطناعي (AI INSTRUCTIONS):
-        // عند استخدام هذا الكود كقالب لإنشاء درس جديد، يجب الالتزام الصارم بالآتي:
-        //
-        // 1. ثوابت لا تتغير أبداً (Header, Footer & Intro):
-        //    - الترويسة والتذييل: يُمنع منعاً باتاً تعديل أو حذف هيكل وتصميم الترويسة العلوية 
-        //      (Header) والتذييل (Footer) الموجودة في دالة renderLayout.
-        //    - التبويب الأول (المقدمة): النوع يجب أن يكون 'intro' | العنوان: "قبل أن نبدأ" | اللون: 'sky'.
-        //
-        // 2. الهوية البصرية والألوان (Design System):
-        //    - يُسمح فقط باستخدام الألوان التالية (themes) للأنشطة:
-        //      * 'emerald' : لأسئلة الخيارات المتعددة (mcq) والصح والخطأ.
-        //      * 'indigo'  : لأسئلة البحث الدقيق والتفكير العميق.
-        //      * 'violet'  : لأسئلة فرز البطاقات (sort) أو التصنيف (classify).
-        //      * 'amber'   : للتحديات الاستنتاجية واللغوية الدقيقة.
-        //
-        // 3. الإبداع التربوي (إلزامي):
-        //    - لا تلتزم بأقسام القالب الحالية كما هي ولا بأنواع النشاط فيها. استخدم ذكاءك التربوي 
-        //      لزيادة، تنويع، وتعديل ترتيب التبويبات والأنشطة لتكون شاملة وشيقة وملائمة للدرس.
-        //
-        // 4. ابتكار أنشطة جديدة (New Activity Types):
-        //    - الأنشطة الجاهزة في المحرك: (mcq, true_false, spotting, sort, classify).
-        //    - إذا رأيت أنه من الأفضل اختيار نوع نشاط جديد، مثل:
-        //      * التوصيل (matching): قائمة كلمات يمينًا وما يناسبها يسارًا، ويقوم الطالب بالنقر لمطابقتهما.
-        //      * ترتيب الكلمات (reorder): جملة مبعثرة كأزرار، ينقر عليها الطالب بالترتيب لتكوين جملة.
-        //      * البطاقات القلابة (flashcards): بطاقات تدور (Flip) عند النقر عليها لتعرض الإجابة.
-        //      * تصويب الأخطاء (error_correction): عرض جملة بها خطأ، ينقر الطالب عليه ثم يختار التصويب.
-        //      يجب عليك ابتكاره، برمجة الدالة الخاصة به، ودمجه بالكامل في المحرك، مع 
-        //      الحفاظ الصارم على نفس تصميم Tailwind الحالي (الهوامش، الظلال، والألوان).
-        // ========================================================================
-
         // ================= الأيقونات (SVG Strings) =================
         const ICONS = {
             youtube: `<svg class="w-7 h-7" fill="#FF0000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/></svg>`,
@@ -128,9 +97,9 @@
                     theme: "sky",
                     description: "تتنوع معاني حروف الجر في لغتنا الجميلة حسب السياق. دعنا نستنتج أبرزها بأسلوبٍ ممتع",
                     content: [
-                        { title: "🧭 المكان والاتجاه", text: "مِن (البداية)، إلَى (النهاية)، فِي (الظرفية)، عَلَى (الاستعلاء).", theme: "blue" },
+                        { title: "🧭 المكان والاتجاه", text: "مِن (البداية)، إلَى (النهاية)، فِي (الظرفية)، عَلَى (الاستعلاء).", theme: "teal" },
                         { title: "⏱️ الزمان", text: "مِن، وإلَى، وفِي تُستخدم أيضًا للدلالة على الأوقات.", theme: "emerald" },
-                        { title: "⚙️ الآلة والوسيلة", text: "الباء تفيد الآلة (ماديًّا)، أو الوسيلة (معنويًّا كالعلم).", theme: "amber" },
+                        { title: "⚙️ الآلة والوسيلة", text: "الباء تفيد الآلة (ماديًّا)، أو الوسيلة (معنويًّا كالعلم).", theme: "cyan" },
                         { title: "🔍 التشبيه والتفصيل", text: "الكاف تُستخدم للتشبيه وتأتي لضرب الأمثلة (التفصيل).", theme: "violet" }
                     ]
                 },
@@ -198,7 +167,7 @@
                     id: "mcq2",
                     type: "mcq",
                     title: "أسرار المعاني",
-                    theme: "amber",
+                    theme: "cyan",
                     description: "تحديات لغوية دقيقة تختبر فهمك العميق لأسرار حروف الجر.",
                     questions: [
                         { text: 'ما معنى اللام في: "اللهمَّ اغفر لـنا ولوالدينا"؟', options: ['الدعاء بالخير', 'الملكية', 'التعليل'], correct: 0, hint: 'طلب الخير لشخصٍ ما.', explanation: 'اللام تستخدم للدعاء بالخير.' },
@@ -238,12 +207,12 @@
                     id: "boxes",
                     type: "classify",
                     title: "صناديق المعاني",
-                    theme: "blue",
+                    theme: "teal",
                     description: "التحدي الشامل: معانٍ متطابقة لحروف مختلفة! اقرأ الجملة وضعها في الصندوق المناسب.",
                     categories: [
                         { id: 'cat0', label: 'السببية والتعليل', theme: 'emerald' },
                         { id: 'cat1', label: 'التفصيل', theme: 'violet' },
-                        { id: 'cat2', label: 'الحال', theme: 'amber' },
+                        { id: 'cat2', label: 'الحال', theme: 'cyan' },
                         { id: 'cat3', label: 'مصدر الشيء', theme: 'cyan' }
                     ],
                     questions: [
@@ -489,7 +458,7 @@
                 if (sectionData.description) {
                     headerHTML += `
                         <div class="text-center mb-8 fade-in">
-                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 p-4 md:p-5 rounded-2xl border border-${sectionData.theme}-200 shadow-sm inline-block w-full">
+                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -532,7 +501,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center mb-8">
-                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 p-4 md:p-5 rounded-2xl border border-${sectionData.theme}-200 shadow-sm inline-block w-full">
+                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -592,9 +561,15 @@
 
                     let numberingHTML = '';
                     if (type === 'mcq') {
-                        let numClass = `w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-xl md:text-2xl font-bold shrink-0 transition-colors `;
-                        if (answered) numClass += opt.isCorrect ? 'bg-emerald-200 text-emerald-800' : (selectedOption === opt ? 'bg-rose-200 text-rose-800' : 'bg-slate-200 text-slate-500');
-                        else numClass += `bg-${theme}-50 text-${theme}-500`;
+                        let numClass = `w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-xl md:text-2xl font-bold shrink-0 transition-all `;
+                        
+                        if (!answered) {
+                            numClass += `bg-white text-${theme}-600 shadow-md border border-slate-100`;
+                        } else {
+                            if (opt.isCorrect) numClass += `bg-emerald-500 text-white shadow-sm`;
+                            else if (selectedOption === opt) numClass += `bg-rose-500 text-white shadow-sm`;
+                            else numClass += `bg-slate-100 text-slate-400 border border-slate-200`;
+                        }
                         numberingHTML = `<div class="${numClass}">${toArabicNum(optIdx + 1)}</div>`;
                     }
 
@@ -612,7 +587,7 @@
                     <div id="${sectionId}-q-${idx}" class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200 mb-8 relative transition-colors duration-300 flex flex-col justify-start ${ringClass}">
                         <div class="bg-slate-50 p-4 md:p-6 rounded-xl border border-slate-100 mb-6 w-full mx-auto">
                             <div class="flex items-center justify-between mb-2 md:mb-3">
-                                <span class="bg-${theme}-50 text-${theme}-500 font-bold px-4 py-1.5 rounded-full text-lg md:text-xl">
+                                <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                     السؤال ${toArabicNum(idx + 1)}
                                 </span>
                                 <button onclick="App.toggleHint('${sectionId}', ${idx})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">
@@ -677,7 +652,7 @@
                     <div id="${sectionId}-q-${idx}" class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200 mb-8 relative transition-colors duration-300 flex flex-col justify-start ${ringClass}">
                         <div class="bg-slate-50 p-4 md:p-6 rounded-xl border border-slate-100 mb-6 w-full mx-auto">
                             <div class="flex items-center justify-between mb-2 md:mb-3">
-                                <span class="bg-${theme}-50 text-${theme}-500 font-bold px-4 py-1.5 rounded-full text-lg md:text-xl">
+                                <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                     السؤال ${toArabicNum(idx + 1)}
                                 </span>
                                 <button onclick="App.toggleHint('${sectionId}', ${idx})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">
@@ -728,7 +703,7 @@
                 // بناء شبكة الصناديق
                 let boxesHTML = '';
                 sectionData.categories.forEach(cat => {
-                    const boxTheme = cat.theme || 'blue';
+                    const boxTheme = cat.theme || 'teal';
                     
                     // استعراض البطاقات التي وُضعت مسبقاً داخل هذا الصندوق
                     const placedHtml = placedItems[cat.id].map(item => 
@@ -762,7 +737,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center w-full">
-                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 p-4 md:p-5 rounded-2xl border border-${theme}-200 shadow-sm">
+                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 p-4 md:p-5 rounded-2xl shadow-sm">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -775,7 +750,7 @@
                         ${currentQuestion ? `
                             <div id="classify-card" class="w-full max-w-2xl bg-white p-5 md:p-8 rounded-2xl shadow-lg border-2 border-slate-200 transition-all transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="bg-${theme}-50 text-${theme}-500 font-bold px-4 py-1.5 rounded-full text-lg md:text-xl">
+                                    <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                         البطاقة ${toArabicNum(currentIndex + 1)}
                                     </span>
                                     <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">
@@ -847,7 +822,7 @@
                 // بناء أزرار الخيارات السفلية
                 let boxesHTML = '';
                 if (!isComplete) {
-                    const colors = ['emerald', 'violet', 'amber', 'blue', 'indigo'];
+                    const colors = ['emerald', 'violet', 'cyan', 'teal', 'indigo'];
                     currentQState.options.forEach((opt, idx) => {
                         const boxTheme = colors[idx % colors.length];
                         let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-5 border-2 md:border-4 rounded-xl md:rounded-2xl transition-all duration-300 border-${boxTheme}-200 text-${boxTheme}-700 bg-${boxTheme}-50 `;
@@ -871,7 +846,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center w-full">
-                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 p-4 md:p-5 rounded-2xl border border-${theme}-200 shadow-sm">
+                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 p-4 md:p-5 rounded-2xl shadow-sm">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -884,7 +859,7 @@
                         ${currentQuestion ? `
                             <div class="w-full max-w-2xl bg-white p-5 md:p-8 rounded-2xl shadow-lg border-2 border-slate-200 transition-all transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="bg-${theme}-50 text-${theme}-500 font-bold px-4 py-1.5 rounded-full text-lg md:text-xl">
+                                    <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                         البطاقة ${toArabicNum(currentIndex + 1)}
                                     </span>
                                     <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">
