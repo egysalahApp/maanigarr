@@ -65,6 +65,37 @@
     <div id="app-root" class="flex-grow flex flex-col"></div>
 
     <script>
+        // ========================================================================
+        // 🤖 تعليمات حتمية للذكاء الاصطناعي (AI INSTRUCTIONS):
+        // عند استخدام هذا الكود كقالب لإنشاء درس جديد، يجب الالتزام الصارم بالآتي:
+        //
+        // 1. ثوابت لا تتغير أبداً (Header, Footer & Intro):
+        //    - الترويسة والتذييل: يُمنع منعاً باتاً تعديل أو حذف هيكل وتصميم الترويسة العلوية 
+        //      (Header) والتذييل (Footer) الموجودة في دالة renderLayout.
+        //    - التبويب الأول (المقدمة): النوع يجب أن يكون 'intro' | العنوان: "قبل أن نبدأ" | اللون: 'sky'.
+        //
+        // 2. الهوية البصرية والألوان (Design System):
+        //    - يُسمح فقط باستخدام الألوان التالية (themes) للأنشطة:
+        //      * 'emerald' : لأسئلة الخيارات المتعددة (mcq) والصح والخطأ.
+        //      * 'indigo'  : لأسئلة البحث الدقيق والتفكير العميق.
+        //      * 'violet'  : لأسئلة فرز البطاقات (sort) أو التصنيف (classify).
+        //      * 'amber'   : للتحديات الاستنتاجية واللغوية الدقيقة.
+        //
+        // 3. الإبداع التربوي (إلزامي):
+        //    - لا تلتزم بأقسام القالب الحالية كما هي ولا بأنواع النشاط فيها. استخدم ذكاءك التربوي 
+        //      لزيادة، تنويع، وتعديل ترتيب التبويبات والأنشطة لتكون شاملة وشيقة وملائمة للدرس.
+        //
+        // 4. ابتكار أنشطة جديدة (New Activity Types):
+        //    - الأنشطة الجاهزة في المحرك: (mcq, true_false, spotting, sort, classify).
+        //    - إذا رأيت أنه من الأفضل اختيار نوع نشاط جديد، مثل:
+        //      * التوصيل (matching): قائمة كلمات يمينًا وما يناسبها يسارًا، ويقوم الطالب بالنقر لمطابقتهما.
+        //      * ترتيب الكلمات (reorder): جملة مبعثرة كأزرار، ينقر عليها الطالب بالترتيب لتكوين جملة.
+        //      * البطاقات القلابة (flashcards): بطاقات تدور (Flip) عند النقر عليها لتعرض الإجابة.
+        //      * تصويب الأخطاء (error_correction): عرض جملة بها خطأ، ينقر الطالب عليه ثم يختار التصويب.
+        //      يجب عليك ابتكاره، برمجة الدالة الخاصة به، ودمجه بالكامل في المحرك، مع 
+        //      الحفاظ الصارم على نفس تصميم Tailwind الحالي (الهوامش، الظلال، والألوان).
+        // ========================================================================
+
         // ================= الأيقونات (SVG Strings) =================
         const ICONS = {
             youtube: `<svg class="w-7 h-7" fill="#FF0000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/></svg>`,
@@ -458,7 +489,7 @@
                 if (sectionData.description) {
                     headerHTML += `
                         <div class="text-center mb-8 fade-in">
-                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
+                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -470,8 +501,8 @@
                     gridHTML += `
                         <div class="bg-white border-2 border-${block.theme}-200 rounded-[2rem] p-6 md:p-8 flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group shadow-sm">
                             
-                            <!-- أيقونة الصندوق (تم تصغيرها وتكثيف لونها للتباين) -->
-                            <div class="bg-${block.theme}-100 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-2xl mb-6 shadow-sm border border-${block.theme}-200 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                            <!-- أيقونة الصندوق (بدون حدود) -->
+                            <div class="bg-${block.theme}-100 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-2xl mb-6 shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                                 <span class="text-3xl md:text-4xl drop-shadow-sm">${block.icon}</span>
                             </div>
                             
@@ -479,11 +510,10 @@
                             <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">${block.title}</h3>
                             <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 flex-grow">${block.desc}</p>
                             
-                            <!-- صندوق المثال السفلي (بشريط جانبي جمالي) -->
-                            <div class="w-full bg-${block.theme}-50/80 p-5 rounded-2xl border border-${block.theme}-200 flex flex-col justify-center relative overflow-hidden">
-                                <div class="absolute top-0 right-0 w-2 h-full bg-${block.theme}-400 opacity-60"></div>
+                            <!-- صندوق المثال السفلي (بطاقة ناعمة بدون حدود) -->
+                            <div class="w-full bg-${block.theme}-50/80 p-5 rounded-2xl flex flex-col justify-center">
                                 <span class="text-sm font-bold text-${block.theme}-600 mb-2 block">أمثلة وتوضيح:</span>
-                                <p class="text-lg md:text-xl font-bold text-${block.theme}-900 leading-relaxed pl-2 pr-1">${block.examples}</p>
+                                <p class="text-lg md:text-xl font-bold text-${block.theme}-900 leading-relaxed">${block.examples}</p>
                             </div>
                             
                         </div>
@@ -516,7 +546,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center mb-8">
-                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
+                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -752,7 +782,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center w-full">
-                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 p-4 md:p-5 rounded-2xl shadow-sm">
+                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -861,7 +891,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center w-full">
-                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 p-4 md:p-5 rounded-2xl shadow-sm">
+                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
