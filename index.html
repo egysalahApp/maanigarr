@@ -97,10 +97,10 @@
                     theme: "sky",
                     description: "تتنوع معاني حروف الجر في لغتنا الجميلة حسب السياق. دعنا نستنتج أبرزها بأسلوبٍ ممتع",
                     content: [
-                        { title: "🧭 المكان والاتجاه", text: "مِن (البداية)، إلَى (النهاية)، فِي (الظرفية)، عَلَى (الاستعلاء).", theme: "teal" },
-                        { title: "⏱️ الزمان", text: "مِن، وإلَى، وفِي تُستخدم أيضًا للدلالة على الأوقات.", theme: "emerald" },
-                        { title: "⚙️ الآلة والوسيلة", text: "الباء تفيد الآلة (ماديًّا)، أو الوسيلة (معنويًّا كالعلم).", theme: "cyan" },
-                        { title: "🔍 التشبيه والتفصيل", text: "الكاف تُستخدم للتشبيه وتأتي لضرب الأمثلة (التفصيل).", theme: "violet" }
+                        { icon: "🧭", title: "المكان والاتجاه", desc: "تُستخدم لتحديد مواقع الأشياء واتجاهات حركتها في الفضاء بدقة.", examples: "مِن (البداية)، إلَى (النهاية)، فِي (الظرفية)، عَلَى (الاستعلاء).", theme: "blue" },
+                        { icon: "⏱️", title: "الزمان", desc: "تأتي لربط الأحداث بأوقات حدوثها، سواء كانت أوقاتاً محددة أو ممتدة.", examples: "مِن، وإلَى، وفِي تُستخدم أيضًا للدلالة على الأوقات.", theme: "emerald" },
+                        { icon: "⚙️", title: "الآلة والوسيلة", desc: "تبين الأداة المستخدمة للقيام بالفعل، سواء كانت مادية أو وسيلة معنوية.", examples: "الباء تفيد الآلة (ماديًّا)، أو الوسيلة (معنويًّا كالعلم).", theme: "amber" },
+                        { icon: "🔍", title: "التشبيه والتفصيل", desc: "تُستعمل لعقد مقارنات ومماثلات بين الأشياء، أو لتوضيح وتعداد الأنواع.", examples: "الكاف تُستخدم للتشبيه وتأتي لضرب الأمثلة (التفصيل).", theme: "violet" }
                     ]
                 },
                 {
@@ -465,12 +465,27 @@
                     `;
                 }
 
-                let gridHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full fade-in">';
+                let gridHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full fade-in">';
                 sectionData.content.forEach(block => {
                     gridHTML += `
-                        <div class="bg-${block.theme}-50 p-6 md:p-8 rounded-3xl border-2 border-${block.theme}-200 hover:-translate-y-2 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 group cursor-default">
-                            <h3 class="text-2xl md:text-3xl font-bold text-${block.theme}-800 leading-snug text-center w-full group-hover:scale-105 transition-transform duration-300">${block.title}</h3>
-                            <p class="text-lg md:text-xl font-medium text-slate-700 leading-relaxed bg-white/60 p-5 rounded-2xl border border-${block.theme}-100 flex-grow shadow-sm text-center">${block.text}</p>
+                        <div class="bg-white border-2 border-${block.theme}-200 rounded-[2rem] p-6 md:p-8 flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group shadow-sm">
+                            
+                            <!-- أيقونة الصندوق (تم تصغيرها وتكثيف لونها للتباين) -->
+                            <div class="bg-${block.theme}-100 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-2xl mb-6 shadow-sm border border-${block.theme}-200 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                                <span class="text-3xl md:text-4xl drop-shadow-sm">${block.icon}</span>
+                            </div>
+                            
+                            <!-- العنوان والشرح -->
+                            <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">${block.title}</h3>
+                            <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 flex-grow">${block.desc}</p>
+                            
+                            <!-- صندوق المثال السفلي (بشريط جانبي جمالي) -->
+                            <div class="w-full bg-${block.theme}-50/80 p-5 rounded-2xl border border-${block.theme}-200 flex flex-col justify-center relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-2 h-full bg-${block.theme}-400 opacity-60"></div>
+                                <span class="text-sm font-bold text-${block.theme}-600 mb-2 block">أمثلة وتوضيح:</span>
+                                <p class="text-lg md:text-xl font-bold text-${block.theme}-900 leading-relaxed pl-2 pr-1">${block.examples}</p>
+                            </div>
+                            
                         </div>
                     `;
                 });
