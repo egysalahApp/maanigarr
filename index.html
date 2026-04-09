@@ -238,7 +238,7 @@
                     id: "boxes",
                     type: "classify",
                     title: "صناديق المعاني",
-                    theme: "teal",
+                    theme: "blue",
                     description: "التحدي الشامل: معانٍ متطابقة لحروف مختلفة! اقرأ الجملة وضعها في الصندوق المناسب.",
                     categories: [
                         { id: 'cat0', label: 'السببية والتعليل', theme: 'emerald' },
@@ -750,38 +750,42 @@
                 sectionData.categories.forEach(cat => {
                     const boxTheme = cat.theme || 'teal';
                     
-                    // استعراض البطاقات التي وُضعت مسبقاً داخل هذا الصندوق (بتصميم ناعم ومندمج)
+                    // استعراض البطاقات التي وُضعت مسبقاً داخل هذا الصندوق
                     const placedHtml = placedItems[cat.id].map(item => 
-                        `<div class="mt-2 p-3 rounded-xl text-lg md:text-xl font-bold bg-${boxTheme}-50/80 shadow-sm leading-snug fade-in text-right text-${boxTheme}-900 relative z-10">
+                        `<div class="p-4 rounded-xl text-lg md:text-xl font-bold bg-white shadow-md border-r-4 border-${boxTheme}-400 leading-snug fade-in text-right text-slate-800 relative z-10">
                             ${item.text}
                         </div>`
                     ).join('');
 
-                    // الصندوق الرئيسي (تصميم البطاقات السحابية الطافية)
-                    let boxClass = `relative overflow-hidden flex flex-col w-full p-5 rounded-[2rem] bg-white shadow-xl shadow-${boxTheme}-100/50 transition-all duration-300 min-h-[12rem] `;
+                    // الصندوق الرئيسي (الصواني الزجاجية المحددة - Defined Glassy Trays)
+                    let boxClass = `relative overflow-hidden flex flex-col w-full px-5 pb-6 pt-8 rounded-[2.5rem] bg-white/50 backdrop-blur-sm border-2 border-slate-300 shadow-[inset_0_2px_8px_rgba(0,0,0,0.03)] transition-all duration-300 min-h-[12rem] `;
                     if (!isComplete && status !== 'correct' && !animatingOut) {
-                        boxClass += `cursor-pointer hover:-translate-y-2 hover:shadow-2xl hover:shadow-${boxTheme}-200/60 active:scale-[0.98]`;
+                        boxClass += `cursor-pointer hover:-translate-y-1 hover:bg-white/80 hover:border-slate-400 hover:shadow-lg active:scale-[0.98] group`;
                     } else {
                         boxClass += `cursor-default`; 
                     }
 
                     boxesHTML += `
                         <div ${(!isComplete && status !== 'correct' && !animatingOut) ? `onclick="App.handleClassifyClick('${sectionId}', '${cat.id}')"` : ''} class="${boxClass}">
-                            <!-- زخرفة العمق السحابي في الزاوية -->
-                            <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-${boxTheme}-50 rounded-full blur-2xl opacity-60 pointer-events-none z-0"></div>
+                            
+                            <!-- شريط الهوية في أعلى الصندوق -->
+                            <div class="absolute top-0 left-0 w-full h-2 bg-${boxTheme}-400 opacity-60 transition-opacity duration-300 group-hover:opacity-100"></div>
 
-                            <!-- عنوان الصندوق (كبسولة ناعمة تتوسط الأعلى) -->
-                            <div class="flex items-center justify-center mb-4 relative z-10">
-                                <div class="bg-${boxTheme}-100/70 text-${boxTheme}-800 px-5 py-2.5 rounded-full backdrop-blur-sm flex items-center justify-center gap-2">
-                                    <span class="flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6 [&>svg]:mb-0 [&>svg]:md:w-7 [&>svg]:md:h-7 opacity-90">
-                                        ${ICONS.tray}
-                                    </span>
-                                    <h3 class="font-bold text-lg md:text-xl m-0">${cat.label}</h3>
+                            <!-- اللمسة الفنية (العلامة المائية المائلة) -->
+                            <div class="absolute -bottom-10 -left-10 text-${boxTheme}-200 opacity-10 transform -rotate-12 scale-150 pointer-events-none z-0 [&>svg]:w-24 [&>svg]:h-24 [&>svg]:mb-0">
+                                ${ICONS.tray}
+                            </div>
+
+                            <!-- رأس الصندوق (الأيقونة والعنوان في المنتصف) -->
+                            <div class="flex items-center justify-center gap-3 mb-2 relative z-10">
+                                <div class="bg-white shadow-sm w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-${boxTheme}-500 shrink-0 [&>svg]:w-5 [&>svg]:h-5 [&>svg]:md:w-6 [&>svg]:md:h-6 [&>svg]:mb-0 [&>svg]:opacity-100 transition-transform duration-300 group-hover:scale-110">
+                                    ${ICONS.tray}
                                 </div>
+                                <h3 class="font-bold text-xl md:text-2xl text-slate-900 m-0">${cat.label}</h3>
                             </div>
                             
                             <!-- مساحة البطاقات المصنفة -->
-                            <div class="flex flex-col gap-1 flex-grow mt-1 relative z-10">
+                            <div class="flex flex-col gap-3 flex-grow relative z-10">
                                 ${placedHtml}
                             </div>
                         </div>
