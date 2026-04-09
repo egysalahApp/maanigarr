@@ -750,27 +750,38 @@
                 sectionData.categories.forEach(cat => {
                     const boxTheme = cat.theme || 'teal';
                     
-                    // استعراض البطاقات التي وُضعت مسبقاً داخل هذا الصندوق
+                    // استعراض البطاقات التي وُضعت مسبقاً داخل هذا الصندوق (بتصميم ناعم ومندمج)
                     const placedHtml = placedItems[cat.id].map(item => 
-                        `<div class="mt-2 p-3 rounded-lg text-lg md:text-xl font-semibold border border-${boxTheme}-100 bg-white shadow-sm leading-snug fade-in text-right text-slate-700">
+                        `<div class="mt-2 p-3 rounded-xl text-lg md:text-xl font-bold bg-${boxTheme}-50/80 shadow-sm leading-snug fade-in text-right text-${boxTheme}-900 relative z-10">
                             ${item.text}
                         </div>`
                     ).join('');
 
-                    let boxClass = `flex flex-col w-full p-4 rounded-xl border-2 transition-all duration-300 min-h-[10rem] `;
+                    // الصندوق الرئيسي (تصميم البطاقات السحابية الطافية)
+                    let boxClass = `relative overflow-hidden flex flex-col w-full p-5 rounded-[2rem] bg-white shadow-xl shadow-${boxTheme}-100/50 transition-all duration-300 min-h-[12rem] `;
                     if (!isComplete && status !== 'correct' && !animatingOut) {
-                        boxClass += `border-${boxTheme}-300 bg-${boxTheme}-50 cursor-pointer hover:shadow-md hover:brightness-95 active:scale-[0.98]`;
+                        boxClass += `cursor-pointer hover:-translate-y-2 hover:shadow-2xl hover:shadow-${boxTheme}-200/60 active:scale-[0.98]`;
                     } else {
-                        // تم إزالة الشفافية لتظل الصناديق واضحة كخريطة ذهنية للطلاب
-                        boxClass += `border-${boxTheme}-300 bg-${boxTheme}-50 cursor-default`; 
+                        boxClass += `cursor-default`; 
                     }
 
                     boxesHTML += `
                         <div ${(!isComplete && status !== 'correct' && !animatingOut) ? `onclick="App.handleClassifyClick('${sectionId}', '${cat.id}')"` : ''} class="${boxClass}">
-                            <h3 class="font-bold text-lg md:text-xl text-center text-${boxTheme}-800 border-b border-black/10 pb-3 flex items-center justify-center gap-2">
-                                ${ICONS.tray} ${cat.label}
-                            </h3>
-                            <div class="flex flex-col gap-1 flex-grow mt-1">
+                            <!-- زخرفة العمق السحابي في الزاوية -->
+                            <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-${boxTheme}-50 rounded-full blur-2xl opacity-60 pointer-events-none z-0"></div>
+
+                            <!-- عنوان الصندوق (كبسولة ناعمة تتوسط الأعلى) -->
+                            <div class="flex items-center justify-center mb-4 relative z-10">
+                                <div class="bg-${boxTheme}-100/70 text-${boxTheme}-800 px-5 py-2.5 rounded-full backdrop-blur-sm flex items-center justify-center gap-2">
+                                    <span class="flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6 [&>svg]:mb-0 [&>svg]:md:w-7 [&>svg]:md:h-7 opacity-90">
+                                        ${ICONS.tray}
+                                    </span>
+                                    <h3 class="font-bold text-lg md:text-xl m-0">${cat.label}</h3>
+                                </div>
+                            </div>
+                            
+                            <!-- مساحة البطاقات المصنفة -->
+                            <div class="flex flex-col gap-1 flex-grow mt-1 relative z-10">
                                 ${placedHtml}
                             </div>
                         </div>
