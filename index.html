@@ -489,7 +489,7 @@
                 if (sectionData.description) {
                     headerHTML += `
                         <div class="text-center mb-8 fade-in">
-                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
+                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -546,7 +546,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center mb-8">
-                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
+                            <p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -777,12 +777,15 @@
                             </div>
 
                             <!-- رأس الصندوق (الأيقونة والعنوان في المنتصف) -->
-                            <div class="flex items-center justify-center gap-3 mb-2 relative z-10">
+                            <div class="flex items-center justify-center gap-3 mb-3 relative z-10">
                                 <div class="bg-white shadow-sm w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-${boxTheme}-500 shrink-0 [&>svg]:w-5 [&>svg]:h-5 [&>svg]:md:w-6 [&>svg]:md:h-6 [&>svg]:mb-0 [&>svg]:opacity-100 transition-transform duration-300 group-hover:scale-110">
                                     ${ICONS.tray}
                                 </div>
                                 <h3 class="font-bold text-xl md:text-2xl text-slate-900 m-0">${cat.label}</h3>
                             </div>
+                            
+                            <!-- الخط الفاصل -->
+                            <div class="h-px bg-slate-200 w-2/3 mx-auto mb-3 relative z-10 transition-colors duration-300 group-hover:bg-slate-300"></div>
                             
                             <!-- مساحة البطاقات المصنفة -->
                             <div class="flex flex-col gap-3 flex-grow relative z-10">
@@ -797,7 +800,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center w-full">
-                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm w-full">
+                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
@@ -906,7 +909,7 @@
                 if (sectionData.description) {
                     html += `
                         <div class="text-center w-full">
-                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50/60 p-4 md:p-5 rounded-2xl shadow-sm w-full">
+                            <p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm w-full">
                                 ${sectionData.description}
                             </p>
                         </div>
