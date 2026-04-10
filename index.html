@@ -561,7 +561,7 @@
                     let btnClass = `w-full p-4 md:p-5 rounded-xl border-2 transition-all font-semibold text-xl md:text-2xl flex items-center gap-3 ${type === 'mcq' ? 'justify-start' : 'justify-center'} `;
                     
                     if (!answered) {
-                        btnClass += `border-slate-200 bg-white text-slate-600 active:scale-95 hover:bg-slate-50 cursor-pointer`;
+                        btnClass += `border-slate-200 bg-white text-slate-600 md:hover:bg-slate-50 cursor-pointer active:scale-95`;
                     } else {
                         if (opt.isCorrect) btnClass += "bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm";
                         else if (selectedOption === opt) btnClass += "bg-rose-50 border-rose-500 text-rose-800 shadow-sm";
@@ -600,7 +600,7 @@
                                 <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                     السؤال ${toArabicNum(idx + 1)}
                                 </span>
-                                <button onclick="App.toggleHint('${sectionId}', ${idx})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">
+                                <button onclick="App.toggleHint('${sectionId}', ${idx})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 md:hover:bg-amber-50 text-amber-500">
                                     💡 تلميح
                                 </button>
                             </div>
@@ -647,7 +647,7 @@
                     let wordClass = "px-4 md:px-6 py-3 md:py-4 text-2xl md:text-3xl font-bold rounded-xl transition-all duration-300 select-none ";
                     
                     if (!answered) {
-                        wordClass += `bg-white border-2 border-slate-200 text-slate-700 hover:border-${theme}-300 hover:bg-${theme}-50 hover:-translate-y-1 hover:shadow-md active:scale-95 cursor-pointer`;
+                        wordClass += `bg-white border-2 border-slate-200 text-slate-700 md:hover:border-${theme}-300 md:hover:bg-${theme}-50 md:hover:-translate-y-1 md:hover:shadow-md cursor-pointer active:scale-95`;
                     } else {
                         if (isSelected && isCorrect) wordClass += "bg-emerald-500 text-white border-2 border-emerald-600 shadow-md scale-105";
                         else if (isSelected && !isCorrect) wordClass += "bg-rose-500 text-white border-2 border-rose-600 shadow-md scale-105";
@@ -665,7 +665,7 @@
                                 <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                     السؤال ${toArabicNum(idx + 1)}
                                 </span>
-                                <button onclick="App.toggleHint('${sectionId}', ${idx})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">
+                                <button onclick="App.toggleHint('${sectionId}', ${idx})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 md:hover:bg-amber-50 text-amber-500">
                                     💡 تلميح
                                 </button>
                             </div>
@@ -723,7 +723,7 @@
                         </div>
                     `).join('');
                     
-                    // الصندوق أصبح حاوية صلبة وثابتة 100% (تمت إزالة transition-all لمنع أي تمدد أو حركة خفية)
+                    // الصندوق أصبح حاوية صلبة وثابتة 100%
                     let boxClass = `flex flex-col w-full pt-6 pb-5 px-5 md:px-6 rounded-[2.5rem] bg-white/50 backdrop-blur-sm border-2 border-slate-300 shadow-[inset_0_2px_8px_rgba(0,0,0,0.03)] min-h-[14rem] relative overflow-hidden opacity-95 `;
 
                     const headerIcon = ICONS.tray.replace('w-8 h-8 md:w-12 md:h-12 mb-2 opacity-80', `w-6 h-6 md:w-8 md:h-8 text-${boxTheme}-600`);
@@ -758,7 +758,7 @@
                         let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 border-${btnTheme}-200 text-${btnTheme}-700 bg-${btnTheme}-50 rounded-xl transition-all duration-300 `;
                         
                         if (!animatingOut && status !== 'correct') { // الزر قابل للنقر
-                            btnClass += `hover:border-${btnTheme}-400 hover:bg-${btnTheme}-100 hover:-translate-y-1 cursor-pointer shadow-sm hover:shadow-md active:scale-95`;
+                            btnClass += `md:hover:border-${btnTheme}-400 md:hover:bg-${btnTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
                         } else {
                             btnClass += `opacity-60 cursor-default grayscale-[30%]`;
                         }
@@ -776,13 +776,14 @@
                 html += `<div class="flex flex-col items-center w-full gap-6 ${sectionFadeClass}">`;
                 if (sectionData.description) { html += `<div class="text-center w-full"><p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm">${sectionData.description}</p></div>`; }
                 
-                html += `<div class="relative w-full bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 md:p-6 transition-all duration-500">
+                // إضافة min-h-[24rem] للحاوية الخلفية لمنع القفز
+                html += `<div class="relative w-full min-h-[24rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 md:p-6 transition-all duration-500">
                     ${currentQuestion ? `
                         <div id="classify-card" class="w-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transition-all transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
                             
                             <div class="flex items-center justify-between mb-4">
                                 <span class="text-${theme}-600 font-bold text-lg md:text-xl">البطاقة ${toArabicNum(currentIndex + 1)}</span>
-                                <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">💡 تلميح</button>
+                                <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 md:hover:bg-amber-50 text-amber-500">💡 تلميح</button>
                             </div>
                             
                             <span class="block mb-4 text-slate-500 text-sm md:text-base font-medium text-center">إلى أي صندوق تنتمي هذه البطاقة؟</span>
@@ -852,7 +853,7 @@
                         let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 rounded-xl transition-all duration-300 border-${boxTheme}-200 text-${boxTheme}-700 bg-${boxTheme}-50 `;
                         
                         if (!animatingOut && status !== 'correct') { // قابل للنقر
-                            btnClass += `hover:border-${boxTheme}-400 hover:bg-${boxTheme}-100 hover:-translate-y-1 cursor-pointer shadow-sm hover:shadow-md active:scale-95`;
+                            btnClass += `md:hover:border-${boxTheme}-400 md:hover:bg-${boxTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
                         } else {
                             btnClass += `opacity-60 cursor-default grayscale-[30%]`;
                         }
@@ -866,8 +867,9 @@
                     optionsButtonsHTML = `<div class="flex flex-row w-full gap-2 md:gap-4 mt-6 relative z-0 flex-wrap justify-center border-t-2 border-slate-100 pt-6">${buttons}</div>`;
                 }
 
+                // إضافة min-h-[24rem] للحاوية الخلفية لمنع القفز
                 html += `
-                    <div class="relative w-full bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 md:p-6 transition-all duration-500">
+                    <div class="relative w-full min-h-[24rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 md:p-6 transition-all duration-500">
                         ${currentQuestion ? `
                             <div class="w-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transition-all transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
                                 
@@ -875,7 +877,7 @@
                                     <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                         البطاقة ${toArabicNum(currentIndex + 1)}
                                     </span>
-                                    <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 text-amber-500 hover:bg-amber-50">
+                                    <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 md:hover:bg-amber-50 text-amber-500">
                                         💡 تلميح
                                     </button>
                                 </div>
@@ -936,7 +938,7 @@
                         </button>
 
                         ${!isLast ? `
-                            <button onclick="App.handleNextSection()" class="w-full md:w-auto px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold text-xl md:text-2xl text-white shadow-md transition-transform flex items-center justify-center gap-3 active:scale-95 bg-${sectionData.theme}-600 hover:bg-${sectionData.theme}-700">
+                            <button onclick="App.handleNextSection()" class="w-full md:w-auto px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold text-xl md:text-2xl text-white shadow-md transition-transform flex items-center justify-center gap-3 active:scale-95 md:hover:bg-${sectionData.theme}-700 bg-${sectionData.theme}-600">
                                 القسم التالي ${ICONS.arrowLeft}
                             </button>
                         ` : ''}
