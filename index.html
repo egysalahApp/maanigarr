@@ -754,7 +754,7 @@
                     let buttons = '';
                     sectionData.categories.forEach(cat => {
                         const btnTheme = cat.theme || 'sky';
-                        let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 border-${btnTheme}-200 text-${btnTheme}-700 bg-${btnTheme}-50 rounded-xl transition-all duration-300 `;
+                        let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 border-${btnTheme}-200 text-${btnTheme}-700 bg-${btnTheme}-50 rounded-xl transition-all duration-300 min-h-[4.5rem] md:min-h-[5rem] `;
                         
                         if (!animatingOut && status !== 'correct') { // الزر قابل للنقر
                             btnClass += `md:hover:border-${btnTheme}-400 md:hover:bg-${btnTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
@@ -809,7 +809,7 @@
                         </div>
                         
                         <!-- لوحة التحكم السفلية (ثابتة في الأسفل ولا تطير مع البطاقة) -->
-                        <div class="w-full z-20 relative">
+                        <div class="w-full z-20 relative flex items-center justify-center min-h-[11rem] md:min-h-[6rem]">
                             ${actionButtonsHTML}
                         </div>
                     `;
@@ -865,7 +865,7 @@
                     let buttons = '';
                     currentQState.options.forEach((opt, idx) => {
                         const boxTheme = colors[idx % colors.length];
-                        let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 rounded-xl transition-all duration-300 border-${boxTheme}-200 text-${boxTheme}-700 bg-${boxTheme}-50 `;
+                        let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 rounded-xl transition-all duration-300 border-${boxTheme}-200 text-${boxTheme}-700 bg-${boxTheme}-50 min-h-[4.5rem] md:min-h-[5rem] `;
                         
                         if (!animatingOut && status !== 'correct') { // قابل للنقر
                             btnClass += `md:hover:border-${boxTheme}-400 md:hover:bg-${boxTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
@@ -922,7 +922,7 @@
                         </div>
 
                         <!-- لوحة التحكم السفلية -->
-                        <div class="w-full z-20 relative">
+                        <div class="w-full z-20 relative flex items-center justify-center min-h-[11rem] md:min-h-[6rem]">
                             ${optionsButtonsHTML}
                         </div>
                     `;
