@@ -756,10 +756,10 @@
                         const btnTheme = cat.theme || 'sky';
                         let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 border-${btnTheme}-200 text-${btnTheme}-700 bg-${btnTheme}-50 rounded-xl transition-all duration-300 `;
                         
-                        if (!animatingOut && status !== 'correct') { 
+                        if (!animatingOut && status !== 'correct') { // الزر قابل للنقر
                             btnClass += `md:hover:border-${btnTheme}-400 md:hover:bg-${btnTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
                         } else {
-                            btnClass += `opacity-60 cursor-default grayscale-[30%] pointer-events-none`;
+                            btnClass += `opacity-60 cursor-default grayscale-[30%]`;
                         }
                         
                         buttons += `
@@ -830,7 +830,7 @@
                 html += this.renderSectionFooterControls(sectionId, isComplete); return html;
             },
 
-            // --- قسم فرز البطاقات بالتصميم المستقر للوحة التحكم ---
+            // --- قسم فرز البطاقات مدمج أيضاً ---
             renderSort(sectionData) {
                 const sectionId = sectionData.id;
                 const theme = sectionData.theme;
@@ -867,10 +867,10 @@
                         const boxTheme = colors[idx % colors.length];
                         let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 rounded-xl transition-all duration-300 border-${boxTheme}-200 text-${boxTheme}-700 bg-${boxTheme}-50 `;
                         
-                        if (!animatingOut && status !== 'correct') { 
+                        if (!animatingOut && status !== 'correct') { // قابل للنقر
                             btnClass += `md:hover:border-${boxTheme}-400 md:hover:bg-${boxTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
                         } else {
-                            btnClass += `opacity-60 cursor-default grayscale-[30%] pointer-events-none`;
+                            btnClass += `opacity-60 cursor-default grayscale-[30%]`;
                         }
                         
                         buttons += `
