@@ -780,42 +780,42 @@
                 
                 if (currentQuestion) {
                     html += `
-                        <!-- مساحة عرض البطاقة (تتوسط الجزء العلوي/الأوسط) -->
-                        <div class="flex-grow flex items-center justify-center w-full mb-6">
-                            <div id="classify-card" class="w-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
+                        <!-- مساحة عرض البطاقة (تتوسط الجزء العلوي/الأوسط وذات مساحة ثابتة) -->
+                        <div class="flex-grow flex items-center justify-center w-full mb-6 relative h-[20rem] md:h-[24rem]">
+                            <div id="classify-card" class="w-full h-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 overflow-y-auto no-scrollbar ${animatingOut ? 'fly-out absolute' : 'fade-in relative'} ${shakeClass}">
                                 
-                                <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center justify-between mb-4 shrink-0">
                                     <span class="text-${theme}-600 font-bold text-lg md:text-xl">البطاقة ${toArabicNum(currentIndex + 1)}</span>
                                     <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 md:hover:bg-amber-50 text-amber-500">💡 تلميح</button>
                                 </div>
                                 
-                                <span class="block mb-2 text-slate-500 text-sm md:text-base font-medium text-center">إلى أي صندوق تنتمي هذه البطاقة؟</span>
+                                <span class="block mb-2 text-slate-500 text-sm md:text-base font-medium text-center shrink-0">إلى أي صندوق تنتمي هذه البطاقة؟</span>
                                 
-                                <!-- المنطقة المخصصة للسؤال بأبعاد ثابتة لمنع اهتزاز الشاشة -->
-                                <div class="w-full flex items-center justify-center min-h-[8rem] md:min-h-[10rem] my-2">
+                                <!-- المنطقة المخصصة للسؤال تتمدد لملء المساحة وتتوسط عمودياً -->
+                                <div class="w-full flex items-center justify-center flex-grow min-h-[6rem] my-2">
                                     <h3 class="text-3xl md:text-4xl font-bold leading-relaxed text-slate-800 text-center px-2">«${currentQuestion.text}»</h3>
                                 </div>
                                 
-                                <div class="${showHint ? `block w-full smooth-expand` : 'hidden'} mt-2">
+                                <div class="${showHint ? `block w-full smooth-expand` : 'hidden'} shrink-0 mt-2">
                                     <div class="bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
                                         <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span><span class="leading-relaxed">${currentQuestion.hint}</span>
                                     </div>
                                 </div>
                                 
-                                <div class="${status === 'incorrect' ? 'block w-full smooth-expand' : 'hidden'} mt-4">
+                                <div class="${status === 'incorrect' ? 'block w-full smooth-expand' : 'hidden'} shrink-0 mt-4">
                                     <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-center text-rose-700 text-lg md:text-xl font-bold shadow-sm">⚠️ ${currentQuestion.explanation}</div>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- لوحة التحكم السفلية (ثابتة في الأسفل ولا تطير مع البطاقة) -->
-                        <div class="w-full">
+                        <div class="w-full z-20 relative">
                             ${actionButtonsHTML}
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="flex-grow flex items-center justify-center w-full">
+                        <div class="flex-grow flex items-center justify-center w-full h-[20rem] md:h-[24rem]">
                             <div class="text-3xl md:text-4xl font-bold text-emerald-500 flex flex-col items-center gap-4 fade-in py-6">
                                 <span class="text-6xl">🎉</span><span>اكتملت الصناديق بنجاح!</span>
                             </div>
@@ -830,7 +830,7 @@
                 html += this.renderSectionFooterControls(sectionId, isComplete); return html;
             },
 
-            // --- قسم فرز البطاقات مدمج أيضاً ---
+            // --- قسم فرز البطاقات بالتصميم المستقر للوحة التحكم ---
             renderSort(sectionData) {
                 const sectionId = sectionData.id;
                 const theme = sectionData.theme;
@@ -887,11 +887,11 @@
                         
                 if (currentQuestion) {
                     html += `
-                        <!-- مساحة عرض البطاقة -->
-                        <div class="flex-grow flex items-center justify-center w-full mb-6">
-                            <div class="w-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
+                        <!-- مساحة عرض البطاقة ذات الارتفاع المطلق المستقر -->
+                        <div class="flex-grow flex items-center justify-center w-full mb-6 relative h-[20rem] md:h-[24rem]">
+                            <div class="w-full h-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 overflow-y-auto no-scrollbar ${animatingOut ? 'fly-out absolute' : 'fade-in relative'} ${shakeClass}">
                                 
-                                <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center justify-between mb-4 shrink-0">
                                     <span class="text-${theme}-600 font-bold text-lg md:text-xl">
                                         البطاقة ${toArabicNum(currentIndex + 1)}
                                     </span>
@@ -900,19 +900,19 @@
                                     </button>
                                 </div>
                                 
-                                <!-- المنطقة المخصصة للسؤال بأبعاد ثابتة لمنع اهتزاز الشاشة -->
-                                <div class="w-full flex items-center justify-center min-h-[8rem] md:min-h-[10rem] my-2">
+                                <!-- المنطقة المخصصة للسؤال تتمدد وتتوسط -->
+                                <div class="w-full flex flex-grow items-center justify-center min-h-[6rem] my-2">
                                     <h3 class="text-3xl md:text-4xl font-bold leading-relaxed text-slate-800 text-center px-2">«${currentQuestion.text}»</h3>
                                 </div>
                                 
-                                <div class="${showHint ? `block w-full smooth-expand` : 'hidden'} mt-2">
+                                <div class="${showHint ? `block w-full smooth-expand` : 'hidden'} shrink-0 mt-2">
                                     <div class="bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
                                         <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span>
                                         <span class="leading-relaxed">${currentQuestion.hint}</span>
                                     </div>
                                 </div>
 
-                                <div class="${status === 'incorrect' ? 'block w-full smooth-expand' : 'hidden'} mt-4">
+                                <div class="${status === 'incorrect' ? 'block w-full smooth-expand' : 'hidden'} shrink-0 mt-4">
                                     <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-center text-rose-700 text-lg md:text-xl font-bold shadow-sm">
                                         ⚠️ إجابة خاطئة! ${currentQuestion.explanation}
                                     </div>
@@ -921,13 +921,13 @@
                         </div>
 
                         <!-- لوحة التحكم السفلية -->
-                        <div class="w-full">
+                        <div class="w-full z-20 relative">
                             ${optionsButtonsHTML}
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="flex-grow flex items-center justify-center w-full">
+                        <div class="flex-grow flex items-center justify-center w-full h-[20rem] md:h-[24rem]">
                             <div class="text-3xl md:text-4xl font-bold text-emerald-500 flex flex-col items-center gap-4 fade-in py-6">
                                 <span class="text-6xl">🎉</span>
                                 <span>اكتمل فرز البطاقات!</span>
