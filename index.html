@@ -776,12 +776,12 @@
                 if (sectionData.description) { html += `<div class="text-center w-full"><p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm">${sectionData.description}</p></div>`; }
                 
                 // الحاوية الخلفية المتقطعة مصممة بـ flex-col و justify-between مع ارتفاع كافٍ صلب لمنع أي قفز
-                html += `<div class="relative w-full min-h-[28rem] md:min-h-[32rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col justify-between p-4 md:p-6">`;
+                html += `<div class="relative w-full min-h-[32rem] md:min-h-[34rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col justify-between p-4 md:p-6">`;
                 
                 if (currentQuestion) {
                     html += `
                         <!-- مساحة عرض البطاقة (تتوسط الجزء العلوي/الأوسط وذات مساحة ثابتة) -->
-                        <div class="flex-grow flex items-center justify-center w-full mb-6 relative h-[20rem] md:h-[24rem]">
+                        <div class="flex-grow flex items-center justify-center w-full mb-6 relative h-[22rem] md:h-[24rem]">
                             <div id="classify-card" class="w-full h-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 overflow-y-auto no-scrollbar ${animatingOut ? 'fly-out absolute' : 'fade-in relative'} ${shakeClass}">
                                 
                                 <div class="flex items-center justify-between mb-4 shrink-0">
@@ -792,7 +792,7 @@
                                 <span class="block mb-2 text-slate-500 text-sm md:text-base font-medium text-center shrink-0">إلى أي صندوق تنتمي هذه البطاقة؟</span>
                                 
                                 <!-- المنطقة المخصصة للسؤال تتمدد لملء المساحة وتتوسط عمودياً -->
-                                <div class="w-full flex items-center justify-center flex-grow min-h-[6rem] my-2">
+                                <div class="w-full flex items-center justify-center flex-grow min-h-[8rem] md:min-h-[10rem] my-2">
                                     <h3 class="text-3xl md:text-4xl font-bold leading-relaxed text-slate-800 text-center px-2">«${currentQuestion.text}»</h3>
                                 </div>
                                 
@@ -815,7 +815,7 @@
                     `;
                 } else {
                     html += `
-                        <div class="flex-grow flex items-center justify-center w-full h-[20rem] md:h-[24rem]">
+                        <div class="flex-grow flex items-center justify-center w-full h-[22rem] md:h-[24rem]">
                             <div class="text-3xl md:text-4xl font-bold text-emerald-500 flex flex-col items-center gap-4 fade-in py-6">
                                 <span class="text-6xl">🎉</span><span>اكتملت الصناديق بنجاح!</span>
                             </div>
@@ -879,16 +879,17 @@
                             </button>
                         `;
                     });
+                    // لوحة التحكم السفلية - محمية بـ pointer-events-none أثناء الحركة
                     optionsButtonsHTML = `<div class="flex flex-row w-full gap-2 md:gap-4 relative z-0 flex-wrap justify-center ${animatingOut ? 'pointer-events-none' : ''}">${buttons}</div>`;
                 }
 
                 // الحاوية الخلفية مصممة بـ flex-col و justify-between مع ارتفاع كافٍ صلب لمنع أي قفز
-                html += `<div class="relative w-full min-h-[28rem] md:min-h-[32rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col justify-between p-4 md:p-6">`;
+                html += `<div class="relative w-full min-h-[32rem] md:min-h-[34rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col justify-between p-4 md:p-6">`;
                         
                 if (currentQuestion) {
                     html += `
                         <!-- مساحة عرض البطاقة ذات الارتفاع المطلق المستقر -->
-                        <div class="flex-grow flex items-center justify-center w-full mb-6 relative h-[20rem] md:h-[24rem]">
+                        <div class="flex-grow flex items-center justify-center w-full mb-6 relative h-[22rem] md:h-[24rem]">
                             <div class="w-full h-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 overflow-y-auto no-scrollbar ${animatingOut ? 'fly-out absolute' : 'fade-in relative'} ${shakeClass}">
                                 
                                 <div class="flex items-center justify-between mb-4 shrink-0">
@@ -901,7 +902,7 @@
                                 </div>
                                 
                                 <!-- المنطقة المخصصة للسؤال تتمدد وتتوسط -->
-                                <div class="w-full flex flex-grow items-center justify-center min-h-[6rem] my-2">
+                                <div class="w-full flex flex-grow items-center justify-center min-h-[8rem] md:min-h-[10rem] my-2">
                                     <h3 class="text-3xl md:text-4xl font-bold leading-relaxed text-slate-800 text-center px-2">«${currentQuestion.text}»</h3>
                                 </div>
                                 
@@ -927,7 +928,7 @@
                     `;
                 } else {
                     html += `
-                        <div class="flex-grow flex items-center justify-center w-full h-[20rem] md:h-[24rem]">
+                        <div class="flex-grow flex items-center justify-center w-full h-[22rem] md:h-[24rem]">
                             <div class="text-3xl md:text-4xl font-bold text-emerald-500 flex flex-col items-center gap-4 fade-in py-6">
                                 <span class="text-6xl">🎉</span>
                                 <span>اكتمل فرز البطاقات!</span>
