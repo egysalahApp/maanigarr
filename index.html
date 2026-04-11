@@ -695,7 +695,7 @@
                 `;
             },
 
-            // --- قسم الصناديق بالتصميم المستقر المدمج من خزانة الأعلام ---
+            // --- قسم الصناديق بالتصميم المستقر للوحة التحكم ---
             renderClassify(sectionData) {
                 const sectionId = sectionData.id; 
                 const theme = sectionData.theme; 
@@ -723,7 +723,6 @@
                         </div>
                     `).join('');
                     
-                    // الصندوق أصبح حاوية صلبة وثابتة 100%
                     let boxClass = `flex flex-col w-full pt-6 pb-5 px-5 md:px-6 rounded-[2.5rem] bg-white/50 backdrop-blur-sm border-2 border-slate-300 shadow-[inset_0_2px_8px_rgba(0,0,0,0.03)] min-h-[14rem] relative overflow-hidden opacity-95 `;
 
                     const headerIcon = ICONS.tray.replace('w-8 h-8 md:w-12 md:h-12 mb-2 opacity-80', `w-6 h-6 md:w-8 md:h-8 text-${boxTheme}-600`);
@@ -749,7 +748,7 @@
                     </div>`;
                 });
 
-                // 🌟 بناء أزرار الخيارات السفلية للتصنيف لتكون مدمجة داخل البطاقة 🌟
+                // 🌟 بناء أزرار الخيارات كلوحة تحكم منفصلة عن حركة البطاقة 🌟
                 let actionButtonsHTML = '';
                 if (!isComplete) {
                     let buttons = '';
@@ -757,10 +756,10 @@
                         const btnTheme = cat.theme || 'sky';
                         let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 border-${btnTheme}-200 text-${btnTheme}-700 bg-${btnTheme}-50 rounded-xl transition-all duration-300 `;
                         
-                        if (!animatingOut && status !== 'correct') { // الزر قابل للنقر
+                        if (!animatingOut && status !== 'correct') { 
                             btnClass += `md:hover:border-${btnTheme}-400 md:hover:bg-${btnTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
                         } else {
-                            btnClass += `opacity-60 cursor-default grayscale-[30%]`;
+                            btnClass += `opacity-60 cursor-default grayscale-[30%] pointer-events-none`;
                         }
                         
                         buttons += `
@@ -769,49 +768,60 @@
                             </button>
                         `;
                     });
-                    // أزرار الخيارات مفصولة بخط علوي خفيف داخل البطاقة
-                    actionButtonsHTML = `<div class="flex flex-row w-full gap-2 md:gap-4 mt-6 relative z-0 flex-wrap justify-center border-t-2 border-slate-100 pt-6">${buttons}</div>`;
+                    // لوحة التحكم السفلية - محمية بـ pointer-events-none أثناء الحركة
+                    actionButtonsHTML = `<div class="flex flex-row w-full gap-2 md:gap-4 relative z-0 flex-wrap justify-center ${animatingOut ? 'pointer-events-none' : ''}">${buttons}</div>`;
                 }
 
                 html += `<div class="flex flex-col items-center w-full gap-6 ${sectionFadeClass}">`;
                 if (sectionData.description) { html += `<div class="text-center w-full"><p class="text-lg md:text-xl text-${theme}-800 font-semibold bg-${theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm">${sectionData.description}</p></div>`; }
                 
-                // إضافة min-h-[24rem] للحاوية الخلفية وإزالة transition-all لمنع الاهتزاز
-                html += `<div class="relative w-full min-h-[24rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 md:p-6">
-                    ${currentQuestion ? `
-                        <div id="classify-card" class="w-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
-                            
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="text-${theme}-600 font-bold text-lg md:text-xl">البطاقة ${toArabicNum(currentIndex + 1)}</span>
-                                <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 md:hover:bg-amber-50 text-amber-500">💡 تلميح</button>
-                            </div>
-                            
-                            <span class="block mb-2 text-slate-500 text-sm md:text-base font-medium text-center">إلى أي صندوق تنتمي هذه البطاقة؟</span>
-                            
-                            <!-- المنطقة المخصصة للسؤال بأبعاد ثابتة لمنع اهتزاز الشاشة -->
-                            <div class="w-full flex items-center justify-center min-h-[8rem] md:min-h-[10rem] my-2">
-                                <h3 class="text-3xl md:text-4xl font-bold leading-relaxed text-slate-800 text-center px-2">«${currentQuestion.text}»</h3>
-                            </div>
-                            
-                            <div class="${showHint ? `block w-full smooth-expand` : 'hidden'} mt-2">
-                                <div class="bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
-                                    <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span><span class="leading-relaxed">${currentQuestion.hint}</span>
+                // الحاوية الخلفية المتقطعة مصممة بـ flex-col و justify-between لفصل البطاقة عن لوحة التحكم
+                html += `<div class="relative w-full min-h-[24rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col justify-between p-4 md:p-6 transition-all duration-500">`;
+                
+                if (currentQuestion) {
+                    html += `
+                        <!-- مساحة عرض البطاقة (تتوسط الجزء العلوي/الأوسط) -->
+                        <div class="flex-grow flex items-center justify-center w-full mb-6">
+                            <div id="classify-card" class="w-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-${theme}-600 font-bold text-lg md:text-xl">البطاقة ${toArabicNum(currentIndex + 1)}</span>
+                                    <button onclick="App.toggleHint('${sectionId}', ${currentIndex})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-lg md:text-xl font-bold transition-all active:scale-95 md:hover:bg-amber-50 text-amber-500">💡 تلميح</button>
+                                </div>
+                                
+                                <span class="block mb-2 text-slate-500 text-sm md:text-base font-medium text-center">إلى أي صندوق تنتمي هذه البطاقة؟</span>
+                                
+                                <div class="w-full flex items-center justify-center min-h-[8rem] md:min-h-[10rem] my-2">
+                                    <h3 class="text-3xl md:text-4xl font-bold leading-relaxed text-slate-800 text-center px-2">«${currentQuestion.text}»</h3>
+                                </div>
+                                
+                                <div class="${showHint ? `block w-full smooth-expand` : 'hidden'} mt-2">
+                                    <div class="bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
+                                        <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span><span class="leading-relaxed">${currentQuestion.hint}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="${status === 'incorrect' ? 'block w-full smooth-expand' : 'hidden'} mt-4">
+                                    <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-center text-rose-700 text-lg md:text-xl font-bold shadow-sm">⚠️ ${currentQuestion.explanation}</div>
                                 </div>
                             </div>
-                            
-                            <div class="${status === 'incorrect' ? 'block w-full smooth-expand' : 'hidden'} mt-4">
-                                <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-center text-rose-700 text-lg md:text-xl font-bold shadow-sm">⚠️ ${currentQuestion.explanation}</div>
-                            </div>
-
-                            <!-- الأزرار مدمجة بالأسفل وتطير مع البطاقة -->
+                        </div>
+                        
+                        <!-- لوحة التحكم السفلية (ثابتة في الأسفل ولا تطير مع البطاقة) -->
+                        <div class="w-full">
                             ${actionButtonsHTML}
                         </div>
-                    ` : `
-                        <div class="text-3xl md:text-4xl font-bold text-emerald-500 flex flex-col items-center gap-4 fade-in py-6">
-                            <span class="text-6xl">🎉</span><span>اكتملت الصناديق بنجاح!</span>
+                    `;
+                } else {
+                    html += `
+                        <div class="flex-grow flex items-center justify-center w-full">
+                            <div class="text-3xl md:text-4xl font-bold text-emerald-500 flex flex-col items-center gap-4 fade-in py-6">
+                                <span class="text-6xl">🎉</span><span>اكتملت الصناديق بنجاح!</span>
+                            </div>
                         </div>
-                    `}
-                </div>`;
+                    `;
+                }
+                html += `</div>`;
 
                 html += `<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">${boxesHTML}</div></div>`;
                 
@@ -819,7 +829,7 @@
                 html += this.renderSectionFooterControls(sectionId, isComplete); return html;
             },
 
-            // --- قسم فرز البطاقات مدمج أيضاً ---
+            // --- قسم فرز البطاقات بالتصميم المستقر للوحة التحكم ---
             renderSort(sectionData) {
                 const sectionId = sectionData.id;
                 const theme = sectionData.theme;
@@ -847,7 +857,7 @@
                     `;
                 }
 
-                // 🌟 بناء أزرار الخيارات السفلية لفرز البطاقات لتكون مدمجة داخل البطاقة 🌟
+                // 🌟 بناء أزرار الخيارات كلوحة تحكم منفصلة 🌟
                 let optionsButtonsHTML = '';
                 if (!isComplete) {
                     const colors = ['emerald', 'violet', 'cyan', 'teal', 'indigo'];
@@ -856,10 +866,10 @@
                         const boxTheme = colors[idx % colors.length];
                         let btnClass = `flex-1 flex flex-col items-center justify-center p-3 md:p-4 border-2 rounded-xl transition-all duration-300 border-${boxTheme}-200 text-${boxTheme}-700 bg-${boxTheme}-50 `;
                         
-                        if (!animatingOut && status !== 'correct') { // قابل للنقر
+                        if (!animatingOut && status !== 'correct') { 
                             btnClass += `md:hover:border-${boxTheme}-400 md:hover:bg-${boxTheme}-100 md:hover:-translate-y-1 cursor-pointer shadow-sm md:hover:shadow-md active:scale-95`;
                         } else {
-                            btnClass += `opacity-60 cursor-default grayscale-[30%]`;
+                            btnClass += `opacity-60 cursor-default grayscale-[30%] pointer-events-none`;
                         }
                         
                         buttons += `
@@ -868,13 +878,16 @@
                             </button>
                         `;
                     });
-                    optionsButtonsHTML = `<div class="flex flex-row w-full gap-2 md:gap-4 mt-6 relative z-0 flex-wrap justify-center border-t-2 border-slate-100 pt-6">${buttons}</div>`;
+                    optionsButtonsHTML = `<div class="flex flex-row w-full gap-2 md:gap-4 relative z-0 flex-wrap justify-center ${animatingOut ? 'pointer-events-none' : ''}">${buttons}</div>`;
                 }
 
-                // إضافة min-h-[24rem] للحاوية الخلفية وإزالة transition-all لمنع الاهتزاز
-                html += `
-                    <div class="relative w-full min-h-[24rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center p-4 md:p-6">
-                        ${currentQuestion ? `
+                // الحاوية الخلفية مصممة بـ flex-col و justify-between
+                html += `<div class="relative w-full min-h-[24rem] bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300 flex flex-col justify-between p-4 md:p-6 transition-all duration-500">`;
+                        
+                if (currentQuestion) {
+                    html += `
+                        <!-- مساحة عرض البطاقة -->
+                        <div class="flex-grow flex items-center justify-center w-full mb-6">
                             <div class="w-full max-w-3xl bg-white p-5 md:p-8 rounded-3xl shadow-xl border-2 border-slate-200 transform leading-snug flex flex-col justify-start z-10 ${animatingOut ? 'fly-out' : 'fade-in'} ${shakeClass}">
                                 
                                 <div class="flex items-center justify-between mb-4">
@@ -886,7 +899,6 @@
                                     </button>
                                 </div>
                                 
-                                <!-- المنطقة المخصصة للسؤال بأبعاد ثابتة لمنع اهتزاز الشاشة -->
                                 <div class="w-full flex items-center justify-center min-h-[8rem] md:min-h-[10rem] my-2">
                                     <h3 class="text-3xl md:text-4xl font-bold leading-relaxed text-slate-800 text-center px-2">«${currentQuestion.text}»</h3>
                                 </div>
@@ -903,18 +915,26 @@
                                         ⚠️ إجابة خاطئة! ${currentQuestion.explanation}
                                     </div>
                                 </div>
-
-                                <!-- الأزرار مدمجة بالأسفل وتطير مع البطاقة -->
-                                ${optionsButtonsHTML}
                             </div>
-                        ` : `
+                        </div>
+
+                        <!-- لوحة التحكم السفلية -->
+                        <div class="w-full">
+                            ${optionsButtonsHTML}
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="flex-grow flex items-center justify-center w-full">
                             <div class="text-3xl md:text-4xl font-bold text-emerald-500 flex flex-col items-center gap-4 fade-in py-6">
                                 <span class="text-6xl">🎉</span>
                                 <span>اكتمل فرز البطاقات!</span>
                             </div>
-                        `}
-                    </div>
-                </div>`;
+                        </div>
+                    `;
+                }
+                
+                html += `</div></div>`;
 
                 if (isComplete) {
                     const progress = this.state.progress[sectionId];
