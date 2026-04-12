@@ -39,8 +39,8 @@
         /* حركة التمدد السلس للمعالجة البصرية بدون أي اهتزاز */
         .smooth-expand { animation: smoothExpand 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; overflow: hidden; }
         @keyframes smoothExpand {
-            0% { max-height: 0; opacity: 0; }
-            100% { max-height: 400px; opacity: 1; }
+            0% { max-height: 0; opacity: 0; transform: translateY(-10px); }
+            100% { max-height: 1000px; opacity: 1; transform: translateY(0); }
         }
 
         /* تأثير الاهتزاز للإجابات الخاطئة */
@@ -401,6 +401,17 @@
                 progressBar.className = `h-full transition-all duration-500 ease-out bg-${theme}-500`;
                 progressBar.style.width = `${progressPercent}%`;
             },
+            
+            showSectionResult(sectionId, sectionDef, progress) {
+                const resultArea = document.getElementById(`section-result-area-${sectionId}`);
+                if (resultArea) {
+                    resultArea.innerHTML = `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${sectionDef.theme}-200 rounded-2xl shadow-sm text-center max-w-2xl mx-auto w-full smooth-expand"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionDef.title})</h3><div class="text-4xl md:text-5xl font-bold text-${sectionDef.theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`;
+                }
+                const footerArea = document.getElementById(`section-footer-area-${sectionId}`);
+                if (footerArea) {
+                    footerArea.innerHTML = `<div class="smooth-expand w-full">${this.renderSectionFooterControls(sectionId, true)}</div>`;
+                }
+            },
 
             renderSection(sectionData) {
                 switch(sectionData.type) {
@@ -425,7 +436,6 @@
                 return `<div class="max-w-4xl mx-auto pb-6">${headerHTML}${gridHTML}<div class="flex justify-center mt-12 pt-4 fade-in"><button onclick="App.handleNextSection()" class="bg-${sectionData.theme}-600 md:hover:bg-${sectionData.theme}-700 text-white font-semibold text-xl md:text-2xl py-4 px-12 rounded-full shadow-lg flex items-center gap-3 active:scale-95 transition-all duration-300">هيا نبدأ التدريبات ${ICONS.arrowLeft}</button></div></div>`;
             },
 
-            // --- قسم المحقق النحوي المدمج (Error Correction) - الهندسة النظيفة ---
             renderErrorCorrection(sectionData) {
                 const sectionId = sectionData.id;
                 const progress = this.state.progress[sectionId];
@@ -437,8 +447,14 @@
                 
                 questions.forEach((qState, idx) => { html += `<div id="${sectionId}-wrapper-${idx}">${this.renderErrorCard(qState, idx, sectionData.theme, sectionId)}</div>`; });
                 
-                if (isComplete) { html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${sectionData.theme}-200 rounded-2xl shadow-sm text-center max-w-2xl mx-auto w-full"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${sectionData.theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
-                html += '</div>'; html += this.renderSectionFooterControls(sectionId, isComplete); return html;
+                html += `</div>`; 
+                html += `<div id="section-result-area-${sectionId}">`;
+                if (isComplete) { html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${sectionData.theme}-200 rounded-2xl shadow-sm text-center max-w-2xl mx-auto w-full smooth-expand"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${sectionData.theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
+                html += `</div>`;
+                html += `<div id="section-footer-area-${sectionId}" class="w-full">`;
+                html += this.renderSectionFooterControls(sectionId, isComplete); 
+                html += `</div>`;
+                return html;
             },
 
             renderErrorCard(qState, idx, theme, sectionId) {
@@ -448,7 +464,6 @@
                 const answerFadeClass = qState.answerAnimate ? 'smooth-expand' : '';
                 let ringClass = isStep3 ? (isSelectedCorrect ? 'ring-2 ring-emerald-400' : 'ring-2 ring-rose-400') : '';
 
-                // الكلمات كأزرار مع الإغلاق البصري
                 let wordsHTML = '';
                 words.forEach((word, wIdx) => {
                     const isErrorWord = wIdx === errorWordIndex;
@@ -460,28 +475,29 @@
                         wordClass += `bg-white border-2 border-slate-200 text-slate-700 md:hover:border-${theme}-300 md:hover:bg-${theme}-50 md:hover:-translate-y-1 md:hover:shadow-md active:scale-95 cursor-pointer `;
                         if (isShaking) wordClass += "bg-rose-100 border-rose-400 text-rose-700 shake ";
                     } else {
-                        // الخطوة 2 و 3
                         if (isErrorWord) {
-                            if (isStep3 && isSelectedCorrect) {
-                                displayWord = q.correctWord; // استخدام الكلمة الصحيحة
-                                wordClass += "bg-emerald-500 text-white border-2 border-emerald-600 z-10 ";
+                            if (isStep3) {
+                                displayWord = selectedOption.text; 
+                                if (isSelectedCorrect) {
+                                    wordClass += "bg-emerald-500 text-white border-2 border-emerald-600 z-10 ";
+                                } else {
+                                    wordClass += "bg-rose-500 text-white border-2 border-rose-600 z-10 ";
+                                }
                             } else {
                                 wordClass += "bg-rose-500 text-white border-2 border-rose-600 ";
                             }
                         } else {
-                            // الكلمات السليمة تبقى واضحة ومقروءة
                             wordClass += "bg-white border-2 border-slate-200 text-slate-700 cursor-default ";
                         }
                     }
                     wordsHTML += `<button ${step !== 1 ? 'disabled' : ''} onclick="App.handleErrorWordClick('${sectionId}', ${idx}, ${wIdx})" class="${wordClass}">${displayWord}</button>`;
                 });
 
-                // خيارات التصويب بتمدد ناعم يمنع قفز الشاشة (تم تغليفها بحاوية overflow-hidden لمنع انهيار الهوامش)
                 let actionButtonsHTML = '';
                 if (step >= 2) {
                     const optionsAnimClass = qState.optionsAnimate ? 'smooth-expand' : '';
                     actionButtonsHTML += `<div class="w-full ${optionsAnimClass}">`;
-                    actionButtonsHTML += `<div class="w-full overflow-hidden">`; // إضافة هذا المغلف يحل أزمة الـ margins
+                    actionButtonsHTML += `<div class="w-full overflow-hidden">`; 
                     actionButtonsHTML += `<div class="w-full mt-4 border-t-2 border-slate-100 pt-6 flex flex-col items-center">`;
                     actionButtonsHTML += `<span class="mb-4 text-slate-600 font-bold text-lg md:text-xl">اختر التصويب الصحيح:</span>`;
                     actionButtonsHTML += `<div class="flex flex-wrap justify-center gap-3 w-full">`;
@@ -517,7 +533,6 @@
                             </div>
                             ` : ''}
                             
-                            <!-- إضافة مُعرف لمنطقة التلميح لتسهيل التحديث الجزئي -->
                             <div id="hint-area-${sectionId}-${idx}" class="w-full">
                                 <div class="${showHint ? `block w-full overflow-hidden ${qState.hintAnimate ? 'smooth-expand' : ''}` : 'hidden'}">
                                     <div class="mt-2 bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
@@ -527,17 +542,14 @@
                             </div>
                         </div>
 
-                        <!-- منطقة الكلمات كأزرار (مغلفة بـ ID للتحديث الجزئي) -->
                         <div id="words-area-${sectionId}-${idx}" class="flex flex-wrap justify-center items-center gap-3 md:gap-4 leading-loose mx-auto w-full max-w-2xl mb-2">
                             ${wordsHTML}
                         </div>
 
-                        <!-- خيارات التصويب المدمجة -->
                         <div id="options-area-${sectionId}-${idx}" class="w-full">
                             ${actionButtonsHTML}
                         </div>
 
-                        <!-- النتيجة والتفسير -->
                         <div id="answer-area-${sectionId}-${idx}" class="w-full">
                             <div class="${isStep3 ? `block w-full overflow-hidden ${answerFadeClass}` : 'hidden'} shrink-0">
                                 <div class="mt-4 p-4 rounded-xl text-right border ${isSelectedCorrect ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200'} shadow-sm">
@@ -553,12 +565,10 @@
                 `;
             },
 
-            // --- تحديث جزئي لبطاقة المحقق النحوي لتجنب اهتزاز وتدمير عناصر البطاقة (Partial DOM Update) ---
             updateErrorCardPartial(sectionId, qIndex, qState, theme) {
                 const newHTML = this.renderErrorCard(qState, qIndex, theme, sectionId);
                 const mainCard = document.getElementById(`${sectionId}-q-${qIndex}`);
                 
-                // خط دفاعي: في حال عدم العثور على البطاقة نقوم بالتحديث الشامل
                 if (!mainCard) {
                     document.getElementById(`${sectionId}-wrapper-${qIndex}`).innerHTML = newHTML;
                     return;
@@ -577,7 +587,6 @@
                     }
                 });
                 
-                // تحديث الـ class الخارجي للبطاقة ليأخذ التأثيرات مثل ringClass
                 mainCard.className = tempDiv.firstElementChild.className;
             },
 
@@ -586,8 +595,14 @@
                 let html = '<div class="fade-in">';
                 if (sectionData.description) { html += `<div class="text-center mb-8"><p class="text-lg md:text-xl text-${sectionData.theme}-800 font-semibold bg-${sectionData.theme}-50 bg-opacity-60 p-4 md:p-5 rounded-2xl shadow-sm inline-block w-full">${sectionData.description}</p></div>`; }
                 questions.forEach((qState, idx) => { html += `<div id="${sectionId}-wrapper-${idx}">${sectionData.type === 'spotting' ? this.renderSpottingCard(qState, idx, sectionData.theme, sectionId) : this.renderQuestionCard(qState, idx, sectionId, sectionData.theme, sectionData.type)}</div>`; });
-                if (isComplete) { html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${sectionData.theme}-200 rounded-2xl shadow-sm text-center max-w-2xl mx-auto w-full"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${sectionData.theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
-                html += '</div>'; html += this.renderSectionFooterControls(sectionId, isComplete); return html;
+                html += `</div>`; 
+                html += `<div id="section-result-area-${sectionId}">`;
+                if (isComplete) { html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${sectionData.theme}-200 rounded-2xl shadow-sm text-center max-w-2xl mx-auto w-full smooth-expand"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${sectionData.theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
+                html += `</div>`;
+                html += `<div id="section-footer-area-${sectionId}" class="w-full">`;
+                html += this.renderSectionFooterControls(sectionId, isComplete); 
+                html += `</div>`;
+                return html;
             },
 
             renderQuestionCard(qState, idx, sectionId, theme, type) {
@@ -701,7 +716,6 @@
                 `;
             },
 
-            // --- تحديث جزئي للبطاقات القياسية (MCQ / Spotting) ---
             updateStandardCardPartial(sectionId, qIndex, qState, theme, type) {
                 const isSpotting = type === 'spotting';
                 const newHTML = isSpotting ? this.renderSpottingCard(qState, qIndex, theme, sectionId) : this.renderQuestionCard(qState, qIndex, sectionId, theme, type);
@@ -728,7 +742,6 @@
                 mainCard.className = tempDiv.firstElementChild.className;
             },
 
-            // --- قسم صناديق المعاني - الهندسة الجديدة (البطاقة المدمجة والتثبيت العلوي) ---
             renderClassify(sectionData) {
                 const sectionId = sectionData.id; const theme = sectionData.theme; const state = this.state.sectionData[sectionId]; 
                 const { questions, currentIndex, status, placedItems, animatingOut } = state; 
@@ -782,7 +795,6 @@
                             <div class="w-full min-h-[8rem] md:min-h-[10rem] flex flex-col items-center justify-center mb-2">
                                 <h3 class="text-3xl md:text-4xl font-bold leading-snug text-slate-800 text-center">«${currentQuestion.text}»</h3>
                             </div>
-                            <!-- تمت إضافة المُعرّف هنا لمنطقة التلميح -->
                             <div id="hint-area-${sectionId}-${currentIndex}" class="${showHint ? `block w-full smooth-expand` : 'hidden'}">
                                 <div class="mb-4 bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
                                     <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span><span class="leading-relaxed">${currentQuestion.hint}</span>
@@ -799,11 +811,15 @@
                 }
                 
                 html += `</div><div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">${glassyTraysHTML}</div></div>`;
-                if (isComplete) { const progress = this.state.progress[sectionId]; html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${theme}-200 rounded-2xl shadow-sm text-center fade-in max-w-2xl mx-auto w-full"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
-                html += this.renderSectionFooterControls(sectionId, isComplete); return html;
+                html += `<div id="section-result-area-${sectionId}">`;
+                if (isComplete) { const progress = this.state.progress[sectionId]; html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${theme}-200 rounded-2xl shadow-sm text-center smooth-expand max-w-2xl mx-auto w-full"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
+                html += `</div>`;
+                html += `<div id="section-footer-area-${sectionId}" class="w-full">`;
+                html += this.renderSectionFooterControls(sectionId, isComplete); 
+                html += `</div>`;
+                return html;
             },
 
-            // --- قسم فرز البطاقات - الهندسة الجديدة (البطاقة المدمجة والتثبيت العلوي) ---
             renderSort(sectionData) {
                 const sectionId = sectionData.id; const theme = sectionData.theme; const state = this.state.sectionData[sectionId];
                 const { questions, currentIndex, status, animatingOut } = state; const isComplete = currentIndex >= questions.length;
@@ -841,7 +857,6 @@
                             <div class="w-full min-h-[8rem] md:min-h-[10rem] flex flex-col items-center justify-center mb-2">
                                 <h3 class="text-3xl md:text-4xl font-bold leading-snug text-slate-800 text-center">«${currentQuestion.text}»</h3>
                             </div>
-                            <!-- تمت إضافة المُعرّف هنا لمنطقة التلميح -->
                             <div id="hint-area-${sectionId}-${currentIndex}" class="${showHint ? `block w-full smooth-expand` : 'hidden'}">
                                 <div class="mb-4 bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
                                     <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span><span class="leading-relaxed">${currentQuestion.hint}</span>
@@ -858,8 +873,13 @@
                 }
                 
                 html += `</div></div>`;
-                if (isComplete) { const progress = this.state.progress[sectionId]; html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${theme}-200 rounded-2xl shadow-sm text-center fade-in max-w-2xl mx-auto w-full"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
-                html += this.renderSectionFooterControls(sectionId, isComplete); return html;
+                html += `<div id="section-result-area-${sectionId}">`;
+                if (isComplete) { const progress = this.state.progress[sectionId]; html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${theme}-200 rounded-2xl shadow-sm text-center smooth-expand max-w-2xl mx-auto w-full"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
+                html += `</div>`;
+                html += `<div id="section-footer-area-${sectionId}" class="w-full">`;
+                html += this.renderSectionFooterControls(sectionId, isComplete); 
+                html += `</div>`;
+                return html;
             },
 
             renderSectionFooterControls(sectionId, isComplete) {
@@ -895,7 +915,6 @@
                 qState.showHint = !qState.showHint; 
                 qState.hintAnimate = qState.showHint; 
 
-                // --- التعديل الهندسي الأخير لمنع UpdateUI للبطاقات الفردية ---
                 if (sectionDef.type === 'classify' || sectionDef.type === 'sort') {
                     const hintArea = document.getElementById(`hint-area-${sectionId}-${idx}`);
                     if (hintArea) {
@@ -921,7 +940,14 @@
                 const selectedOption = qState.options[optIndex]; qState.answered = true; qState.selectedOption = selectedOption; qState.answerAnimate = true; 
                 this.recordProgress(sectionId, selectedOption.isCorrect);
                 const progress = this.state.progress[sectionId];
-                if (progress.answered === progress.total) { this.updateUI(); } else { const sectionDef = APP_DATA.sections.find(s => s.id === sectionId); this.updateStandardCardPartial(sectionId, qIndex, qState, sectionDef.theme, sectionDef.type); this.updateTabs(); this.checkFinalEvaluation(); }
+                const sectionDef = APP_DATA.sections.find(s => s.id === sectionId);
+                
+                this.updateStandardCardPartial(sectionId, qIndex, qState, sectionDef.theme, sectionDef.type); 
+                this.updateTabs(); 
+                if (progress.answered === progress.total) { 
+                    this.showSectionResult(sectionId, sectionDef, progress);
+                } 
+                this.checkFinalEvaluation(); 
                 qState.answerAnimate = false; 
             },
 
@@ -930,7 +956,14 @@
                 qState.answered = true; qState.selectedIndex = wIndex; qState.answerAnimate = true; 
                 const isCorrect = wIndex === qState.originalQuestion.correctIndex; this.recordProgress(sectionId, isCorrect);
                 const progress = this.state.progress[sectionId];
-                if (progress.answered === progress.total) { this.updateUI(); } else { const sectionDef = APP_DATA.sections.find(s => s.id === sectionId); this.updateStandardCardPartial(sectionId, qIndex, qState, sectionDef.theme, sectionDef.type); this.updateTabs(); this.checkFinalEvaluation(); }
+                const sectionDef = APP_DATA.sections.find(s => s.id === sectionId);
+                
+                this.updateStandardCardPartial(sectionId, qIndex, qState, sectionDef.theme, sectionDef.type); 
+                this.updateTabs(); 
+                if (progress.answered === progress.total) { 
+                    this.showSectionResult(sectionId, sectionDef, progress);
+                } 
+                this.checkFinalEvaluation(); 
                 qState.answerAnimate = false; 
             },
 
@@ -942,7 +975,6 @@
                 if (isCorrectError) {
                     qState.selectedWordIndex = wIndex; qState.step = 2; qState.shakeWordIndex = null;
                     qState.optionsAnimate = true; 
-                    // استخدام التحديث الجزئي لمنع إعادة رسم البطاقة بالكامل
                     this.updateErrorCardPartial(sectionId, qIndex, qState, sectionDef.theme);
                     qState.optionsAnimate = false; 
                 } else {
@@ -965,14 +997,13 @@
                 const progress = this.state.progress[sectionId];
                 const sectionDef = APP_DATA.sections.find(s => s.id === sectionId);
                 
+                this.updateErrorCardPartial(sectionId, qIndex, qState, sectionDef.theme);
+                this.updateTabs(); 
                 if (progress.answered === progress.total) { 
-                    this.updateUI(); 
-                } else { 
-                    // استخدام التحديث الجزئي لإظهار النتيجة
-                    this.updateErrorCardPartial(sectionId, qIndex, qState, sectionDef.theme);
-                    this.updateTabs(); 
-                    this.checkFinalEvaluation(); 
-                }
+                    this.showSectionResult(sectionId, sectionDef, progress);
+                } 
+                this.checkFinalEvaluation(); 
+                
                 qState.answerAnimate = false;
             },
 
@@ -1092,7 +1123,7 @@
                     else { message = "أداء استثنائي! أنت بطل حقيقي وخبير في هذا الدرس."; color = "text-emerald-600"; }
 
                     container.innerHTML = `
-                        <div id="final-eval-box" class="mt-12 bg-white p-8 md:p-12 rounded-3xl shadow-lg border-2 border-amber-200 text-center fade-in">
+                        <div id="final-eval-box" class="mt-12 bg-white p-8 md:p-12 rounded-3xl shadow-lg border-2 border-amber-200 text-center smooth-expand">
                             ${ICONS.medal}
                             <h2 class="text-3xl md:text-4xl font-bold text-slate-700 mb-6">التقييم النهائي</h2>
                             <div class="text-6xl md:text-7xl font-bold mb-8 text-slate-700 flex items-center justify-center gap-4">
