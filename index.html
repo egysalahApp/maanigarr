@@ -782,7 +782,8 @@
                             <div class="w-full min-h-[8rem] md:min-h-[10rem] flex flex-col items-center justify-center mb-2">
                                 <h3 class="text-3xl md:text-4xl font-bold leading-snug text-slate-800 text-center">«${currentQuestion.text}»</h3>
                             </div>
-                            <div class="${showHint ? `block w-full smooth-expand` : 'hidden'}">
+                            <!-- تمت إضافة المُعرّف هنا لمنطقة التلميح -->
+                            <div id="hint-area-${sectionId}-${currentIndex}" class="${showHint ? `block w-full smooth-expand` : 'hidden'}">
                                 <div class="mb-4 bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
                                     <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span><span class="leading-relaxed">${currentQuestion.hint}</span>
                                 </div>
@@ -840,7 +841,8 @@
                             <div class="w-full min-h-[8rem] md:min-h-[10rem] flex flex-col items-center justify-center mb-2">
                                 <h3 class="text-3xl md:text-4xl font-bold leading-snug text-slate-800 text-center">«${currentQuestion.text}»</h3>
                             </div>
-                            <div class="${showHint ? `block w-full smooth-expand` : 'hidden'}">
+                            <!-- تمت إضافة المُعرّف هنا لمنطقة التلميح -->
+                            <div id="hint-area-${sectionId}-${currentIndex}" class="${showHint ? `block w-full smooth-expand` : 'hidden'}">
                                 <div class="mb-4 bg-amber-50 text-amber-900 p-4 rounded-xl text-xl font-medium border border-amber-200 flex gap-2 items-start text-right">
                                     <span class="text-amber-500 font-semibold mt-1 shrink-0">💡</span><span class="leading-relaxed">${currentQuestion.hint}</span>
                                 </div>
@@ -881,22 +883,37 @@
 
             toggleHint(sectionId, idx) {
                 const sectionDef = APP_DATA.sections.find(s => s.id === sectionId);
+                if (sectionDef.id === 'intro') return;
+
+                let qState;
                 if (sectionDef.type === 'classify' || sectionDef.type === 'sort') {
-                    const q = this.state.sectionData[sectionId].questions[idx]; q.showHint = !q.showHint; q.hintAnimate = q.showHint; this.updateUI(); q.hintAnimate = false; 
-                } else if (sectionDef.type === 'error_correction') {
-                    // استخدام التحديث الجزئي بدلاً من الاستبدال الشامل للبطاقة
-                    const qState = this.state.sectionData[sectionId][idx]; 
-                    qState.showHint = !qState.showHint; 
-                    qState.hintAnimate = qState.showHint; 
-                    this.updateErrorCardPartial(sectionId, idx, qState, sectionDef.theme);
-                    qState.hintAnimate = false;
+                    qState = this.state.sectionData[sectionId].questions[idx]; 
                 } else {
-                    const qState = this.state.sectionData[sectionId][idx]; 
-                    qState.showHint = !qState.showHint; 
-                    qState.hintAnimate = qState.showHint; 
-                    this.updateStandardCardPartial(sectionId, idx, qState, sectionDef.theme, sectionDef.type);
-                    qState.hintAnimate = false; 
+                    qState = this.state.sectionData[sectionId][idx]; 
                 }
+
+                qState.showHint = !qState.showHint; 
+                qState.hintAnimate = qState.showHint; 
+
+                // --- التعديل الهندسي الأخير لمنع UpdateUI للبطاقات الفردية ---
+                if (sectionDef.type === 'classify' || sectionDef.type === 'sort') {
+                    const hintArea = document.getElementById(`hint-area-${sectionId}-${idx}`);
+                    if (hintArea) {
+                        if (qState.showHint) {
+                            hintArea.className = 'block w-full smooth-expand';
+                        } else {
+                            hintArea.className = 'hidden';
+                        }
+                    }
+                } 
+                else if (sectionDef.type === 'error_correction') {
+                    this.updateErrorCardPartial(sectionId, idx, qState, sectionDef.theme);
+                } 
+                else {
+                    this.updateStandardCardPartial(sectionId, idx, qState, sectionDef.theme, sectionDef.type);
+                }
+                
+                qState.hintAnimate = false;
             },
 
             handleAnswer(sectionId, qIndex, optIndex) {
