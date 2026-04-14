@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<!--
+======================================================================
+[STRICT AI INSTRUCTIONS - DO NOT REMOVE OR MODIFY THIS BLOCK]
+[تعليمات نظامية صارمة للذكاء الاصطناعي - احتفظ بهذا التعليق دائماً في أي كود تولده]
+======================================================================
+أنت الآن تقوم بتوليد/تعديل درس تفاعلي باستخدام هذا القالب. يجب عليك الالتزام بالآتي حرفياً:
+1. نطاق التعديل: تعديلاتك تقتصر حصرياً على كائن (APP_DATA). ممنوع منعاً باتاً تعديل هيكل HTML المدمج (الترويسة والتذييل)، أو دوال JavaScript، أو الـ CSS.
+2. الاستثناء الوحيد: يُسمح لك بكتابة دوال JavaScript وتنسيقات CSS جديدة (فقط) إذا طُلب منك إضافة "نوع نشاط جديد كليًّا" غير مدعوم في الكود الحالي، على أن تدمجه بسلاسة دون كسر المنطق القديم.
+3. التبويب الأول: يجب أن يكون دائماً بعنوان "قبل أن نبدأ" (قسم الشرح intro) ويحتفظ بخصائصه وتصميمه.
+4. الألوان المسموحة (Themes) للتبويبات محصورة في: (emerald, indigo, amber, violet, sky, blue, slate, teal).
+5. قواعد لغوية إجبارية في المحتوى:
+   - امنع الضمائر الزائدة (اكتب "ما السبب" وليس "ما هو السبب").
+   - ضع تنوين الفتح على الحرف الذي يسبق الألف (مثل: كتابًا، قلمًا، جزءًا).
+   - استثناء إلزامي للتنوين: إذا انتهت الكلمة بألف مسبوقة بلام، ضع التنوين على الألف (مثل: أهلاً، أولاً، أملاً، بدلاً).
+======================================================================
+-->
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -78,7 +94,10 @@
             tray: `<svg class="w-8 h-8 md:w-12 md:h-12 mb-2 opacity-80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>`
         };
 
-        // ================= قاعدة البيانات المركزية (APP_DATA) =================
+        // =========================================================================
+        // 🔒 [AI GUARD START]: ابدأ تعديل محتوى الدرس من هنا داخل كائن (APP_DATA) فقط
+        // تذكر: التزم بالقواعد اللغوية (التنوين والضمائر) المذكورة في أعلى الملف.
+        // =========================================================================
         const APP_DATA = {
             pageTitle: "معاني حروف الجر | العربية السهلة",
             headerTitle: "العربية السهلة",
@@ -229,6 +248,12 @@
                 }
             ]
         };
+        // =========================================================================
+        // ⬆️ نهاية بيانات الدرس ⬆️
+        // =========================================================================
+        // 🛑 [AI GUARD WARNING]: توقف هنا! ممنوع منعاً باتاً تعديل أي سطر برمجي أو دالة JavaScript أو CSS أسفل هذا السطر نهائياً.
+        // مسموح بالتعديل هنا فقط إذا طلب منك المستخدم نصاً "إضافة نوع نشاط جديد كلياً".
+        // =========================================================================
 
         // ================= الأداة اللغوية =================
         const toArabicNum = (num) => {
@@ -341,6 +366,7 @@
             },
 
             renderLayout() {
+                // 🛑 [AI GUARD]: ممنوع تعديل الهيكل الأساسي أو الترويسة (Header) أو التذييل (Footer)
                 const root = document.getElementById('app-root');
                 let sectionsContainers = '';
                 APP_DATA.sections.forEach(sec => { sectionsContainers += `<div id="section-${sec.id}" class="hidden"></div>`; });
@@ -675,9 +701,9 @@
                     if (!answered) {
                         wordClass += `bg-white border-2 border-slate-200 text-slate-700 md:hover:border-${theme}-300 md:hover:bg-${theme}-50 md:hover:-translate-y-1 md:hover:shadow-md active:scale-95 cursor-pointer`;
                     } else {
-                        if (isSelected && isCorrect) wordClass += "bg-emerald-500 text-white border-2 border-emerald-600 shadow-md scale-105";
-                        else if (isSelected && !isCorrect) wordClass += "bg-rose-500 text-white border-2 border-rose-600 shadow-md scale-105";
-                        else if (!isSelected && isCorrect) wordClass += "bg-emerald-50 text-emerald-700 border-2 border-emerald-300 ring-2 ring-emerald-200";
+                        if (isSelected && isCorrect) wordClass += "bg-emerald-500 text-white border-2 border-emerald-600 shadow-md ";
+                        else if (isSelected && !isCorrect) wordClass += "bg-rose-500 text-white border-2 border-rose-600 shadow-md ";
+                        else if (!isSelected && isCorrect) wordClass += "bg-emerald-50 text-emerald-700 border-2 border-emerald-300 ring-2 ring-emerald-200 ";
                         else wordClass += "bg-slate-50 border-2 border-slate-100 text-slate-400 opacity-50 cursor-default";
                     }
 
@@ -876,7 +902,7 @@
                 html += `<div id="section-result-area-${sectionId}">`;
                 if (isComplete) { const progress = this.state.progress[sectionId]; html += `<div class="mt-12 p-8 md:p-10 bg-white border-2 border-${theme}-200 rounded-2xl shadow-sm text-center smooth-expand max-w-2xl mx-auto w-full"><h3 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-6">نتيجتك في قسم (${sectionData.title})</h3><div class="text-4xl md:text-5xl font-bold text-${theme}-600 flex items-center justify-center gap-3"><span>${toArabicNum(progress.score)}</span><span class="text-2xl md:text-3xl text-slate-400 font-medium mt-1">من</span><span>${toArabicNum(progress.total)}</span></div></div>`; }
                 html += `</div>`;
-                html += `<div id="section-footer-area-${sectionId}" class="w-full">`;
+                html += `<div id="section-footer-area-${sectionId}">`;
                 html += this.renderSectionFooterControls(sectionId, isComplete); 
                 html += `</div>`;
                 return html;
